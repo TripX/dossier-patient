@@ -24,6 +24,9 @@ import {WebviewDirective} from 'app/directives/webview.directive';
 
 import {AppComponent} from './app.component';
 import {DossierPatientComponent} from './components/dossier-patient/dossier-patient.component';
+import { FichePatientComponent } from './components/fiche-patient/fiche-patient.component';
+import { MonEvolutionComponent } from './components/mon-evolution/mon-evolution.component';
+import { MaBalanceEnergetiqueComponent } from './components/ma-balance-energetique/ma-balance-energetique.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -34,7 +37,10 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AppComponent,
     WebviewDirective,
-    DossierPatientComponent
+    DossierPatientComponent,
+    FichePatientComponent,
+    MonEvolutionComponent,
+    MaBalanceEnergetiqueComponent
   ],
   imports: [
     BrowserModule,

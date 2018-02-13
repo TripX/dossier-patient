@@ -1,0 +1,36 @@
+<form [formGroup]="tabForm">
+  <div class="left-panel">
+    <mat-form-field>
+      <mat-select placeholder="Groupe Patient" formControlName="group">
+        <mat-option *ngFor="let group of groupPatient" [value]="group">{{group}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select placeholder="Civilité" formControlName="title">
+        <mat-option *ngFor="let title of titlePatient" [value]="title">{{title}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Nom" formControlName="lastName">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Prénom" formControlName="firstName">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput [matDatepicker]="picker" placeholder="Anniversaire" formControlName="birthDate">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker startView="year" [startAt]="startDate"></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Age" [value]="age" disabled>
+    </mat-form-field>
+
+  </div>
+</form>
+
+<pre>{{tabForm.value | json}}</pre>

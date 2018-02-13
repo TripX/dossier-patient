@@ -1,10 +1,22 @@
-<form class="example-form">
-  <mat-form-field class="example-full-width">
-    <input type="text" placeholder="Pick one" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
-    <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let option of options" [value]="option">
-        {{ option }}
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
-</form>
+<mat-card>
+  <mat-card-content>
+    <h2>Dossier Patient</h2>
+    <mat-tab-group>
+      <mat-tab label="Fiche patient">
+        <div class="tab-content">
+          <app-fiche-patient></app-fiche-patient>
+        </div>
+      </mat-tab>
+      <mat-tab label="Mon évolution">
+        <div class="tab-content">
+          <app-mon-evolution></app-mon-evolution>
+        </div>
+      </mat-tab>
+      <mat-tab label="Ma balance énergétique">
+        <div class="tab-content">
+          <app-ma-balance-energetique></app-ma-balance-energetique>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card-content>
+</mat-card>

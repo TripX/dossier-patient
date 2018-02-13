@@ -1,0 +1,8 @@
+.left-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.left-panel > * {
+  width: 100%;
+}
