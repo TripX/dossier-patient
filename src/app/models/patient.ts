@@ -10,7 +10,7 @@ export interface IPatient {
   email: string;
   mobile: string;
   landline: string;
-  favoriteContact: string;
+  favoriteContactType: string;
   profession: string;
   maritalStatus: string;
   groupPatient: string[];

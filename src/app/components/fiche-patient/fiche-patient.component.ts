@@ -1,13 +1,19 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {DateAdapter} from '@angular/material';
+
+import {FrenchDateAdapter} from '../../services/FrenchDateAdapter';
 
 import {GROUP_PATIENT} from '../../models/group-patient';
 import {TITLE_PATIENT} from '../../models/title-patient';
+import {MARITAL_STATUS} from '../../models/marital-status';
+import {FAVORITE_CONTACT_TYPE} from '../../models/favorite-contact-type';
 
 @Component({
   selector: 'app-fiche-patient',
   templateUrl: './fiche-patient.component.html',
-  styleUrls: ['./fiche-patient.component.scss']
+  styleUrls: ['./fiche-patient.component.scss'],
+  providers: [{provide: DateAdapter, useClass: FrenchDateAdapter}],
 })
 export class FichePatientComponent implements OnInit {
 
@@ -15,11 +21,16 @@ export class FichePatientComponent implements OnInit {
 
   groupPatient: string[] = GROUP_PATIENT;
   titlePatient: string[] = TITLE_PATIENT;
+  maritalStatus: string[] = MARITAL_STATUS;
+  favoriteContactType: string[] = FAVORITE_CONTACT_TYPE;
   age = '';
 
-  startDate = new Date(1990, 0, 1);
+  startBirthDate = new Date(1990, 0, 1);
+  startToday = new Date();
 
-  constructor() { }
+  constructor(private dateAdapter: DateAdapter<Date>) {
+    this.dateAdapter.setLocale('fr');
+  }
 
   ngOnInit() {
     this.tabForm = new FormGroup({
@@ -27,7 +38,18 @@ export class FichePatientComponent implements OnInit {
       title: new FormControl(),
       firstName: new FormControl(),
       lastName: new FormControl(),
-      birthDate: new FormControl()
+      birthDate: new FormControl(),
+      profession: new FormControl(),
+      maritalStatus: new FormControl(),
+      landline: new FormControl(),
+      mobile: new FormControl(),
+      email: new FormControl('', Validators.email),
+      creationDate: new FormControl(),
+      favoriteContactType: new FormControl(),
+      metabolism: new FormControl(),
+      healthHistory: new FormControl(),
+      regularDoctor: new FormControl(),
+      healthNote: new FormControl()
     });
 
     this.tabForm.valueChanges.subscribe(value => {
