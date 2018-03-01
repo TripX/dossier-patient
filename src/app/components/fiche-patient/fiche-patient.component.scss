@@ -1,18 +1,20 @@
-.left-panel {
-  display: flex;
-  flex-direction: column;
-  float: left
-}
-
-.left-panel > * {
-  width: 100%;
-}
-
-.right-panel {
+.column {
   display: flex;
   flex-direction: column;
 }
 
-.right-panel > * {
-  width: 100%;
+.red {
+  background-color: red;
+}
+
+.green {
+  background-color: green;
+}
+
+.cyan {
+  background-color: cyan;
+}
+
+.blue {
+  background-color: blue;
 }

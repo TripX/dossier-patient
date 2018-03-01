@@ -1,76 +1,78 @@
 <form [formGroup]="tabForm">
-  <div class="left-panel">
-    <mat-form-field>
-      <mat-select placeholder="Groupe Patient" formControlName="group">
-        <mat-option *ngFor="let group of groupPatient" [value]="group">{{group}}</mat-option>
-      </mat-select>
-    </mat-form-field>
+  <mat-grid-list cols="4" rowHeight="400px">
 
-    <mat-form-field>
-      <mat-select placeholder="Civilité" formControlName="title">
-        <mat-option *ngFor="let title of titlePatient" [value]="title">{{title}}</mat-option>
-      </mat-select>
-    </mat-form-field>
+    <!-- 1 -->
+    <mat-grid-tile [colspan]="1" [rowspan]="2" class="red">
+      <div class="column">
+        <mat-form-field>
+          <mat-select placeholder="Groupe Patient" formControlName="group">
+            <mat-option *ngFor="let group of groupPatient" [value]="group">{{group}}</mat-option>
+          </mat-select>
+        </mat-form-field>
 
-    <mat-form-field>
-      <input matInput placeholder="Nom" formControlName="lastName">
-    </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Civilité" formControlName="title">
+            <mat-option *ngFor="let title of titlePatient" [value]="title">{{title}}</mat-option>
+          </mat-select>
+        </mat-form-field>
 
-    <mat-form-field>
-      <input matInput placeholder="Prénom" formControlName="firstName">
-    </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Nom" formControlName="lastName">
+        </mat-form-field>
 
-    <mat-form-field>
-      <input matInput [matDatepicker]="birthDatePicker" placeholder="Anniversaire" formControlName="birthDate">
-      <mat-datepicker-toggle matSuffix [for]="birthDatePicker"></mat-datepicker-toggle>
-      <mat-datepicker #birthDatePicker startView="year" [startAt]="startBirthDate"></mat-datepicker>
-    </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Prénom" formControlName="firstName">
+        </mat-form-field>
 
-    <mat-form-field>
-      <input matInput placeholder="Age" [value]="age" disabled>
-    </mat-form-field>
+        <mat-form-field>
+          <input matInput [matDatepicker]="birthDatePicker" placeholder="Anniversaire" formControlName="birthDate">
+          <mat-datepicker-toggle matSuffix [for]="birthDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #birthDatePicker startView="year" [startAt]="startBirthDate"></mat-datepicker>
+        </mat-form-field>
 
-    <mat-form-field>
-      <input matInput placeholder="Profession" formControlName="profession">
-    </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Age" [value]="age" disabled>
+        </mat-form-field>
 
-    <mat-form-field>
-      <mat-select placeholder="Situation familiale" formControlName="maritalStatus">
-        <mat-option *ngFor="let status of maritalStatus" [value]="status">{{status}}</mat-option>
-      </mat-select>
-    </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Profession" formControlName="profession">
+        </mat-form-field>
 
-    <mat-form-field>
-      <input type="tel" matInput placeholder="Téléphone fixe" formControlName="landline">
-    </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Situation familiale" formControlName="maritalStatus">
+            <mat-option *ngFor="let status of maritalStatus" [value]="status">{{status}}</mat-option>
+          </mat-select>
+        </mat-form-field>
 
-    <mat-form-field>
-      <input type="tel" matInput placeholder="Téléphone portable" formControlName="mobile">
-    </mat-form-field>
+        <mat-form-field>
+          <input type="tel" matInput placeholder="Téléphone fixe" formControlName="landline">
+        </mat-form-field>
 
-    <mat-form-field>
-      <input matInput placeholder="Email" formControlName="email">
-    </mat-form-field>
+        <mat-form-field>
+          <input type="tel" matInput placeholder="Téléphone portable" formControlName="mobile">
+        </mat-form-field>
 
-    <mat-form-field>
-      <input matInput [matDatepicker]="creationPicker" placeholder="Créée le" formControlName="creationDate">
-      <mat-datepicker-toggle matSuffix [for]="creationPicker"></mat-datepicker-toggle>
-      <mat-datepicker #creationPicker startView="year" [startAt]="startToday"></mat-datepicker>
-    </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Email" formControlName="email">
+        </mat-form-field>
 
-    <mat-form-field>
-      <mat-select placeholder="Moyen de contact préféré" formControlName="favoriteContactType">
-        <mat-option *ngFor="let type of favoriteContactType" [value]="type">{{type}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
+        <mat-form-field>
+          <input matInput [matDatepicker]="creationPicker" placeholder="Créée le" formControlName="creationDate">
+          <mat-datepicker-toggle matSuffix [for]="creationPicker"></mat-datepicker-toggle>
+          <mat-datepicker #creationPicker startView="year" [startAt]="startToday"></mat-datepicker>
+        </mat-form-field>
 
-  <div class="right-panel">
-    <mat-grid-list cols="3" rowHeight="3:1">
-      <mat-grid-tile>
+        <mat-form-field>
+          <mat-select placeholder="Moyen de contact préféré" formControlName="favoriteContactType">
+            <mat-option *ngFor="let type of favoriteContactType" [value]="type">{{type}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-grid-tile>
 
-        <mat-grid-tile-header><mat-icon>plus</mat-icon> SANTÉ</mat-grid-tile-header>
-
+    <!-- SANTE -->
+    <mat-grid-tile [colspan]="1" [rowspan]="1" class="green">
+      <div class="column">
         <mat-form-field>
           <textarea matInput placeholder="Maladie métabolique" formControlName="metabolism"></textarea>
         </mat-form-field>
@@ -86,16 +88,22 @@
         <mat-form-field>
           <textarea matInput placeholder="Autres" formControlName="healthNote"></textarea>
         </mat-form-field>
+      </div>
+    </mat-grid-tile>
 
-      </mat-grid-tile>
-      <mat-grid-tile>2</mat-grid-tile>
-      <mat-grid-tile>3</mat-grid-tile>
-      <mat-grid-tile>
+     <!-- 3 -->
+    <mat-grid-tile [colspan]="1" [rowspan]="1" class="cyan">
+      3
+    </mat-grid-tile>
 
-        <mat-grid-tile-header><mat-icon>home</mat-icon>NOTES</mat-grid-tile-header>
+    <!-- 4 -->
+    <mat-grid-tile [colspan]="1" [rowspan]="1" class="red">
+      4
+    </mat-grid-tile>
 
-      </mat-grid-tile>
-    </mat-grid-list>
-  </div>
-
+    <!-- NOTES -->
+    <mat-grid-tile [colspan]="3" [rowspan]="1" class="blue">
+      Notes
+    </mat-grid-tile>
+  </mat-grid-list>
 </form>
