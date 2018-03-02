@@ -3,3 +3,9 @@
   flex-direction: column;
   width: 90%;
 }
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}

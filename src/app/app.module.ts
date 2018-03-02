@@ -9,6 +9,7 @@ import 'hammerjs';
 
 import {HttpClientModule, HttpClient} from '@angular/common/http';
 
+import {DomSanitizer} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CustomMaterialModule} from './module/angular-material';
 

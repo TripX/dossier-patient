@@ -98,12 +98,17 @@
     <mat-grid-tile [colspan]="1" [rowspan]="1">
       <div class="column">
         <h2>SPORT</h2>
-        <mat-form-field>
-          <input matInput placeholder="Sport" formControlName="activityTitle">
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Nombre d'heure par semaine" formControlName="activityHoursPerWeek">
-        </mat-form-field>
+        <div>
+          <mat-form-field>
+            <input matInput placeholder="Sport" formControlName="activityTitle">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Heure par semaine" formControlName="activityHoursPerWeek">
+          </mat-form-field>
+          <button mat-icon-button>
+            <mat-icon svgIcon="ic_add_circle_black_24px.svg"></mat-icon>
+          </button>
+        </div>
         <!--TODO bouton suppression sport -->
         <!--TODO bouton ajout sport -->
       </div>
