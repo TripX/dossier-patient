@@ -49,7 +49,9 @@ export class FichePatientComponent implements OnInit {
       metabolism: new FormControl(),
       healthHistory: new FormControl(),
       regularDoctor: new FormControl(),
-      healthNote: new FormControl()
+      healthNote: new FormControl(),
+      activityTitle: new FormControl(),
+      activityHoursPerWeek: new FormControl(),
     });
 
     this.tabForm.valueChanges.subscribe(value => {

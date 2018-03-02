@@ -2,7 +2,7 @@
   <mat-grid-list cols="4" rowHeight="400px">
 
     <!-- 1 -->
-    <mat-grid-tile [colspan]="1" [rowspan]="2" class="red">
+    <mat-grid-tile [colspan]="1" [rowspan]="2">
       <div class="column">
         <mat-form-field>
           <mat-select placeholder="Groupe Patient" formControlName="group">
@@ -74,11 +74,13 @@
     <mat-grid-tile [colspan]="1" [rowspan]="1" class="green">
       <div class="column">
         <mat-form-field>
-          <textarea matInput placeholder="Maladie métabolique" formControlName="metabolism"></textarea>
+          <textarea matInput placeholder="Maladie métabolique" matTextareaAutosize matAutosizeMinRows="2"
+                    matAutosizeMaxRows="5" formControlName="metabolism"></textarea>
         </mat-form-field>
 
         <mat-form-field>
-          <textarea matInput placeholder="Antécédent" formControlName="healthHistory"></textarea>
+          <textarea matInput placeholder="Antécédent" matTextareaAutosize matAutosizeMinRows="2"
+                    matAutosizeMaxRows="5" formControlName="healthHistory"></textarea>
         </mat-form-field>
 
         <mat-form-field>
@@ -86,24 +88,34 @@
         </mat-form-field>
 
         <mat-form-field>
-          <textarea matInput placeholder="Autres" formControlName="healthNote"></textarea>
+          <textarea matInput placeholder="Autres" matTextareaAutosize matAutosizeMinRows="2"
+                    matAutosizeMaxRows="5" formControlName="healthNote"></textarea>
         </mat-form-field>
       </div>
     </mat-grid-tile>
 
-     <!-- 3 -->
-    <mat-grid-tile [colspan]="1" [rowspan]="1" class="cyan">
-      3
+     <!-- SPORT -->
+    <mat-grid-tile [colspan]="1" [rowspan]="1">
+      SPORT
+      <div class="column">
+        <mat-form-field>
+          <input matInput placeholder="Sport" formControlName="activityTitle">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Nombre d'heure par semaine" formControlName="activityHoursPerWeek">
+        </mat-form-field>
+
+      </div>
     </mat-grid-tile>
 
-    <!-- 4 -->
-    <mat-grid-tile [colspan]="1" [rowspan]="1" class="red">
-      4
+    <!-- PAIEMENT -->
+    <mat-grid-tile [colspan]="1" [rowspan]="1">
+      PAIEMENT
     </mat-grid-tile>
 
     <!-- NOTES -->
-    <mat-grid-tile [colspan]="3" [rowspan]="1" class="blue">
-      Notes
+    <mat-grid-tile [colspan]="3" [rowspan]="1">
+      NOTES
     </mat-grid-tile>
   </mat-grid-list>
 </form>
