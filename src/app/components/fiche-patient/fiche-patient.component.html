@@ -1,9 +1,9 @@
 <form [formGroup]="tabForm">
   <mat-grid-list cols="4" rowHeight="400px">
 
-    <!-- 1 -->
     <mat-grid-tile [colspan]="1" [rowspan]="2">
       <div class="column">
+        <h2>INFORMATIONS PERSONNELLES</h2>
         <mat-form-field>
           <mat-select placeholder="Groupe Patient" formControlName="group">
             <mat-option *ngFor="let group of groupPatient" [value]="group">{{group}}</mat-option>
@@ -73,6 +73,7 @@
     <!-- SANTE -->
     <mat-grid-tile [colspan]="1" [rowspan]="1" class="green">
       <div class="column">
+        <h2>SANTE</h2>
         <mat-form-field>
           <textarea matInput placeholder="Maladie métabolique" matTextareaAutosize matAutosizeMinRows="2"
                     matAutosizeMaxRows="5" formControlName="metabolism"></textarea>
@@ -94,28 +95,26 @@
       </div>
     </mat-grid-tile>
 
-     <!-- SPORT -->
     <mat-grid-tile [colspan]="1" [rowspan]="1">
-      SPORT
       <div class="column">
+        <h2>SPORT</h2>
         <mat-form-field>
           <input matInput placeholder="Sport" formControlName="activityTitle">
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Nombre d'heure par semaine" formControlName="activityHoursPerWeek">
         </mat-form-field>
-
+        <!--TODO bouton suppression sport -->
+        <!--TODO bouton ajout sport -->
       </div>
     </mat-grid-tile>
 
-    <!-- PAIEMENT -->
     <mat-grid-tile [colspan]="1" [rowspan]="1">
-      PAIEMENT
+      <h2>PAIEMENT</h2>
     </mat-grid-tile>
 
-    <!-- NOTES -->
     <mat-grid-tile [colspan]="3" [rowspan]="1">
-      NOTES
+      <h2>NOTES</h2>
     </mat-grid-tile>
   </mat-grid-list>
 </form>
