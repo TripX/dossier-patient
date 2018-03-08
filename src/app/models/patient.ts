@@ -30,8 +30,9 @@ export interface IPatient {
 }
 
 export interface IActivity {
+  index: number;
   title: string;
-  hoursPerWeek: number
+  hoursPerWeek: number;
 }
 
 export interface IConsultation {

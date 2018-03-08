@@ -3,7 +3,6 @@
 
     <mat-grid-tile [colspan]="1" [rowspan]="2">
       <div class="column">
-        <h2>INFORMATIONS PERSONNELLES</h2>
         <mat-form-field>
           <mat-select placeholder="Groupe Patient" formControlName="group">
             <mat-option *ngFor="let group of groupPatient" [value]="group">{{group}}</mat-option>
@@ -73,7 +72,6 @@
     <!-- SANTE -->
     <mat-grid-tile [colspan]="1" [rowspan]="1" class="green">
       <div class="column">
-        <h2>SANTE</h2>
         <mat-form-field>
           <textarea matInput placeholder="Maladie métabolique" matTextareaAutosize matAutosizeMinRows="2"
                     matAutosizeMaxRows="5" formControlName="metabolism"></textarea>
@@ -97,25 +95,28 @@
 
     <mat-grid-tile [colspan]="1" [rowspan]="1">
       <div class="column">
-        <h2>SPORT</h2>
-        <div>
-          <mat-form-field>
-            <input matInput placeholder="Sport" formControlName="activityTitle">
+        <div class="row" *ngFor="let activity of activities">
+          <mat-form-field class="sport-input">
+            <input matInput placeholder="Sport" [value]="activity.title" formControlName="activityTitle">
           </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Heure par semaine" formControlName="activityHoursPerWeek">
+          <mat-form-field class="sport-hour-input">
+            <input matInput placeholder="Heure par semaine" [value]="activity.hoursPerWeek" formControlName="activityHoursPerWeek" class="break-word">
           </mat-form-field>
-          <button mat-icon-button>
-            <mat-icon svgIcon="ic_add_circle_black_24px.svg"></mat-icon>
+          <button mat-icon-button (click)="removeActivity(activity)">
+            <mat-icon class="large-font-size very-bold align-middle">-</mat-icon>
           </button>
         </div>
-        <!--TODO bouton suppression sport -->
-        <!--TODO bouton ajout sport -->
+        <div class="row">
+          <button mat-raised-button (click)="addNewActivity()">
+            <span class="large-font-size very-bold">+</span><span class="align-middle very-bold"> Ajouter un sport</span>
+          </button>
+        </div>
       </div>
     </mat-grid-tile>
 
     <mat-grid-tile [colspan]="1" [rowspan]="1">
       <h2>PAIEMENT</h2>
+      <mat-icon>home</mat-icon>
     </mat-grid-tile>
 
     <mat-grid-tile [colspan]="3" [rowspan]="1">

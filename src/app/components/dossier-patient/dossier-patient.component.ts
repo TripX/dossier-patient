@@ -1,15 +1,20 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
+import {MatIconRegistry} from '@angular/material';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-dossier-patient',
   templateUrl: './dossier-patient.component.html',
-  styleUrls: ['./dossier-patient.component.scss']
+  styleUrls: ['./dossier-patient.component.scss'],
+  providers: [MatIconRegistry]
 })
-export class DossierPatientComponent implements OnInit {
+export class DossierPatientComponent {
 
-  constructor() { }
+  constructor(private domSanitizer: DomSanitizer,
+              public matIconRegistry: MatIconRegistry) {
 
-  ngOnInit() {
+    // Custom material icons
+    matIconRegistry.addSvgIconSetInNamespace('addCircleBlack"',
+      domSanitizer.bypassSecurityTrustResourceUrl('assets/svg-icons/add_circle_black.svg'));
   }
-
 }

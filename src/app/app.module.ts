@@ -9,7 +9,6 @@ import 'hammerjs';
 
 import {HttpClientModule, HttpClient} from '@angular/common/http';
 
-import {DomSanitizer} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CustomMaterialModule} from './module/angular-material';
 
@@ -25,9 +24,9 @@ import {WebviewDirective} from 'app/directives/webview.directive';
 
 import {AppComponent} from './app.component';
 import {DossierPatientComponent} from './components/dossier-patient/dossier-patient.component';
-import { FichePatientComponent } from './components/fiche-patient/fiche-patient.component';
-import { MonEvolutionComponent } from './components/mon-evolution/mon-evolution.component';
-import { MaBalanceEnergetiqueComponent } from './components/ma-balance-energetique/ma-balance-energetique.component';
+import {FichePatientComponent} from './components/fiche-patient/fiche-patient.component';
+import {MonEvolutionComponent} from './components/mon-evolution/mon-evolution.component';
+import {MaBalanceEnergetiqueComponent} from './components/ma-balance-energetique/ma-balance-energetique.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {

@@ -8,6 +8,7 @@ import {GROUP_PATIENT} from '../../models/group-patient';
 import {TITLE_PATIENT} from '../../models/title-patient';
 import {MARITAL_STATUS} from '../../models/marital-status';
 import {FAVORITE_CONTACT_TYPE} from '../../models/favorite-contact-type';
+import {IActivity} from '../../models/patient';
 
 @Component({
   selector: 'app-fiche-patient',
@@ -23,13 +24,26 @@ export class FichePatientComponent implements OnInit {
   titlePatient: string[] = TITLE_PATIENT;
   maritalStatus: string[] = MARITAL_STATUS;
   favoriteContactType: string[] = FAVORITE_CONTACT_TYPE;
-  age = '';
+  age: string;
+  activities: IActivity[];
+  indexSport: number;
 
-  startBirthDate = new Date(1990, 0, 1);
-  startToday = new Date();
+  startBirthDate: Date;
+  startToday: Date;
 
   constructor(private dateAdapter: DateAdapter<Date>) {
     this.dateAdapter.setLocale('fr');
+
+    this.age = '';
+    this.indexSport = 0;
+    this.activities = [{
+      index: this.indexSport,
+      title: '',
+      hoursPerWeek: null
+    }];
+
+    this.startBirthDate = new Date(1990, 0, 1);
+    this.startToday = new Date();
   }
 
   ngOnInit() {
@@ -60,6 +74,18 @@ export class FichePatientComponent implements OnInit {
     );
 
     console.log('tabForm', this.tabForm);
+  }
+
+  addNewActivity() {
+    this.activities.push({
+      index: ++this.indexSport,
+      title: '',
+      hoursPerWeek: null
+    });
+  }
+
+  removeActivity(activityToRemove: IActivity) {
+    this.activities = this.activities.filter(activity => activity !== activityToRemove);
   }
 
   calculateAge(birthDate): string {

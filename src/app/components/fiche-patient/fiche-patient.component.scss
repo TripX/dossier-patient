@@ -1,11 +1,7 @@
-.column {
-  display: flex;
-  flex-direction: column;
-  width: 90%;
+.sport-input {
+  min-width: 145px;
 }
 
-.row {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
+.sport-hour-input {
+  min-width: 124px;
 }

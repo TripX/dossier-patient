@@ -1,2 +1,25 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
+.column {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.large-font-size {
+  font-size: 2.3em;
+}
+
+.very-bold {
+  font-weight: 900;
+}
+
+.align-middle {
+  vertical-align: middle;
+}
