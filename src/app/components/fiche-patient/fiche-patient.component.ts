@@ -4,11 +4,13 @@ import {DateAdapter} from '@angular/material';
 
 import {FrenchDateAdapter} from '../../services/FrenchDateAdapter';
 
+import {IActivity} from '../../models/patient';
 import {GROUP_PATIENT} from '../../models/group-patient';
 import {TITLE_PATIENT} from '../../models/title-patient';
 import {MARITAL_STATUS} from '../../models/marital-status';
 import {FAVORITE_CONTACT_TYPE} from '../../models/favorite-contact-type';
-import {IActivity} from '../../models/patient';
+import {PAYMENT_METHOD} from '../../models/payment-method';
+import {TARIFICATION_TYPE} from '../../models/tarification-type';
 
 @Component({
   selector: 'app-fiche-patient',
@@ -24,6 +26,8 @@ export class FichePatientComponent implements OnInit {
   titlePatient: string[] = TITLE_PATIENT;
   maritalStatus: string[] = MARITAL_STATUS;
   favoriteContactType: string[] = FAVORITE_CONTACT_TYPE;
+  paymentMethod: string[] = PAYMENT_METHOD;
+  tarificationType: string[] = TARIFICATION_TYPE;
   age: string;
   activities: IActivity[];
   indexSport: number;
@@ -66,6 +70,9 @@ export class FichePatientComponent implements OnInit {
       healthNote: new FormControl(),
       activityTitle: new FormControl(),
       activityHoursPerWeek: new FormControl(),
+      consultationCost: new FormControl(),
+      consultationPaymentMethod: new FormControl(),
+      consultationTarificationType: new FormControl(),
     });
 
     this.tabForm.valueChanges.subscribe(value => {

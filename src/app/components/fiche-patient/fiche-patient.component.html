@@ -115,8 +115,22 @@
     </mat-grid-tile>
 
     <mat-grid-tile [colspan]="1" [rowspan]="1">
-      <h2>PAIEMENT</h2>
-      <mat-icon>home</mat-icon>
+      <div class="column">
+        <mat-form-field>
+          <input matInput type="number" placeholder="Montant consultation" formControlName="consultationCost">
+          <span matSuffix>€</span>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Mode de réglement" formControlName="consultationPaymentMethod">
+            <mat-option *ngFor="let method of paymentMethod" [value]="method">{{method}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Type tarification" formControlName="consultationTarificationType">
+            <mat-option *ngFor="let type of tarificationType" [value]="type">{{type}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
     </mat-grid-tile>
 
     <mat-grid-tile [colspan]="3" [rowspan]="1">

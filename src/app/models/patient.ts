@@ -21,8 +21,6 @@ export interface IPatient {
   freeNotes: string;
   activity: IActivity[];
   consultation: IConsultation[];
-  paymentMethod: string;
-  tarificationType: string;
   weight: IWeight[];
   height: IHeight[];
   skinfold: ISkinfold[];
@@ -38,6 +36,8 @@ export interface IActivity {
 export interface IConsultation {
   date: string;
   cost: number;
+  paymentMethod: string;
+  tarificationType: string;
 }
 
 export interface IWeight {
