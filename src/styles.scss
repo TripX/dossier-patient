@@ -36,7 +36,8 @@
 .column {
   display: flex;
   flex-direction: column;
-  width: 90%;
+  min-width: 300px;
+  margin: 5px;
 }
 
 .row {

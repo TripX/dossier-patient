@@ -34,7 +34,7 @@ export interface IActivity {
 }
 
 export interface IConsultation {
-  date: string;
+  date: Date;
   cost: number;
   paymentMethod: string;
   tarificationType: string;

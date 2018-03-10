@@ -115,22 +115,56 @@
     </mat-grid-tile>
 
     <mat-grid-tile [colspan]="1" [rowspan]="1">
-      <div class="column">
-        <mat-form-field>
-          <input matInput type="number" placeholder="Montant consultation" formControlName="consultationCost">
-          <span matSuffix>€</span>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-select placeholder="Mode de réglement" formControlName="consultationPaymentMethod">
-            <mat-option *ngFor="let method of paymentMethod" [value]="method">{{method}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-select placeholder="Type tarification" formControlName="consultationTarificationType">
-            <mat-option *ngFor="let type of tarificationType" [value]="type">{{type}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
+      <mat-tab-group>
+        <mat-tab label="Nouveau">
+          <div class="column">
+            <mat-form-field>
+              <input matInput type="number" placeholder="Montant consultation" formControlName="consultationCost">
+              <span matSuffix>€</span>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-select placeholder="Mode de réglement" formControlName="consultationPaymentMethod">
+                <mat-option *ngFor="let method of paymentMethod" [value]="method">{{method}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-select placeholder="Type de tarification" formControlName="consultationTarificationType">
+                <mat-option *ngFor="let type of tarificationType" [value]="type">{{type}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Historique">
+          <div class="column">
+            <mat-table #table [dataSource]="dataSource" matSort matSortActive="date" matSortDisableClear matSortDirection="asc">
+
+              <ng-container matColumnDef="date">
+                <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true"> Date </mat-header-cell>
+                <mat-cell *matCellDef="let consultation"> {{consultation.date | date:'shortDate'}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="cost">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Montant </mat-header-cell>
+                <mat-cell *matCellDef="let consultation"> {{consultation.cost}} €</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="paymentMethod">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Mode de réglement </mat-header-cell>
+                <mat-cell *matCellDef="let consultation"> {{consultation.paymentMethod}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="tarificationType">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Type de tarification </mat-header-cell>
+                <mat-cell *matCellDef="let consultation"> {{consultation.tarificationType}} </mat-cell>
+              </ng-container>
+
+              <mat-header-row *matHeaderRowDef="displayedColumnsConsultation"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumnsConsultation;"></mat-row>
+            </mat-table>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
     </mat-grid-tile>
 
     <mat-grid-tile [colspan]="3" [rowspan]="1">

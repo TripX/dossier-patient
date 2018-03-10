@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {DateAdapter} from '@angular/material';
+import {DateAdapter, MatSort, MatTableDataSource} from '@angular/material';
 
 import {FrenchDateAdapter} from '../../services/FrenchDateAdapter';
 
-import {IActivity} from '../../models/patient';
+import {IActivity, IConsultation} from '../../models/patient';
 import {GROUP_PATIENT} from '../../models/group-patient';
 import {TITLE_PATIENT} from '../../models/title-patient';
 import {MARITAL_STATUS} from '../../models/marital-status';
@@ -18,7 +18,7 @@ import {TARIFICATION_TYPE} from '../../models/tarification-type';
   styleUrls: ['./fiche-patient.component.scss'],
   providers: [{provide: DateAdapter, useClass: FrenchDateAdapter}],
 })
-export class FichePatientComponent implements OnInit {
+export class FichePatientComponent implements OnInit, AfterViewInit {
 
   tabForm: FormGroup;
 
@@ -28,9 +28,15 @@ export class FichePatientComponent implements OnInit {
   favoriteContactType: string[] = FAVORITE_CONTACT_TYPE;
   paymentMethod: string[] = PAYMENT_METHOD;
   tarificationType: string[] = TARIFICATION_TYPE;
+
   age: string;
   activities: IActivity[];
   indexSport: number;
+
+  consultations: IConsultation[];
+  displayedColumnsConsultation = ['date', 'cost', 'tarificationType'];
+  dataSource: MatTableDataSource<IConsultation>;
+  @ViewChild(MatSort) sort: MatSort;
 
   startBirthDate: Date;
   startToday: Date;
@@ -50,7 +56,29 @@ export class FichePatientComponent implements OnInit {
     this.startToday = new Date();
   }
 
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+  }
+
   ngOnInit() {
+
+    // TODO get list of past consultations
+    this.consultations = [
+      {
+        date: this.startToday,
+        cost: 35,
+        paymentMethod: 'Espèce',
+        tarificationType: 'Type 1'
+      },
+      {
+        date: this.startToday,
+        cost: 50,
+        paymentMethod: 'Chéque',
+        tarificationType: 'Type 2'
+      }
+    ];
+    this.dataSource = new MatTableDataSource(this.consultations);
+
     this.tabForm = new FormGroup({
       group: new FormControl(),
       title: new FormControl(),
