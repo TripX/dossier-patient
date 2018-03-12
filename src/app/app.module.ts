@@ -9,7 +9,8 @@ import 'hammerjs';
 
 import {HttpClientModule, HttpClient} from '@angular/common/http';
 
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+// import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CustomMaterialModule} from './module/angular-material';
 
 import {AppRoutingModule} from './app-routing.module';
@@ -19,6 +20,7 @@ import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 import {ElectronService} from './providers/electron.service';
+import {SaveDataService} from './services/save-data.service';
 
 import {WebviewDirective} from './directives/webview.directive';
 
@@ -55,10 +57,14 @@ export function HttpLoaderFactory(http: HttpClient) {
       }
     }),
     ReactiveFormsModule,
-    BrowserAnimationsModule,
+    // BrowserAnimationsModule,
+    NoopAnimationsModule,
     CustomMaterialModule
   ],
-  providers: [ElectronService],
+  providers: [
+    ElectronService,
+    SaveDataService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

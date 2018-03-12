@@ -1,5 +1,5 @@
 <form [formGroup]="tabForm">
-  <mat-grid-list cols="4" rowHeight="400px">
+  <mat-grid-list cols="4">
 
     <mat-grid-tile [colspan]="1" [rowspan]="2">
       <div class="column">
@@ -167,8 +167,13 @@
       </mat-tab-group>
     </mat-grid-tile>
 
-    <mat-grid-tile [colspan]="3" [rowspan]="1">
-      <h2>NOTES</h2>
+    <mat-grid-tile [colspan]="3" [rowspan]="1" class="notes-start">
+      <div class="column notes">
+      <mat-form-field>
+        <textarea matInput placeholder="Notes" matTextareaAutosize matAutosizeMinRows="20"
+                  formControlName="freeNotes"></textarea>
+      </mat-form-field>
+      </div>
     </mat-grid-tile>
   </mat-grid-list>
 </form>

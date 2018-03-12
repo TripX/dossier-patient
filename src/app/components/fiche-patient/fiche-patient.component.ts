@@ -101,6 +101,7 @@ export class FichePatientComponent implements OnInit, AfterViewInit {
       consultationCost: new FormControl(),
       consultationPaymentMethod: new FormControl(),
       consultationTarificationType: new FormControl(),
+      freeNotes: new FormControl()
     });
 
     this.tabForm.valueChanges.subscribe(value => {
