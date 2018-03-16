@@ -1,12 +1,14 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {DateAdapter, MatSort, MatTableDataSource} from '@angular/material';
 
 import {FrenchDateAdapter} from '../../services/FrenchDateAdapter';
+import {SaveDataService} from '../../services/save-data.service';
 
 import {IActivity, IConsultation} from '../../models/patient';
 import {GROUP_PATIENT} from '../../models/group-patient';
 import {TITLE_PATIENT} from '../../models/title-patient';
+import {SEX_PATIENT} from '../../models/sex-patient';
 import {MARITAL_STATUS} from '../../models/marital-status';
 import {FAVORITE_CONTACT_TYPE} from '../../models/favorite-contact-type';
 import {PAYMENT_METHOD} from '../../models/payment-method';
@@ -20,10 +22,14 @@ import {TARIFICATION_TYPE} from '../../models/tarification-type';
 })
 export class FichePatientComponent implements OnInit, AfterViewInit {
 
+  @Input() idPatient: number = null;
+  patient = null;
+
   tabForm: FormGroup;
 
   groupPatient: string[] = GROUP_PATIENT;
   titlePatient: string[] = TITLE_PATIENT;
+  sexPatient: string[] = SEX_PATIENT;
   maritalStatus: string[] = MARITAL_STATUS;
   favoriteContactType: string[] = FAVORITE_CONTACT_TYPE;
   paymentMethod: string[] = PAYMENT_METHOD;
@@ -41,7 +47,8 @@ export class FichePatientComponent implements OnInit, AfterViewInit {
   startBirthDate: Date;
   startToday: Date;
 
-  constructor(private dateAdapter: DateAdapter<Date>) {
+  constructor(private dateAdapter: DateAdapter<Date>,
+              private saveDataService: SaveDataService) {
     this.dateAdapter.setLocale('fr');
 
     this.age = '';
@@ -61,6 +68,10 @@ export class FichePatientComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+
+    // TODO if id.patient est vide alors c'est un nouveau patient
+    // TODO afficher à l'écran que c'est un nouveau patient
+    // TODO bouton valider
 
     // TODO get list of past consultations
     this.consultations = [
@@ -82,9 +93,10 @@ export class FichePatientComponent implements OnInit, AfterViewInit {
     this.tabForm = new FormGroup({
       group: new FormControl(),
       title: new FormControl(),
-      firstName: new FormControl(),
-      lastName: new FormControl(),
-      birthDate: new FormControl(),
+      firstname: new FormControl(),
+      name: new FormControl(),
+      sex: new FormControl(),
+      birthdate: new FormControl(),
       profession: new FormControl(),
       maritalStatus: new FormControl(),
       landline: new FormControl(),
@@ -105,11 +117,26 @@ export class FichePatientComponent implements OnInit, AfterViewInit {
     });
 
     this.tabForm.valueChanges.subscribe(value => {
-        this.age = this.calculateAge(value.birthDate);
+        this.age = this.calculateAge(value.birthdate);
       }
     );
 
     console.log('tabForm', this.tabForm);
+
+    if (this.patient) {
+      /*this.saveDataService.getPatient(this.idPatient).subscribe(
+          data => {
+            console.log('data', data);
+            if (data) {
+              this.patients = data;
+            }
+          },
+          error => {
+            console.log('handleError', error.statusText);
+          }
+        );*/
+    }
+
   }
 
   addNewActivity() {
@@ -124,9 +151,9 @@ export class FichePatientComponent implements OnInit, AfterViewInit {
     this.activities = this.activities.filter(activity => activity !== activityToRemove);
   }
 
-  calculateAge(birthDate): string {
-    if (birthDate) {
-      const ageDifMs = Date.now() - birthDate.getTime();
+  calculateAge(birthdate): string {
+    if (birthdate) {
+      const ageDifMs = Date.now() - birthdate.getTime();
       const ageDate = new Date(ageDifMs);
       return Math.abs(ageDate.getUTCFullYear() - 1970).toString();
     }

@@ -21,6 +21,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 import {ElectronService} from './providers/electron.service';
 import {SaveDataService} from './services/save-data.service';
+import {PatientsService} from './services/patient-service';
 
 import {WebviewDirective} from './directives/webview.directive';
 
@@ -29,6 +30,9 @@ import {DossierPatientComponent} from './components/dossier-patient/dossier-pati
 import {FichePatientComponent} from './components/fiche-patient/fiche-patient.component';
 import {MonEvolutionComponent} from './components/mon-evolution/mon-evolution.component';
 import {MaBalanceEnergetiqueComponent} from './components/ma-balance-energetique/ma-balance-energetique.component';
+import {RecherchePatientComponent} from './components/recherche-patient/recherche-patient.component';
+import {MonEnqueteAlimentaireComponent} from './components/mon-enquete-alimentaire/mon-enquete-alimentaire.component';
+import { BeautifyArrayPipe } from './pipes/beautify-array.pipe';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -42,7 +46,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     DossierPatientComponent,
     FichePatientComponent,
     MonEvolutionComponent,
-    MaBalanceEnergetiqueComponent
+    MaBalanceEnergetiqueComponent,
+    RecherchePatientComponent,
+    MonEnqueteAlimentaireComponent,
+    BeautifyArrayPipe
   ],
   imports: [
     BrowserModule,
@@ -63,7 +70,8 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   providers: [
     ElectronService,
-    SaveDataService
+    SaveDataService,
+    PatientsService
   ],
   bootstrap: [AppComponent]
 })

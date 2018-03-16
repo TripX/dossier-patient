@@ -1,10 +1,10 @@
 <form [formGroup]="tabForm">
-  <mat-grid-list cols="4">
+  <mat-grid-list cols="4" rowHeight="1:1" cellHeight="auto">
 
     <mat-grid-tile [colspan]="1" [rowspan]="2">
       <div class="column">
         <mat-form-field>
-          <mat-select placeholder="Groupe Patient" formControlName="group">
+          <mat-select placeholder="Groupe Patient" formControlName="group" multiple>
             <mat-option *ngFor="let group of groupPatient" [value]="group">{{group}}</mat-option>
           </mat-select>
         </mat-form-field>
@@ -16,17 +16,23 @@
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput placeholder="Nom" formControlName="lastName">
+          <input matInput placeholder="Nom" formControlName="name">
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput placeholder="Prénom" formControlName="firstName">
+          <input matInput placeholder="Prénom" formControlName="firstname">
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput [matDatepicker]="birthDatePicker" placeholder="Anniversaire" formControlName="birthDate">
-          <mat-datepicker-toggle matSuffix [for]="birthDatePicker"></mat-datepicker-toggle>
-          <mat-datepicker #birthDatePicker startView="year" [startAt]="startBirthDate"></mat-datepicker>
+          <mat-select placeholder="Sexe" formControlName="sex">
+            <mat-option *ngFor="let sex of sexPatient" [value]="sex">{{sex}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput [matDatepicker]="birthdatePicker" placeholder="Anniversaire" formControlName="birthdate">
+          <mat-datepicker-toggle matSuffix [for]="birthdatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #birthdatePicker startView="year" [startAt]="startBirthDate"></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field>
@@ -44,6 +50,16 @@
         </mat-form-field>
 
         <mat-form-field>
+          <input matInput [matDatepicker]="creationPicker" placeholder="Créée le" formControlName="creationDate">
+          <mat-datepicker-toggle matSuffix [for]="creationPicker"></mat-datepicker-toggle>
+          <mat-datepicker #creationPicker startView="year" [startAt]="startToday"></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </mat-grid-tile>
+
+    <mat-grid-tile [colspan]="1" [rowspan]="1">
+      <div class="column">
+        <mat-form-field>
           <input type="tel" matInput placeholder="Téléphone fixe" formControlName="landline">
         </mat-form-field>
 
@@ -56,12 +72,6 @@
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput [matDatepicker]="creationPicker" placeholder="Créée le" formControlName="creationDate">
-          <mat-datepicker-toggle matSuffix [for]="creationPicker"></mat-datepicker-toggle>
-          <mat-datepicker #creationPicker startView="year" [startAt]="startToday"></mat-datepicker>
-        </mat-form-field>
-
-        <mat-form-field>
           <mat-select placeholder="Moyen de contact préféré" formControlName="favoriteContactType">
             <mat-option *ngFor="let type of favoriteContactType" [value]="type">{{type}}</mat-option>
           </mat-select>
@@ -69,16 +79,15 @@
       </div>
     </mat-grid-tile>
 
-    <!-- SANTE -->
-    <mat-grid-tile [colspan]="1" [rowspan]="1" class="green">
+    <mat-grid-tile [colspan]="1" [rowspan]="1">
       <div class="column">
         <mat-form-field>
-          <textarea matInput placeholder="Maladie métabolique" matTextareaAutosize matAutosizeMinRows="2"
+          <textarea matInput placeholder="Maladie métabolique" matTextareaAutosize matAutosizeMinRows="1"
                     matAutosizeMaxRows="5" formControlName="metabolism"></textarea>
         </mat-form-field>
 
         <mat-form-field>
-          <textarea matInput placeholder="Antécédent" matTextareaAutosize matAutosizeMinRows="2"
+          <textarea matInput placeholder="Antécédent" matTextareaAutosize matAutosizeMinRows="1"
                     matAutosizeMaxRows="5" formControlName="healthHistory"></textarea>
         </mat-form-field>
 
@@ -87,30 +96,9 @@
         </mat-form-field>
 
         <mat-form-field>
-          <textarea matInput placeholder="Autres" matTextareaAutosize matAutosizeMinRows="2"
+          <textarea matInput placeholder="Autres" matTextareaAutosize matAutosizeMinRows="1"
                     matAutosizeMaxRows="5" formControlName="healthNote"></textarea>
         </mat-form-field>
-      </div>
-    </mat-grid-tile>
-
-    <mat-grid-tile [colspan]="1" [rowspan]="1">
-      <div class="column">
-        <div class="row" *ngFor="let activity of activities">
-          <mat-form-field class="sport-input">
-            <input matInput placeholder="Sport" [value]="activity.title" formControlName="activityTitle">
-          </mat-form-field>
-          <mat-form-field class="sport-hour-input">
-            <input matInput placeholder="Heure par semaine" [value]="activity.hoursPerWeek" formControlName="activityHoursPerWeek" class="break-word">
-          </mat-form-field>
-          <button mat-icon-button (click)="removeActivity(activity)">
-            <mat-icon class="large-font-size very-bold align-middle">-</mat-icon>
-          </button>
-        </div>
-        <div class="row">
-          <button mat-raised-button (click)="addNewActivity()">
-            <span class="large-font-size very-bold">+</span><span class="align-middle very-bold"> Ajouter un sport</span>
-          </button>
-        </div>
       </div>
     </mat-grid-tile>
 
@@ -167,10 +155,32 @@
       </mat-tab-group>
     </mat-grid-tile>
 
-    <mat-grid-tile [colspan]="3" [rowspan]="1" class="notes-start">
+    <mat-grid-tile [colspan]="1" [rowspan]="1">
+
+      <div class="column">
+        <div class="row" *ngFor="let activity of activities">
+          <mat-form-field class="sport-input">
+            <input matInput placeholder="Sport" [value]="activity.title" formControlName="activityTitle">
+          </mat-form-field>
+          <mat-form-field class="sport-hour-input">
+            <input matInput placeholder="Heure par semaine" [value]="activity.hoursPerWeek" formControlName="activityHoursPerWeek" class="break-word">
+          </mat-form-field>
+          <button mat-icon-button (click)="removeActivity(activity)">
+            <mat-icon class="large-font-size very-bold align-middle">-</mat-icon>
+          </button>
+        </div>
+        <div class="row">
+          <button mat-raised-button (click)="addNewActivity()">
+            <span class="large-font-size very-bold">+</span><span class="align-middle very-bold"> Ajouter un sport</span>
+          </button>
+        </div>
+      </div>
+    </mat-grid-tile>
+
+    <mat-grid-tile [colspan]="2" [rowspan]="1" class="notes-start">
       <div class="column notes">
       <mat-form-field>
-        <textarea matInput placeholder="Notes" matTextareaAutosize matAutosizeMinRows="20"
+        <textarea matInput placeholder="Notes" matTextareaAutosize matAutosizeMinRows="15"
                   formControlName="freeNotes"></textarea>
       </mat-form-field>
       </div>

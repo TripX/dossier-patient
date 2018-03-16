@@ -1,0 +1,56 @@
+<div class="loading-shade" *ngIf="isLoadingResults">
+  <mat-spinner></mat-spinner>
+</div>
+
+<mat-form-field>
+  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Rechercher un patient">
+</mat-form-field>
+
+<button mat-raised-button type="submit" class="left-space">
+  <mat-icon>add</mat-icon><span class="align-middle very-bold"> Ajouter un nouveau patient</span>
+</button>
+
+<div class="column">
+  <mat-table [dataSource]="dataSource" matSort matSortActive="groupPatient" matSortDisableClear matSortDirection="asc">
+
+    <ng-container matColumnDef="groupPatient">
+      <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true"> Groupe </mat-header-cell>
+      <mat-cell *matCellDef="let patient"> {{patient.groupPatient | beautifyArray}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Nom </mat-header-cell>
+      <mat-cell *matCellDef="let patient"> {{patient.name}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="firstname">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Prénom </mat-header-cell>
+      <mat-cell *matCellDef="let patient"> {{patient.firstname}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="birthdate">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Date de naissance </mat-header-cell>
+      <mat-cell *matCellDef="let patient"> {{patient.birthdate | date:'shortDate'}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="profession">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Profession </mat-header-cell>
+      <mat-cell *matCellDef="let patient"> {{patient.profession}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Mail </mat-header-cell>
+      <mat-cell *matCellDef="let patient"> {{patient.email}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="mobile">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Téléphone mobile </mat-header-cell>
+      <mat-cell *matCellDef="let patient"> {{patient.mobile}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumnsSearch"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumnsSearch;" (click)="goToFichePatient(row)"></mat-row>
+  </mat-table>
+
+  <mat-paginator [length]="resultsLength" [pageSize]="30"></mat-paginator>
+</div>

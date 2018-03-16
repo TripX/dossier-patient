@@ -18,9 +18,9 @@ export interface IPatient {
   healthHistory: string;
   regularDoctor: string;
   healthNote: string;
+  freeNotes: string;
   activity: IActivity[];
   consultation: IConsultation[];
-  freeNotes: string;
   weight: IWeight[];
   height: IHeight[];
   skinfold: ISkinfold[];
