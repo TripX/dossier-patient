@@ -33,11 +33,14 @@
   font-feature-settings: 'liga';
 }
 
-.column {
-  display: flex;
-  flex-direction: column;
-  min-width: 300px;
-  margin: 5px;
+figure.mat-figure {
+  align-items: flex-start!important;
+  justify-content: flex-start!important;
+  .column {
+    display: flex;
+    flex-direction: column;
+    min-width: 250px;
+  }
 }
 
 .row {

@@ -52,5 +52,7 @@
     <mat-row *matRowDef="let row; columns: displayedColumnsSearch;" (click)="goToFichePatient(row)"></mat-row>
   </mat-table>
 
+  <div *ngIf="error" class="mat-error">{{error}}</div>
+
   <mat-paginator [length]="resultsLength" [pageSize]="30"></mat-paginator>
 </div>

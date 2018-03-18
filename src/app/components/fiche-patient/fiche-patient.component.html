@@ -156,18 +156,17 @@
     </mat-grid-tile>
 
     <mat-grid-tile [colspan]="1" [rowspan]="1">
-
       <div class="column">
         <div class="row" *ngFor="let activity of activities">
+          <button class="sport-retrait" mat-button color="warn" (click)="removeActivity(activity)">
+            <mat-icon>delete</mat-icon>
+          </button>
           <mat-form-field class="sport-input">
             <input matInput placeholder="Sport" [value]="activity.title" formControlName="activityTitle">
           </mat-form-field>
           <mat-form-field class="sport-hour-input">
-            <input matInput placeholder="Heure par semaine" [value]="activity.hoursPerWeek" formControlName="activityHoursPerWeek" class="break-word">
+            <input matInput placeholder="H / Sem." [value]="activity.hoursPerWeek" formControlName="activityHoursPerWeek" class="break-word">
           </mat-form-field>
-          <button mat-icon-button (click)="removeActivity(activity)">
-            <mat-icon class="large-font-size very-bold align-middle">-</mat-icon>
-          </button>
         </div>
         <div class="row">
           <button mat-raised-button (click)="addNewActivity()">

@@ -1,15 +1,20 @@
+// SPORT
+.sport-retrait {
+  margin-left: -10px;
+  min-width: 45px!important;
+}
 .sport-input {
-  min-width: 145px;
+  min-width: 175px;
 }
-
 .sport-hour-input {
-  min-width: 124px;
+  min-width: 50px;
+  padding-right: 40px;
 }
 
+// NOTES
 .notes-start > ::ng-deep figure.mat-figure {
   justify-content: flex-start !important;
 }
-
 .notes {
   width: 100%!important;
 }
@@ -19,12 +24,10 @@
   padding: auto!important;
   margin: auto!important;
 }
-
 .mat-table {
   overflow: auto;
   max-height: 500px;
 }
-
 .mat-header-cell.mat-sort-header-sorted {
   color: red;
 }
