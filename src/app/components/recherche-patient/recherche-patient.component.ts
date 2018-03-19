@@ -48,7 +48,7 @@ export class RecherchePatientComponent implements OnInit {
       length = Math.max(length, 0);
       const startIndex = page * pageSize;
       const endIndex = startIndex < length ? Math.min(startIndex + pageSize, length) : startIndex + pageSize;
-      return `${startIndex + 1} - ${endIndex} ${rangeLabel} ${length}`;
+      return `${startIndex + 1} à ${endIndex} ${rangeLabel} ${length}`;
     };
 
     // If the user changes the sort order, reset back to the first page.
