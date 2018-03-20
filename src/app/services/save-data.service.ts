@@ -10,16 +10,6 @@ import {IPatient} from '../models/patient';
 
 @Injectable()
 export class SaveDataService {
-  get currentPatient(): IPatient {
-    return this._currentPatient;
-  }
-
-  set currentPatient(value: IPatient) {
-    this._currentPatient = value;
-  }
-
-  private _currentPatient: IPatient = null;
-
   patientSubject = new Subject();
   searchResultSubject = new Subject();
 

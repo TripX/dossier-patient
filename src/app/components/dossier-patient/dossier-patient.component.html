@@ -1,14 +1,14 @@
 <mat-card>
   <mat-card-content>
-    <mat-tab-group>
-      <mat-tab label="Rechercher patient">
+    <mat-tab-group [selectedIndex]="selectedIndex" (selectedIndexChange)="onSelectedIndex($event)">
+      <mat-tab label="Rechercher un patient">
         <div class="tab-content">
-          <app-recherche-patient></app-recherche-patient>
+          <app-recherche-patient (onSelectedIndex)="onSelectedIndex($event)" (onSearchPatient)="onSearchPatient($event)"></app-recherche-patient>
         </div>
       </mat-tab>
-      <mat-tab label="Fiche patient">
+      <mat-tab label="Ma fiche patient">
         <div class="tab-content">
-          <app-fiche-patient></app-fiche-patient>
+          <app-fiche-patient [patient]="searchedPatient"></app-fiche-patient>
         </div>
       </mat-tab>
       <mat-tab label="Mon évolution">

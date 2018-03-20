@@ -1,12 +1,81 @@
+export const NEW_PATIENT: IPatient = this.patient = {
+  'id': null,
+  'creationDate': new Date(),
+  'lastUpdate': new Date(),
+  'title': '',
+  'name': '',
+  'firstname': '',
+  'sex': '',
+  'birthdate': null,
+  'email': '',
+  'mobile': '',
+  'landline': '',
+  'favoriteContactType': '',
+  'profession': '',
+  'maritalStatus': '',
+  'groupPatient': [],
+  'metabolism': '',
+  'healthHistory': '',
+  'regularDoctor': '',
+  'healthNote': '',
+  'freeNotes': '',
+  'activity': [
+    {
+      'index': null,
+      'title': '',
+      'hoursPerWeek' : null
+    }
+  ],
+  'consultation': [
+    {
+      'date': null,
+      'cost': null,
+      'paymentMethod': '',
+      'tarificationType': ''
+    }
+  ],
+  'weight': [
+    {
+      'date': null,
+      'kg': null
+    }
+  ],
+  'height':  [
+    {
+      'date': null,
+      'cm': null
+    }
+  ],
+  'skinfold': [
+    {
+      'date': null,
+      'bicipital': null,
+      'tricipital': null,
+      'subscapulaire': null,
+      'suprailiaque': null
+    }
+  ],
+  'size': [
+    {
+      'date': null,
+      'waist': null,
+      'hip': null,
+      'pectoral': null,
+      'arm': null,
+      'thigh': null
+    }
+  ]
+};
+
 export interface IPatient {
   id: number;
-  creationDate: string;
-  lastUpdate: string;
+  creationDate: Date;
+  lastUpdate: Date;
   title: string;
   name: string;
   firstname: string;
   sex: string;
-  birthdate: string;
+  birthdate: Date;
   email: string;
   mobile: string;
   landline: string;
@@ -41,17 +110,17 @@ export interface IConsultation {
 }
 
 export interface IWeight {
-  date: string;
+  date: Date;
   kg: number;
 }
 
 export interface IHeight {
-  date: string;
+  date: Date;
   cm: number;
 }
 
 export interface ISkinfold {
-  date: string;
+  date: Date;
   bicipital: number;
   tricipital: number;
   subscapulaire: number;
@@ -59,7 +128,7 @@ export interface ISkinfold {
 }
 
 export interface ISize {
-  date: string;
+  date: Date;
   waist: number;
   hip: number;
   pectoral: number;

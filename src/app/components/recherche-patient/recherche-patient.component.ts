@@ -1,5 +1,5 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatPaginator, MatPaginatorIntl, MatSort, MatTableDataSource} from '@angular/material';
+import {AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {DateAdapter, MatPaginator, MatPaginatorIntl, MatSort, MatTableDataSource} from '@angular/material';
 import {merge} from 'rxjs/observable/merge';
 import {of as observableOf} from 'rxjs/observable/of';
 import {catchError} from 'rxjs/operators/catchError';
@@ -7,17 +7,17 @@ import {map} from 'rxjs/operators/map';
 import {startWith} from 'rxjs/operators/startWith';
 import {switchMap} from 'rxjs/operators/switchMap';
 
-import {IPatient} from '../../models/patient';
-import {SaveDataService} from '../../services/save-data.service';
+import {IPatient, NEW_PATIENT} from '../../models/patient';
 import {PatientsService} from '../../services/patient-service';
+import {FrenchDateAdapter} from '../../services/FrenchDateAdapter';
 
 @Component({
   selector: 'app-recherche-patient',
   templateUrl: './recherche-patient.component.html',
   styleUrls: ['./recherche-patient.component.scss'],
-  providers: [MatPaginatorIntl]
+  providers: [{provide: DateAdapter, useClass: FrenchDateAdapter}, MatPaginatorIntl]
 })
-export class RecherchePatientComponent implements OnInit {
+export class RecherchePatientComponent implements OnInit, AfterViewInit {
 
   displayedColumnsSearch = ['groupPatient', 'name', 'firstname', 'birthdate', 'profession', 'email', 'mobile'];
   dataSource: MatTableDataSource<IPatient> = new MatTableDataSource();
@@ -25,12 +25,17 @@ export class RecherchePatientComponent implements OnInit {
   isLoadingResults = true;
   error = '';
 
+  @Output() onSelectedIndex = new EventEmitter<number>();
+  @Output() onSearchPatient = new EventEmitter<IPatient>();
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private saveDataService: SaveDataService,
-              private patientsService: PatientsService,
-              private matPaginatorIntl: MatPaginatorIntl) { }
+  constructor(private patientsService: PatientsService,
+              private matPaginatorIntl: MatPaginatorIntl,
+              private dateAdapter: DateAdapter<Date>) {
+    this.dateAdapter.setLocale('fr');
+  }
 
   ngOnInit() {
     // Label paginator
@@ -77,15 +82,23 @@ export class RecherchePatientComponent implements OnInit {
       ).subscribe(data => this.dataSource.data = data);
   }
 
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+  }
+
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
   }
 
-  goToFichePatient(patient) {
-    console.log('patient', patient);
-    this.saveDataService.currentPatient = patient;
-    // TODO Redirection vers fiche patient
+  goToFichePatient(patient: IPatient) {
+    if (patient) {
+      this.onSearchPatient.emit(patient);
+    } else {
+      this.onSearchPatient.emit(NEW_PATIENT);
+    }
+    this.onSelectedIndex.emit(1); // Redirection vers fiche patient
   }
+
 }

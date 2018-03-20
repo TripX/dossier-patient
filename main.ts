@@ -80,7 +80,6 @@ const port = 4201;
 app.listen(port, () => {
   console.log(`listening on port ${port}`);
 });
-
 // SERVER SIDE END
 
 function createWindow() {

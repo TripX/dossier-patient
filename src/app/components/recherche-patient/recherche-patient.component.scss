@@ -15,3 +15,8 @@
   align-items: center;
   justify-content: center;
 }
+
+mat-row:hover {
+  cursor: pointer;
+  background-color: lightblue;
+}

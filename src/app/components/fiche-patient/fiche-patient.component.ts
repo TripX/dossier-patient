@@ -1,11 +1,10 @@
-import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChange, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {DateAdapter, MatSort, MatTableDataSource} from '@angular/material';
 
 import {FrenchDateAdapter} from '../../services/FrenchDateAdapter';
-import {SaveDataService} from '../../services/save-data.service';
 
-import {IActivity, IConsultation} from '../../models/patient';
+import {IActivity, IConsultation, IPatient, NEW_PATIENT} from '../../models/patient';
 import {GROUP_PATIENT} from '../../models/group-patient';
 import {TITLE_PATIENT} from '../../models/title-patient';
 import {SEX_PATIENT} from '../../models/sex-patient';
@@ -20,12 +19,7 @@ import {TARIFICATION_TYPE} from '../../models/tarification-type';
   styleUrls: ['./fiche-patient.component.scss'],
   providers: [{provide: DateAdapter, useClass: FrenchDateAdapter}],
 })
-export class FichePatientComponent implements OnInit, AfterViewInit {
-
-  @Input() idPatient: number = null;
-  patient = null;
-
-  tabForm: FormGroup;
+export class FichePatientComponent implements OnInit, AfterViewInit, OnChanges {
 
   groupPatient: string[] = GROUP_PATIENT;
   titlePatient: string[] = TITLE_PATIENT;
@@ -35,22 +29,19 @@ export class FichePatientComponent implements OnInit, AfterViewInit {
   paymentMethod: string[] = PAYMENT_METHOD;
   tarificationType: string[] = TARIFICATION_TYPE;
 
+  @Input() patient: IPatient;
+  tabForm: FormGroup;
+  startToday: Date;
+  startBirthDate: Date;
   age: string;
   activities: IActivity[];
   indexSport: number;
-
-  consultations: IConsultation[];
   displayedColumnsConsultation = ['date', 'cost', 'tarificationType'];
   dataSource: MatTableDataSource<IConsultation>;
   @ViewChild(MatSort) sort: MatSort;
 
-  startBirthDate: Date;
-  startToday: Date;
-
-  constructor(private dateAdapter: DateAdapter<Date>,
-              private saveDataService: SaveDataService) {
+  constructor(private dateAdapter: DateAdapter<Date>) {
     this.dateAdapter.setLocale('fr');
-
     this.age = '';
     this.indexSport = 0;
     this.activities = [{
@@ -67,28 +58,17 @@ export class FichePatientComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
+  ngOnChanges(changes: {[propertyName: string]: SimpleChange}) {
+    if (this.patient && this.patient.consultation) {
+      this.dataSource.data = this.patient.consultation;
+    }
+  }
+
   ngOnInit() {
 
-    // TODO if id.patient est vide alors c'est un nouveau patient
-    // TODO afficher à l'écran que c'est un nouveau patient
-    // TODO bouton valider
+    this.patient = NEW_PATIENT;
 
-    // TODO get list of past consultations
-    this.consultations = [
-      {
-        date: this.startToday,
-        cost: 35,
-        paymentMethod: 'Espèce',
-        tarificationType: 'Type 1'
-      },
-      {
-        date: this.startToday,
-        cost: 50,
-        paymentMethod: 'Chéque',
-        tarificationType: 'Type 2'
-      }
-    ];
-    this.dataSource = new MatTableDataSource(this.consultations);
+    this.dataSource = new MatTableDataSource(this.patient.consultation);
 
     this.tabForm = new FormGroup({
       group: new FormControl(),
@@ -123,20 +103,6 @@ export class FichePatientComponent implements OnInit, AfterViewInit {
 
     console.log('tabForm', this.tabForm);
 
-    if (this.patient) {
-      /*this.saveDataService.getPatient(this.idPatient).subscribe(
-          data => {
-            console.log('data', data);
-            if (data) {
-              this.patients = data;
-            }
-          },
-          error => {
-            console.log('handleError', error.statusText);
-          }
-        );*/
-    }
-
   }
 
   addNewActivity() {
@@ -151,13 +117,17 @@ export class FichePatientComponent implements OnInit, AfterViewInit {
     this.activities = this.activities.filter(activity => activity !== activityToRemove);
   }
 
-  calculateAge(birthdate): string {
+  calculateAge(birthdate: Date): string {
     if (birthdate) {
-      const ageDifMs = Date.now() - birthdate.getTime();
+      const ageDifMs = Date.now() - new Date(birthdate).getTime();
       const ageDate = new Date(ageDifMs);
       return Math.abs(ageDate.getUTCFullYear() - 1970).toString();
     }
     return null;
+  }
+
+  savePatient() {
+    console.log('save');
   }
 
 }

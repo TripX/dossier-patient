@@ -1,56 +1,57 @@
 <form [formGroup]="tabForm">
   <mat-grid-list cols="4" rowHeight="1:1" cellHeight="auto">
 
+    <h3 *ngIf="!patient.id">Nouveau Patient</h3>
     <mat-grid-tile [colspan]="1" [rowspan]="2">
       <div class="column">
         <mat-form-field>
-          <mat-select placeholder="Groupe Patient" formControlName="group" multiple>
+          <mat-select placeholder="Groupe Patient" formControlName="group" multiple [(ngModel)]="patient.groupPatient">
             <mat-option *ngFor="let group of groupPatient" [value]="group">{{group}}</mat-option>
           </mat-select>
         </mat-form-field>
 
         <mat-form-field>
-          <mat-select placeholder="Civilité" formControlName="title">
+          <mat-select placeholder="Civilité" formControlName="title" [(ngModel)]="patient.title">
             <mat-option *ngFor="let title of titlePatient" [value]="title">{{title}}</mat-option>
           </mat-select>
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput placeholder="Nom" formControlName="name">
+          <input matInput placeholder="Nom" formControlName="name" [(ngModel)]="patient.name">
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput placeholder="Prénom" formControlName="firstname">
+          <input matInput placeholder="Prénom" formControlName="firstname" [(ngModel)]="patient.firstname">
         </mat-form-field>
 
         <mat-form-field>
-          <mat-select placeholder="Sexe" formControlName="sex">
+          <mat-select placeholder="Sexe" formControlName="sex" [(ngModel)]="patient.sex">
             <mat-option *ngFor="let sex of sexPatient" [value]="sex">{{sex}}</mat-option>
           </mat-select>
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput [matDatepicker]="birthdatePicker" placeholder="Anniversaire" formControlName="birthdate">
+          <input matInput [matDatepicker]="birthdatePicker" placeholder="Anniversaire" formControlName="birthdate" [(ngModel)]="patient.birthdate">
           <mat-datepicker-toggle matSuffix [for]="birthdatePicker"></mat-datepicker-toggle>
           <mat-datepicker #birthdatePicker startView="year" [startAt]="startBirthDate"></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput placeholder="Age" [value]="age" disabled>
+          <input matInput placeholder="Age" [value]="age" [disabled]="!age">
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput placeholder="Profession" formControlName="profession">
+          <input matInput placeholder="Profession" formControlName="profession" [(ngModel)]="patient.profession">
         </mat-form-field>
 
         <mat-form-field>
-          <mat-select placeholder="Situation familiale" formControlName="maritalStatus">
+          <mat-select placeholder="Situation familiale" formControlName="maritalStatus" [(ngModel)]="patient.maritalStatus">
             <mat-option *ngFor="let status of maritalStatus" [value]="status">{{status}}</mat-option>
           </mat-select>
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput [matDatepicker]="creationPicker" placeholder="Créée le" formControlName="creationDate">
+          <input matInput [matDatepicker]="creationPicker" placeholder="Créée le" formControlName="creationDate" [(ngModel)]="patient.creationDate">
           <mat-datepicker-toggle matSuffix [for]="creationPicker"></mat-datepicker-toggle>
           <mat-datepicker #creationPicker startView="year" [startAt]="startToday"></mat-datepicker>
         </mat-form-field>
@@ -60,19 +61,19 @@
     <mat-grid-tile [colspan]="1" [rowspan]="1">
       <div class="column">
         <mat-form-field>
-          <input type="tel" matInput placeholder="Téléphone fixe" formControlName="landline">
+          <input type="tel" matInput placeholder="Téléphone fixe" formControlName="landline" [(ngModel)]="patient.landline">
         </mat-form-field>
 
         <mat-form-field>
-          <input type="tel" matInput placeholder="Téléphone portable" formControlName="mobile">
+          <input type="tel" matInput placeholder="Téléphone portable" formControlName="mobile" [(ngModel)]="patient.mobile">
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput placeholder="Email" formControlName="email">
+          <input matInput placeholder="Email" formControlName="email" [(ngModel)]="patient.email">
         </mat-form-field>
 
         <mat-form-field>
-          <mat-select placeholder="Moyen de contact préféré" formControlName="favoriteContactType">
+          <mat-select placeholder="Moyen de contact préféré" formControlName="favoriteContactType" [(ngModel)]="patient.favoriteContactType">
             <mat-option *ngFor="let type of favoriteContactType" [value]="type">{{type}}</mat-option>
           </mat-select>
         </mat-form-field>
@@ -83,28 +84,31 @@
       <div class="column">
         <mat-form-field>
           <textarea matInput placeholder="Maladie métabolique" matTextareaAutosize matAutosizeMinRows="1"
-                    matAutosizeMaxRows="5" formControlName="metabolism"></textarea>
+                    matAutosizeMaxRows="5" formControlName="metabolism" [(ngModel)]="patient.metabolism"></textarea>
         </mat-form-field>
 
         <mat-form-field>
           <textarea matInput placeholder="Antécédent" matTextareaAutosize matAutosizeMinRows="1"
-                    matAutosizeMaxRows="5" formControlName="healthHistory"></textarea>
+                    matAutosizeMaxRows="5" formControlName="healthHistory" [(ngModel)]="patient.healthHistory"></textarea>
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput placeholder="Médecin Traitant" formControlName="regularDoctor">
+          <input matInput placeholder="Médecin Traitant" formControlName="regularDoctor" [(ngModel)]="patient.regularDoctor">
         </mat-form-field>
 
         <mat-form-field>
           <textarea matInput placeholder="Autres" matTextareaAutosize matAutosizeMinRows="1"
-                    matAutosizeMaxRows="5" formControlName="healthNote"></textarea>
+                    matAutosizeMaxRows="5" formControlName="healthNote" [(ngModel)]="patient.healthNote"></textarea>
         </mat-form-field>
       </div>
     </mat-grid-tile>
 
     <mat-grid-tile [colspan]="1" [rowspan]="1">
       <mat-tab-group>
-        <mat-tab label="Nouveau">
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon>add</mat-icon><span class="align-super"> Nouveau</span>
+          </ng-template>
           <div class="column">
             <mat-form-field>
               <input matInput type="number" placeholder="Montant consultation" formControlName="consultationCost">
@@ -123,13 +127,16 @@
           </div>
         </mat-tab>
 
-        <mat-tab label="Historique">
+        <mat-tab [disabled]="!patient.consultation[0].cost">
+          <ng-template mat-tab-label>
+            <mat-icon>history</mat-icon><span class="align-super"> Historique</span>
+          </ng-template>
           <div class="column">
             <mat-table #table [dataSource]="dataSource" matSort matSortActive="date" matSortDisableClear matSortDirection="asc">
 
               <ng-container matColumnDef="date">
                 <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true"> Date </mat-header-cell>
-                <mat-cell *matCellDef="let consultation"> {{consultation.date | date:'shortDate'}} </mat-cell>
+                <mat-cell *matCellDef="let consultation"> {{consultation.date | date:'dd/MM/yyyy'}} </mat-cell>
               </ng-container>
 
               <ng-container matColumnDef="cost">
@@ -158,7 +165,7 @@
     <mat-grid-tile [colspan]="1" [rowspan]="1">
       <div class="column">
         <div class="row" *ngFor="let activity of activities">
-          <button class="sport-retrait" mat-button color="warn" (click)="removeActivity(activity)">
+          <button class="sport-retrait" mat-button color="primary" (click)="removeActivity(activity)">
             <mat-icon>delete</mat-icon>
           </button>
           <mat-form-field class="sport-input">
@@ -180,9 +187,16 @@
       <div class="column notes">
       <mat-form-field>
         <textarea matInput placeholder="Notes" matTextareaAutosize matAutosizeMinRows="15"
-                  formControlName="freeNotes"></textarea>
+                  formControlName="freeNotes" [(ngModel)]="patient.freeNotes"></textarea>
       </mat-form-field>
       </div>
     </mat-grid-tile>
   </mat-grid-list>
+
+  <button mat-raised-button [disabled]="tabForm.pristine" color="primary" (click)="savePatient()" class="save">
+    <mat-icon>person_add</mat-icon>
+    <span class="align-middle" *ngIf="!patient.id"> Sauvegarder le nouveau patient</span>
+    <span class="align-middle" *ngIf="patient.id"> Sauvegarder les changements</span>
+  </button>
+
 </form>

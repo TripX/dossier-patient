@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {IPatient} from '../models/patient';
 
 @Injectable()
 export class PatientsService {
 
-  BASE_URL = 'http://localhost:4201/';
+  private BASE_URL = 'http://localhost:4201/';
 
   constructor(private http: HttpClient) {}
 

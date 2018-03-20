@@ -1,21 +1,22 @@
+import {IPatient} from '../../app/models/patient';
 
-export let patientsData: any = [
+export let patientsData: IPatient[] = [
   {
     'id': 1,
-    'creationDate': '2017-08-01',
-    'lastUpdate': '2017-09-01',
-    'title': 'Mr',
-    'name': 'NomTest',
-    'firstname': 'PrenomTest',
-    'sex': 'M',
-    'birthdate': '1989-12-13',
+    'creationDate': new Date('2017-08-01'),
+    'lastUpdate':  new Date('2017-09-01'),
+    'title': 'Monsieur',
+    'name': 'Rousseau',
+    'firstname': 'Bastien',
+    'sex': 'Masculin',
+    'birthdate': new Date('1989-12-13'),
     'email': 'test@test.com',
     'mobile': '0601020304',
     'landline': '0801020304',
-    'favoriteContactType': 'Par SMS',
+    'favoriteContactType': 'SMS',
     'profession': 'Ingénieur',
-    'maritalStatus': 'En couple',
-    'groupPatient': ['Patients', 'Amis'],
+    'maritalStatus': 'Couple',
+    'groupPatient': ['Patient', 'Ami'],
     'metabolism': 'A contracté tel maladie à tel moment, forte corpulance',
     'healthHistory': 'Antécédents ...',
     'regularDoctor': 'Dr Test Test',
@@ -25,99 +26,210 @@ export let patientsData: any = [
       {
         'index': 0,
         'title': 'Karaté',
-        'hoursPerWeek' : '3'
+        'hoursPerWeek' : 2
       },
       {
         'index': 1,
-        'title': 'Yoga',
-        'hoursPerWeek' : '1'
+        'title': 'Vélo',
+        'hoursPerWeek' : 3
       }
     ],
     'consultation': [
       {
-        'date': '2017-08-22',
-        'cost': '70',
+        'date': new Date('2017-08-22'),
+        'cost': 57,
         'paymentMethod': 'Espèce',
         'tarificationType': 'Type 1'
       },
       {
-        'date': '2017-09-22',
-        'cost': '50',
+        'date': new Date('2017-09-22'),
+        'cost': 50,
         'paymentMethod': 'CB',
         'tarificationType': 'Type 1'
       }
     ],
     'weight': [
       {
-        'date': '2017-08-22',
-        'kg': '80'
+        'date': new Date('2017-08-22'),
+        'kg': 80
       },
       {
-        'date': '2017-09-22',
-        'kg': '78'
+        'date': new Date('2017-09-22'),
+        'kg': 78
+      },
+      {
+        'date': new Date('2018-03-20'),
+        'kg': 77
       }
     ],
     'height':  [
       {
-        'date': '2017-08-22',
-        'cm': '180'
+        'date': new Date('2017-08-22'),
+        'cm': 178
       },
       {
-        'date': '2017-09-22',
-        'cm': '180'
+        'date': new Date('2017-09-22'),
+        'cm': 178
       }
     ],
     'skinfold': [
       {
-        'date': '2017-08-22',
-        'bicipital': '2',
-        'tricipital': '2',
-        'subscapulaire': '2',
-        'suprailiaque': '2'
+        'date': new Date('2017-08-22'),
+        'bicipital': 2,
+        'tricipital': 2,
+        'subscapulaire': 2,
+        'suprailiaque': 2
       },
       {
-        'date': '2017-09-22',
-        'bicipital': '2',
-        'tricipital': '2',
-        'subscapulaire': '1',
-        'suprailiaque': '1'
+        'date': new Date('2017-09-22'),
+        'bicipital': 2,
+        'tricipital': 2,
+        'subscapulaire': 1,
+        'suprailiaque': 1
       }
     ],
     'size': [
       {
-        'date': '2017-08-22',
-        'waist': '70',
-        'hip': '100',
-        'pectoral': '110',
-        'arm': '20',
-        'thigh': '40'
+        'date': new Date('2017-08-22'),
+        'waist': 70,
+        'hip': 70,
+        'pectoral': 110,
+        'arm': 10,
+        'thigh': 40
       },
       {
-        'date': '2017-09-22',
-        'waist': '70',
-        'hip': '100',
-        'pectoral': '110',
-        'arm': '20',
-        'thigh': '40'
+        'date': new Date('2017-09-22'),
+        'waist': 70,
+        'hip': 70,
+        'pectoral': 110,
+        'arm': 10,
+        'thigh': 40
       }
     ]
   },
   {
     'id': 2,
-    'creationDate': '2017-08-22',
-    'lastUpdate': '2017-10-17',
-    'title': 'Mme',
-    'name': 'NomFemme',
-    'firstname': 'PrenomFemme',
-    'sex': 'F',
-    'birthdate': '1991-12-13',
-    'email': 'testFemme@test.com',
-    'mobile': '0600000000',
+    'creationDate': new Date('2017-08-22'),
+    'lastUpdate': new Date('2017-10-17'),
+    'title': 'Madame',
+    'name': 'Garciau',
+    'firstname': 'Naomi',
+    'sex': 'Féminin',
+    'birthdate': new Date('1996-10-13'),
+    'email': 'naomi.garciau@test.com',
+    'mobile': '0615009900',
     'landline': '0800000000',
-    'favoriteContact': 'Par Mail',
+    'favoriteContactType': 'SMS',
+    'profession': 'Diététicienne',
+    'maritalStatus': 'Couple',
+    'groupPatient': ['Patient', 'Famille'],
+    'metabolism': 'A contracté tel maladie à tel moment, maigre, gras, gros',
+    'healthHistory': 'Antécédents femme ...',
+    'regularDoctor': 'Dr Test Femme',
+    'healthNote': 'Autres notes sur la santé de cette femme !',
+    'freeNotes': 'Champ Notes blablablabla, j\'ai fais cela, ceci et ça à cette femme.',
+    'activity': [
+      {
+        'index': 0,
+        'title': 'Karaté',
+        'hoursPerWeek' : 3
+      },
+      {
+        'index': 1,
+        'title': 'Body Karaté',
+        'hoursPerWeek' : 3
+      },
+      {
+        'index': 2,
+        'title': 'Musculation',
+        'hoursPerWeek' : 5
+      }
+    ],
+    'consultation': [
+      {
+        'date': new Date('2017-08-22'),
+        'cost': 75,
+        'paymentMethod': 'Espèce',
+        'tarificationType': 'Type 1'
+      },
+      {
+        'date': new Date('2017-09-22'),
+        'cost': 45,
+        'paymentMethod': 'Espèce',
+        'tarificationType': 'Type 1'
+      }
+    ],
+    'weight': [
+      {
+        'date': new Date('2017-08-22'),
+        'kg': 65
+      },
+      {
+        'date': new Date('2017-09-22'),
+        'kg': 63
+      }
+    ],
+    'height':  [
+      {
+        'date': new Date('2017-08-22'),
+        'cm': 165
+      },
+      {
+        'date': new Date('2017-09-22'),
+        'cm': 165
+      }
+    ],
+    'skinfold': [
+      {
+        'date': new Date('2017-08-22'),
+        'bicipital': 2,
+        'tricipital': 2,
+        'subscapulaire': 2,
+        'suprailiaque': 2
+      },
+      {
+        'date': new Date('2017-09-22'),
+        'bicipital': 2,
+        'tricipital': 2,
+        'subscapulaire': 1,
+        'suprailiaque': 1
+      }
+    ],
+    'size': [
+      {
+        'date': new Date('2017-08-22'),
+        'waist': 50,
+        'hip': 50,
+        'pectoral': 90,
+        'arm': 10,
+        'thigh': 10
+      },
+      {
+        'date': new Date('2017-09-22'),
+        'waist': 50,
+        'hip': 50,
+        'pectoral': 90,
+        'arm': 10,
+        'thigh': 10
+      }
+    ]
+  },
+  {
+    'id': 3,
+    'creationDate': new Date('2017-08-22'),
+    'lastUpdate': new Date('2017-10-17'),
+    'title': 'Madame',
+    'name': 'Tartufe',
+    'firstname': 'Emmeline',
+    'sex': 'Féminin',
+    'birthdate': new Date('1991-12-13'),
+    'email': 'testFemme@test.com',
+    'mobile': '0625450000',
+    'landline': '0800000000',
+    'favoriteContactType': 'Téléphone Fixe',
     'profession': 'Professeur',
     'maritalStatus': 'Mariée',
-    'group': ['Patients', 'Famille'],
+    'groupPatient': ['Patient'],
     'metabolism': 'A contracté tel maladie à tel moment, maigre',
     'healthHistory': 'Antécédents femme ...',
     'regularDoctor': 'Dr Test Femme',
@@ -127,96 +239,139 @@ export let patientsData: any = [
       {
         'index': 0,
         'title': 'Pilate',
-        'hoursPerWeek' : '3'
+        'hoursPerWeek' : 3
       }
     ],
     'consultation': [
       {
-        'date': '2017-08-22',
-        'cost': '75',
+        'date': new Date('2017-08-22'),
+        'cost': 72,
         'paymentMethod': 'Espèce',
-        'tarificationType': 'Type 1'
+        'tarificationType': 'Type 3'
       },
       {
-        'date': '2017-09-22',
-        'cost': '45',
+        'date': new Date('2017-09-22'),
+        'cost': 52,
         'paymentMethod': 'Espèce',
         'tarificationType': 'Type 1'
       }
     ],
-    'paymentMethod': 'Espèce',
-    'tarificationType': 'Normal',
     'weight': [
       {
-        'date': '2017-08-227',
-        'kg': '50'
+        'date': new Date('2017-08-02'),
+        'kg': 50
       },
       {
-        'date': '2017-09-22',
-        'kg': '48'
+        'date': new Date('2017-09-22'),
+        'kg': 48
       }
     ],
     'height':  [
       {
-        'date': '2017-08-22',
-        'cm': '160'
+        'date': new Date('2017-08-22'),
+        'cm': 160
       },
       {
-        'date': '2017-09-22',
-        'cm': '160'
+        'date': new Date('2017-09-22'),
+        'cm': 160
       }
     ],
     'skinfold': [
       {
-        'date': '2017-08-22',
-        'bicipital': '2',
-        'tricipital': '2',
-        'subscapulaire': '2',
-        'suprailiaque': '2'
+        'date': new Date('2017-08-22'),
+        'bicipital': 2,
+        'tricipital': 2,
+        'subscapulaire': 2,
+        'suprailiaque': 2
       },
       {
-        'date': '2017-09-22',
-        'bicipital': '2',
-        'tricipital': '2',
-        'subscapulaire': '1',
-        'suprailiaque': '1'
+        'date': new Date('2017-09-22'),
+        'bicipital': 2,
+        'tricipital': 2,
+        'subscapulaire': 1,
+        'suprailiaque': 1
       }
     ],
     'size': [
       {
-        'date': '2017-08-22',
-        'waist': '50',
-        'hip': '80',
-        'pectoral': '90',
-        'arm': '10',
-        'thigh': '20'
+        'date': new Date('2017-08-22'),
+        'waist': 50,
+        'hip': 50,
+        'pectoral': 90,
+        'arm': 10,
+        'thigh': 10
       },
       {
-        'date': '2017-09-22',
-        'waist': '50',
-        'hip': '80',
-        'pectoral': '90',
-        'arm': '10',
-        'thigh': '20'
+        'date': new Date('2017-09-22'),
+        'waist': 50,
+        'hip': 50,
+        'pectoral': 90,
+        'arm': 10,
+        'thigh': 10
       }
     ]
   },
   {
-    'id': 2,
-    'creationDate': '2017-08-22',
-    'lastUpdate': '2017-10-17',
-    'title': 'Mme',
-    'name': 'NomFemme',
-    'firstname': 'PrenomFemme',
-    'sex': 'F',
-    'birthdate': '1991-12-13',
-    'email': 'testFemme@test.com',
-    'mobile': '0600000000',
+    'id': 4,
+    'creationDate': new Date('2017-08-22'),
+    'lastUpdate': new Date('2017-10-17'),
+    'title': 'Monsieur',
+    'name': 'Test',
+    'firstname': 'Temoi',
+    'sex': 'Féminin',
+    'birthdate': new Date('1980-01-30'),
+    'email': 'testtemoi@test.com',
+    'mobile': '0609000045',
     'landline': '0800000000',
-    'favoriteContact': 'Par Mail',
-    'profession': 'Professeur',
-    'maritalStatus': 'Mariée',
-    'group': ['Patients', 'Famille'],
+    'favoriteContactType': 'Téléphone Portable',
+    'profession': 'Agriculteur',
+    'maritalStatus': 'Célibataire',
+    'groupPatient': ['Ami'],
+    'metabolism': 'A contracté tel maladie à tel moment, maigre',
+    'healthHistory': 'Antécédents femme ...',
+    'regularDoctor': 'Dr Test Femme',
+    'healthNote': 'Autres notes sur la santé de cette femme !',
+    'freeNotes': 'Champ Notes blablablabla, j\'ai fais cela, ceci et ça à cette femme.',
+    'activity': [],
+    'consultation': [
+      {
+        'date': new Date('2017-08-22'),
+        'cost': 0,
+        'paymentMethod': 'Espèce',
+        'tarificationType': 'Type 1'
+      }
+    ],
+    'weight': [
+      {
+        'date': new Date('2017-08-27'),
+        'kg': 90
+      }
+    ],
+    'height':  [
+      {
+        'date': new Date('2017-08-22'),
+        'cm': 160
+      }
+    ],
+    'skinfold': [],
+    'size': []
+  },
+  {
+    'id': 5,
+    'creationDate': new Date('2017-08-22'),
+    'lastUpdate': new Date('2017-10-17'),
+    'title': 'Madame',
+    'name': 'Tube',
+    'firstname': 'Jean',
+    'sex': 'Féminin',
+    'birthdate': new Date('1990-06-19'),
+    'email': 'babilolilo@da.com',
+    'mobile': '0690001020',
+    'landline': '0800000000',
+    'favoriteContactType': 'Mail',
+    'profession': 'Serveur',
+    'maritalStatus': 'Veuf',
+    'groupPatient': ['Patient'],
     'metabolism': 'A contracté tel maladie à tel moment, maigre',
     'healthHistory': 'Antécédents femme ...',
     'regularDoctor': 'Dr Test Femme',
@@ -225,294 +380,94 @@ export let patientsData: any = [
     'activity': [
       {
         'index': 0,
-        'title': 'Pilate',
-        'hoursPerWeek' : '3'
+        'title': 'Course à pied',
+        'hoursPerWeek' : 5
       }
     ],
     'consultation': [
       {
-        'date': '2017-08-22',
-        'cost': '75',
+        'date': new Date('2017-08-22'),
+        'cost': 70,
         'paymentMethod': 'Espèce',
         'tarificationType': 'Type 1'
       },
       {
-        'date': '2017-09-22',
-        'cost': '45',
+        'date': new Date('2017-09-22'),
+        'cost': 70,
         'paymentMethod': 'Espèce',
         'tarificationType': 'Type 1'
       }
     ],
-    'paymentMethod': 'Espèce',
-    'tarificationType': 'Normal',
     'weight': [
       {
-        'date': '2017-08-227',
-        'kg': '50'
+        'date': new Date('2017-09-10'),
+        'kg': 50
       },
       {
-        'date': '2017-09-22',
-        'kg': '48'
+        'date': new Date('2017-09-22'),
+        'kg': 48
       }
     ],
     'height':  [
       {
-        'date': '2017-08-22',
-        'cm': '160'
+        'date': new Date('2017-08-22'),
+        'cm': 160
       },
       {
-        'date': '2017-09-22',
-        'cm': '160'
+        'date': new Date('2017-09-22'),
+        'cm': 160
       }
     ],
     'skinfold': [
       {
-        'date': '2017-08-22',
-        'bicipital': '2',
-        'tricipital': '2',
-        'subscapulaire': '2',
-        'suprailiaque': '2'
+        'date': new Date('2017-08-22'),
+        'bicipital': 2,
+        'tricipital': 2,
+        'subscapulaire': 2,
+        'suprailiaque': 2
       },
       {
-        'date': '2017-09-22',
-        'bicipital': '2',
-        'tricipital': '2',
-        'subscapulaire': '1',
-        'suprailiaque': '1'
+        'date': new Date('2017-09-22'),
+        'bicipital': 2,
+        'tricipital': 2,
+        'subscapulaire': 1,
+        'suprailiaque': 1
       }
     ],
     'size': [
       {
-        'date': '2017-08-22',
-        'waist': '50',
-        'hip': '80',
-        'pectoral': '90',
-        'arm': '10',
-        'thigh': '20'
+        'date': new Date('2017-08-22'),
+        'waist': 50,
+        'hip': 50,
+        'pectoral': 90,
+        'arm': 10,
+        'thigh': 10
       },
       {
-        'date': '2017-09-22',
-        'waist': '50',
-        'hip': '80',
-        'pectoral': '90',
-        'arm': '10',
-        'thigh': '20'
-      }
-    ]
-  },
-  {
-    'id': 2,
-    'creationDate': '2017-08-22',
-    'lastUpdate': '2017-10-17',
-    'title': 'Mme',
-    'name': 'NomFemme',
-    'firstname': 'PrenomFemme',
-    'sex': 'F',
-    'birthdate': '1991-12-13',
-    'email': 'testFemme@test.com',
-    'mobile': '0600000000',
-    'landline': '0800000000',
-    'favoriteContact': 'Par Mail',
-    'profession': 'Professeur',
-    'maritalStatus': 'Mariée',
-    'group': ['Patients', 'Famille'],
-    'metabolism': 'A contracté tel maladie à tel moment, maigre',
-    'healthHistory': 'Antécédents femme ...',
-    'regularDoctor': 'Dr Test Femme',
-    'healthNote': 'Autres notes sur la santé de cette femme !',
-    'freeNotes': 'Champ Notes blablablabla, j\'ai fais cela, ceci et ça à cette femme.',
-    'activity': [
-      {
-        'index': 0,
-        'title': 'Pilate',
-        'hoursPerWeek' : '3'
-      }
-    ],
-    'consultation': [
-      {
-        'date': '2017-08-22',
-        'cost': '75',
-        'paymentMethod': 'Espèce',
-        'tarificationType': 'Type 1'
-      },
-      {
-        'date': '2017-09-22',
-        'cost': '45',
-        'paymentMethod': 'Espèce',
-        'tarificationType': 'Type 1'
-      }
-    ],
-    'paymentMethod': 'Espèce',
-    'tarificationType': 'Normal',
-    'weight': [
-      {
-        'date': '2017-08-227',
-        'kg': '50'
-      },
-      {
-        'date': '2017-09-22',
-        'kg': '48'
-      }
-    ],
-    'height':  [
-      {
-        'date': '2017-08-22',
-        'cm': '160'
-      },
-      {
-        'date': '2017-09-22',
-        'cm': '160'
-      }
-    ],
-    'skinfold': [
-      {
-        'date': '2017-08-22',
-        'bicipital': '2',
-        'tricipital': '2',
-        'subscapulaire': '2',
-        'suprailiaque': '2'
-      },
-      {
-        'date': '2017-09-22',
-        'bicipital': '2',
-        'tricipital': '2',
-        'subscapulaire': '1',
-        'suprailiaque': '1'
-      }
-    ],
-    'size': [
-      {
-        'date': '2017-08-22',
-        'waist': '50',
-        'hip': '80',
-        'pectoral': '90',
-        'arm': '10',
-        'thigh': '20'
-      },
-      {
-        'date': '2017-09-22',
-        'waist': '50',
-        'hip': '80',
-        'pectoral': '90',
-        'arm': '10',
-        'thigh': '20'
-      }
-    ]
-  },
-  {
-    'id': 2,
-    'creationDate': '2017-08-22',
-    'lastUpdate': '2017-10-17',
-    'title': 'Mme',
-    'name': 'NomFemme',
-    'firstname': 'PrenomFemme',
-    'sex': 'F',
-    'birthdate': '1991-12-13',
-    'email': 'testFemme@test.com',
-    'mobile': '0600000000',
-    'landline': '0800000000',
-    'favoriteContact': 'Par Mail',
-    'profession': 'Professeur',
-    'maritalStatus': 'Mariée',
-    'group': ['Patients', 'Famille'],
-    'metabolism': 'A contracté tel maladie à tel moment, maigre',
-    'healthHistory': 'Antécédents femme ...',
-    'regularDoctor': 'Dr Test Femme',
-    'healthNote': 'Autres notes sur la santé de cette femme !',
-    'freeNotes': 'Champ Notes blablablabla, j\'ai fais cela, ceci et ça à cette femme.',
-    'activity': [
-      {
-        'index': 0,
-        'title': 'Pilate',
-        'hoursPerWeek' : '3'
-      }
-    ],
-    'consultation': [
-      {
-        'date': '2017-08-22',
-        'cost': '75',
-        'paymentMethod': 'Espèce',
-        'tarificationType': 'Type 1'
-      },
-      {
-        'date': '2017-09-22',
-        'cost': '45',
-        'paymentMethod': 'Espèce',
-        'tarificationType': 'Type 1'
-      }
-    ],
-    'paymentMethod': 'Espèce',
-    'tarificationType': 'Normal',
-    'weight': [
-      {
-        'date': '2017-08-227',
-        'kg': '50'
-      },
-      {
-        'date': '2017-09-22',
-        'kg': '48'
-      }
-    ],
-    'height':  [
-      {
-        'date': '2017-08-22',
-        'cm': '160'
-      },
-      {
-        'date': '2017-09-22',
-        'cm': '160'
-      }
-    ],
-    'skinfold': [
-      {
-        'date': '2017-08-22',
-        'bicipital': '2',
-        'tricipital': '2',
-        'subscapulaire': '2',
-        'suprailiaque': '2'
-      },
-      {
-        'date': '2017-09-22',
-        'bicipital': '2',
-        'tricipital': '2',
-        'subscapulaire': '1',
-        'suprailiaque': '1'
-      }
-    ],
-    'size': [
-      {
-        'date': '2017-08-22',
-        'waist': '50',
-        'hip': '80',
-        'pectoral': '90',
-        'arm': '10',
-        'thigh': '20'
-      },
-      {
-        'date': '2017-09-22',
-        'waist': '50',
-        'hip': '80',
-        'pectoral': '90',
-        'arm': '10',
-        'thigh': '20'
+        'date': new Date('2017-09-22'),
+        'waist': 50,
+        'hip': 50,
+        'pectoral': 90,
+        'arm': 10,
+        'thigh': 10
       }
     ]
   },    {
-    'id': 2,
-    'creationDate': '2017-08-22',
-    'lastUpdate': '2017-10-17',
-    'title': 'Mme',
+    'id': 6,
+    'creationDate': new Date('2018-03-01'),
+    'lastUpdate': new Date('2018-03-20'),
+    'title': 'Madame',
     'name': 'Jacqueline',
     'firstname': 'Pinageeeeeee',
-    'sex': 'F',
-    'birthdate': '1990-10-13',
-    'email': 'testFemme@test.com',
-    'mobile': '0600000000',
+    'sex': 'Féminin',
+    'birthdate': new Date('1954-10-13'),
+    'email': 'herocorp@canada.com',
+    'mobile': '0600700045',
     'landline': '0800000000',
-    'favoriteContact': 'Par Mail',
+    'favoriteContactType': 'Mail',
     'profession': 'Professeur',
     'maritalStatus': 'Mariée',
-    'group': ['Patients', 'Famille'],
+    'groupPatient': ['Famille'],
     'metabolism': 'A contracté tel maladie à tel moment, maigre',
     'healthHistory': 'Antécédents femme ...',
     'regularDoctor': 'Dr Test Femme',
@@ -522,77 +477,75 @@ export let patientsData: any = [
       {
         'index': 0,
         'title': 'Pilate',
-        'hoursPerWeek' : '3'
+        'hoursPerWeek' : 9
       }
     ],
     'consultation': [
       {
-        'date': '2017-08-22',
-        'cost': '75',
+        'date': new Date('2017-08-22'),
+        'cost': 50,
         'paymentMethod': 'Espèce',
         'tarificationType': 'Type 1'
       },
       {
-        'date': '2017-09-22',
-        'cost': '45',
+        'date': new Date('2017-09-22'),
+        'cost': 45,
         'paymentMethod': 'Espèce',
         'tarificationType': 'Type 1'
       }
     ],
-    'paymentMethod': 'Espèce',
-    'tarificationType': 'Normal',
     'weight': [
       {
-        'date': '2017-08-227',
-        'kg': '50'
+        'date': new Date('2017-08-01'),
+        'kg': 50
       },
       {
-        'date': '2017-09-22',
-        'kg': '48'
+        'date': new Date('2017-09-22'),
+        'kg': 48
       }
     ],
     'height':  [
       {
-        'date': '2017-08-22',
-        'cm': '160'
+        'date': new Date('2017-08-22'),
+        'cm': 160
       },
       {
-        'date': '2017-09-22',
-        'cm': '160'
+        'date': new Date('2017-09-22'),
+        'cm': 159
       }
     ],
     'skinfold': [
       {
-        'date': '2017-08-22',
-        'bicipital': '2',
-        'tricipital': '2',
-        'subscapulaire': '2',
-        'suprailiaque': '2'
+        'date': new Date('2017-08-22'),
+        'bicipital': 2,
+        'tricipital': 2,
+        'subscapulaire': 2,
+        'suprailiaque': 2
       },
       {
-        'date': '2017-09-22',
-        'bicipital': '2',
-        'tricipital': '2',
-        'subscapulaire': '1',
-        'suprailiaque': '1'
+        'date': new Date('2017-09-22'),
+        'bicipital': 2,
+        'tricipital': 2,
+        'subscapulaire': 1,
+        'suprailiaque': 1
       }
     ],
     'size': [
       {
-        'date': '2017-08-22',
-        'waist': '50',
-        'hip': '80',
-        'pectoral': '90',
-        'arm': '10',
-        'thigh': '20'
+        'date': new Date('2017-08-22'),
+        'waist': 50,
+        'hip': 50,
+        'pectoral': 90,
+        'arm': 10,
+        'thigh': 10
       },
       {
-        'date': '2017-09-22',
-        'waist': '50',
-        'hip': '80',
-        'pectoral': '90',
-        'arm': '10',
-        'thigh': '20'
+        'date': new Date('2017-09-22'),
+        'waist': 50,
+        'hip': 50,
+        'pectoral': 90,
+        'arm': 10,
+        'thigh': 10
       }
     ]
   }

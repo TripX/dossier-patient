@@ -6,12 +6,12 @@
   <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Rechercher un patient">
 </mat-form-field>
 
-<button mat-raised-button type="submit" class="left-space">
+<button mat-raised-button type="submit" class="left-space" (click)="goToFichePatient()">
   <mat-icon>add</mat-icon><span class="align-middle very-bold"> Ajouter un nouveau patient</span>
 </button>
 
 <div class="column">
-  <mat-table [dataSource]="dataSource" matSort matSortActive="groupPatient" matSortDisableClear matSortDirection="asc">
+  <mat-table [dataSource]="dataSource" matSort matSortDisableClear matSortDirection="asc">
 
     <ng-container matColumnDef="groupPatient">
       <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true"> Groupe </mat-header-cell>
@@ -30,7 +30,7 @@
 
     <ng-container matColumnDef="birthdate">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Date de naissance </mat-header-cell>
-      <mat-cell *matCellDef="let patient"> {{patient.birthdate | date:'shortDate'}} </mat-cell>
+      <mat-cell *matCellDef="let patient"> {{patient.birthdate | date:'dd/MM/yyyy'}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="profession">

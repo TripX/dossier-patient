@@ -7,8 +7,8 @@
   min-width: 175px;
 }
 .sport-hour-input {
-  min-width: 50px;
-  padding-right: 40px;
+  min-width: 55px;
+  padding-right: 55px;
 }
 
 // NOTES
@@ -28,6 +28,8 @@
   overflow: auto;
   max-height: 500px;
 }
-.mat-header-cell.mat-sort-header-sorted {
-  color: red;
+
+// Bouton save
+.save {
+  float: right;
 }

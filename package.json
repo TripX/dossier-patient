@@ -2,10 +2,9 @@
   "name": "dossier_patient",
   "version": "0.1.0",
   "description": "Dossier Patient - Angular 5 with Electron",
-  "homepage": "https://github.com/maximegris/angular-electron",
   "author": {
-    "name": "Maxime GRIS et Bastien ROUSSEAU",
-    "email": "maxime.gris@gmail.com & rousseau.bastien@gmail.com"
+    "name": "Bastien ROUSSEAU",
+    "email": "rousseau.bastien@gmail.com"
   },
   "keywords": [
     "angular",
