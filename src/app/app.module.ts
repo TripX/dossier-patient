@@ -10,7 +10,6 @@ import 'hammerjs';
 import {HttpClientModule, HttpClient} from '@angular/common/http';
 
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-// import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CustomMaterialModule} from './module/angular-material';
 
 import {AppRoutingModule} from './app-routing.module';
@@ -32,7 +31,7 @@ import {MonEvolutionComponent} from './components/mon-evolution/mon-evolution.co
 import {MaBalanceEnergetiqueComponent} from './components/ma-balance-energetique/ma-balance-energetique.component';
 import {RecherchePatientComponent} from './components/recherche-patient/recherche-patient.component';
 import {MonEnqueteAlimentaireComponent} from './components/mon-enquete-alimentaire/mon-enquete-alimentaire.component';
-import { BeautifyArrayPipe } from './pipes/beautify-array.pipe';
+import {BeautifyArrayPipe} from './pipes/beautify-array.pipe';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -64,7 +63,6 @@ export function HttpLoaderFactory(http: HttpClient) {
       }
     }),
     ReactiveFormsModule,
-    // BrowserAnimationsModule,
     NoopAnimationsModule,
     CustomMaterialModule
   ],

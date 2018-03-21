@@ -58,7 +58,7 @@ export let patientsData: IPatient[] = [
         'kg': 78
       },
       {
-        'date': new Date('2018-03-20'),
+        'date': new Date('2017-10-22'),
         'kg': 77
       }
     ],
@@ -70,6 +70,10 @@ export let patientsData: IPatient[] = [
       {
         'date': new Date('2017-09-22'),
         'cm': 178
+      },
+      {
+        'date': new Date('2017-10-22'),
+        'cm': 179
       }
     ],
     'skinfold': [

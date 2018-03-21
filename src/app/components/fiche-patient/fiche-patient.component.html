@@ -1,7 +1,7 @@
 <form [formGroup]="tabForm">
-  <mat-grid-list cols="4" rowHeight="1:1" cellHeight="auto">
+  <mat-grid-list cols="4" rowHeight="1:0.8">
 
-    <h3 *ngIf="!patient.id">Nouveau Patient</h3>
+    <h3 *ngIf="!patient.id" class="header-new-patient">Nouveau Patient</h3>
     <mat-grid-tile [colspan]="1" [rowspan]="2">
       <div class="column">
         <mat-form-field>
@@ -83,12 +83,12 @@
     <mat-grid-tile [colspan]="1" [rowspan]="1">
       <div class="column">
         <mat-form-field>
-          <textarea matInput placeholder="Maladie métabolique" matTextareaAutosize matAutosizeMinRows="1"
+          <textarea matInput placeholder="Maladie métabolique" matTextareaAutosize matAutosizeMinRows="2"
                     matAutosizeMaxRows="5" formControlName="metabolism" [(ngModel)]="patient.metabolism"></textarea>
         </mat-form-field>
 
         <mat-form-field>
-          <textarea matInput placeholder="Antécédent" matTextareaAutosize matAutosizeMinRows="1"
+          <textarea matInput placeholder="Antécédent" matTextareaAutosize matAutosizeMinRows="2"
                     matAutosizeMaxRows="5" formControlName="healthHistory" [(ngModel)]="patient.healthHistory"></textarea>
         </mat-form-field>
 
@@ -97,7 +97,7 @@
         </mat-form-field>
 
         <mat-form-field>
-          <textarea matInput placeholder="Autres" matTextareaAutosize matAutosizeMinRows="1"
+          <textarea matInput placeholder="Autres" matTextareaAutosize matAutosizeMinRows="2"
                     matAutosizeMaxRows="5" formControlName="healthNote" [(ngModel)]="patient.healthNote"></textarea>
         </mat-form-field>
       </div>
@@ -176,8 +176,8 @@
           </mat-form-field>
         </div>
         <div class="row">
-          <button mat-raised-button (click)="addNewActivity()">
-            <span class="large-font-size very-bold">+</span><span class="align-middle very-bold"> Ajouter un sport</span>
+          <button mat-raised-button (click)="addNewActivity()" color="primary">
+            <mat-icon>add</mat-icon><span class="align-middle"> Ajouter un sport</span>
           </button>
         </div>
       </div>

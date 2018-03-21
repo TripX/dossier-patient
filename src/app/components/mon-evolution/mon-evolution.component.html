@@ -1,3 +1,22 @@
-<p>
-  mon-evolution works!
-</p>
+<form #monEvolution [formGroup]="tabForm">
+  <mat-grid-list [cols]="numberCols" rowHeight="1:1">
+
+    <h3 *ngIf="!patient.id" class="header-new-patient">Nouveau Patient</h3>
+
+    <mat-grid-tile [colspan]="1" [rowspan]="rows.length">
+      NOM, Prénom, Age
+    </mat-grid-tile>
+
+    <mat-grid-tile *ngFor="let cell of cells;" [colspan]="cell.nbCol" [rowspan]="cell.nbRow" class="border-cell">
+      <div [innerHTML]="cell.content"></div>
+    </mat-grid-tile>
+
+  </mat-grid-list>
+
+  <button mat-raised-button [disabled]="tabForm.pristine" color="primary" (click)="savePatient()" class="save">
+    <mat-icon>person_add</mat-icon>
+    <span class="align-middle" *ngIf="!patient.id"> Sauvegarder le nouveau patient</span>
+    <span class="align-middle" *ngIf="patient.id"> Sauvegarder les changements</span>
+  </button>
+
+</form>

@@ -6,8 +6,8 @@
   <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Rechercher un patient">
 </mat-form-field>
 
-<button mat-raised-button type="submit" class="left-space" (click)="goToFichePatient()">
-  <mat-icon>add</mat-icon><span class="align-middle very-bold"> Ajouter un nouveau patient</span>
+<button mat-raised-button type="submit" class="left-space" color="primary" (click)="goToFichePatient()">
+  <mat-icon>add</mat-icon><span class="align-middle"> Ajouter un nouveau patient</span>
 </button>
 
 <div class="column">

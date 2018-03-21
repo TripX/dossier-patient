@@ -33,14 +33,11 @@
   font-feature-settings: 'liga';
 }
 
-figure.mat-figure {
-  align-items: flex-start!important;
-  justify-content: flex-start!important;
-  .column {
-    display: flex;
-    flex-direction: column;
-    min-width: 250px;
-  }
+
+.column {
+  display: flex;
+  flex-direction: column;
+  min-width: 85%;
 }
 
 .row {
@@ -52,15 +49,17 @@ figure.mat-figure {
 .large-font-size {
   font-size: 2.3em;
 }
-
-.very-bold {
-  font-weight: 900;
-}
-
 .align-middle {
   vertical-align: middle;
 }
 
 .align-super {
   vertical-align: super;
+}
+
+.header-new-patient {
+  background-color: rgba(63, 81, 181, 0.11);
+  padding: 15px;
+  margin: 0;
+  text-align: center;
 }

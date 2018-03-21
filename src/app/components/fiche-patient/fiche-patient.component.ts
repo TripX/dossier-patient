@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChange, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {DateAdapter, MatSort, MatTableDataSource} from '@angular/material';
 
@@ -39,6 +39,7 @@ export class FichePatientComponent implements OnInit, AfterViewInit, OnChanges {
   displayedColumnsConsultation = ['date', 'cost', 'tarificationType'];
   dataSource: MatTableDataSource<IConsultation>;
   @ViewChild(MatSort) sort: MatSort;
+  @Output() onSelectedIndex = new EventEmitter<number>();
 
   constructor(private dateAdapter: DateAdapter<Date>) {
     this.dateAdapter.setLocale('fr');
@@ -59,8 +60,13 @@ export class FichePatientComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngOnChanges(changes: {[propertyName: string]: SimpleChange}) {
-    if (this.patient && this.patient.consultation) {
-      this.dataSource.data = this.patient.consultation;
+    if (this.patient) {
+      if (this.patient.consultation) {
+        this.dataSource.data = this.patient.consultation;
+      }
+      if (this.patient.activity) {
+        this.activities = this.patient.activity;
+      }
     }
   }
 
@@ -128,6 +134,7 @@ export class FichePatientComponent implements OnInit, AfterViewInit, OnChanges {
 
   savePatient() {
     console.log('save');
+    this.onSelectedIndex.emit(2); // Redirection vers mon évolution
   }
 
 }

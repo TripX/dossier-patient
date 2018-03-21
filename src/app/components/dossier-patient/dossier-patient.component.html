@@ -8,12 +8,12 @@
       </mat-tab>
       <mat-tab label="Ma fiche patient">
         <div class="tab-content">
-          <app-fiche-patient [patient]="searchedPatient"></app-fiche-patient>
+          <app-fiche-patient (onSelectedIndex)="onSelectedIndex($event)" [patient]="searchedPatient"></app-fiche-patient>
         </div>
       </mat-tab>
       <mat-tab label="Mon évolution">
         <div class="tab-content">
-          <app-mon-evolution></app-mon-evolution>
+          <app-mon-evolution (onSelectedIndex)="onSelectedIndex($event)" [patient]="searchedPatient"></app-mon-evolution>
         </div>
       </mat-tab>
       <mat-tab label="Ma balance énergétique">
