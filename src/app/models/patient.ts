@@ -34,30 +34,15 @@ export const NEW_PATIENT: IPatient = this.patient = {
       'tarificationType': ''
     }
   ],
-  'weight': [
+  'evolution': [
     {
-      'date': null,
-      'kg': null
-    }
-  ],
-  'height':  [
-    {
-      'date': null,
-      'cm': null
-    }
-  ],
-  'skinfold': [
-    {
-      'date': null,
+      'date': new Date(),
+      'height': null,
+      'weight': null,
       'bicipital': null,
       'tricipital': null,
       'subscapulaire': null,
-      'suprailiaque': null
-    }
-  ],
-  'size': [
-    {
-      'date': null,
+      'suprailiaque': null,
       'waist': null,
       'hip': null,
       'pectoral': null,
@@ -90,10 +75,7 @@ export interface IPatient {
   freeNotes: string;
   activity: IActivity[];
   consultation: IConsultation[];
-  weight: IWeight[];
-  height: IHeight[];
-  skinfold: ISkinfold[];
-  size: ISize[];
+  evolution: IEvolution[];
 }
 
 export interface IActivity {
@@ -109,29 +91,17 @@ export interface IConsultation {
   tarificationType: string;
 }
 
-export interface IWeight {
-  date: Date;
-  kg: number;
-}
-
-export interface IHeight {
-  date: Date;
-  cm: number;
-}
-
-export interface ISkinfold {
-  date: Date;
-  bicipital: number;
-  tricipital: number;
-  subscapulaire: number;
-  suprailiaque: number;
-}
-
-export interface ISize {
-  date: Date;
-  waist: number;
-  hip: number;
-  pectoral: number;
-  arm: number;
-  thigh: number;
+export interface IEvolution {
+  date: Date,
+  height: number,
+  weight: number,
+  bicipital: number,
+  tricipital: number,
+  subscapulaire: number,
+  suprailiaque: number,
+  waist: number,
+  hip: number,
+  pectoral: number,
+  arm: number,
+  thigh: number
 }

@@ -48,53 +48,15 @@ export let patientsData: IPatient[] = [
         'tarificationType': 'Type 1'
       }
     ],
-    'weight': [
+    'evolution': [
       {
         'date': new Date('2017-08-22'),
-        'kg': 80
-      },
-      {
-        'date': new Date('2017-09-22'),
-        'kg': 78
-      },
-      {
-        'date': new Date('2017-10-22'),
-        'kg': 77
-      }
-    ],
-    'height':  [
-      {
-        'date': new Date('2017-08-22'),
-        'cm': 178
-      },
-      {
-        'date': new Date('2017-09-22'),
-        'cm': 178
-      },
-      {
-        'date': new Date('2017-10-22'),
-        'cm': 179
-      }
-    ],
-    'skinfold': [
-      {
-        'date': new Date('2017-08-22'),
-        'bicipital': 2,
-        'tricipital': 2,
-        'subscapulaire': 2,
-        'suprailiaque': 2
-      },
-      {
-        'date': new Date('2017-09-22'),
+        'height': 178,
+        'weight': 80,
         'bicipital': 2,
         'tricipital': 2,
         'subscapulaire': 1,
-        'suprailiaque': 1
-      }
-    ],
-    'size': [
-      {
-        'date': new Date('2017-08-22'),
+        'suprailiaque': 1,
         'waist': 70,
         'hip': 70,
         'pectoral': 110,
@@ -103,9 +65,29 @@ export let patientsData: IPatient[] = [
       },
       {
         'date': new Date('2017-09-22'),
+        'height': 178,
+        'weight': 78,
+        'bicipital': 2,
+        'tricipital': 2,
+        'subscapulaire': 1,
+        'suprailiaque': 1,
         'waist': 70,
         'hip': 70,
         'pectoral': 110,
+        'arm': 10,
+        'thigh': 40
+      },
+      {
+        'date': new Date('2017-10-22'),
+        'height': 178,
+        'weight': 77,
+        'bicipital': 2,
+        'tricipital': 2,
+        'subscapulaire': 1,
+        'suprailiaque': 1,
+        'waist': 70,
+        'hip': 70,
+        'pectoral': 108,
         'arm': 10,
         'thigh': 40
       }
@@ -163,58 +145,34 @@ export let patientsData: IPatient[] = [
         'tarificationType': 'Type 1'
       }
     ],
-    'weight': [
+    'evolution': [
       {
         'date': new Date('2017-08-22'),
-        'kg': 65
-      },
-      {
-        'date': new Date('2017-09-22'),
-        'kg': 63
-      }
-    ],
-    'height':  [
-      {
-        'date': new Date('2017-08-22'),
-        'cm': 165
-      },
-      {
-        'date': new Date('2017-09-22'),
-        'cm': 165
-      }
-    ],
-    'skinfold': [
-      {
-        'date': new Date('2017-08-22'),
-        'bicipital': 2,
-        'tricipital': 2,
-        'subscapulaire': 2,
-        'suprailiaque': 2
-      },
-      {
-        'date': new Date('2017-09-22'),
+        'height': 165,
+        'weight': 70,
         'bicipital': 2,
         'tricipital': 2,
         'subscapulaire': 1,
-        'suprailiaque': 1
-      }
-    ],
-    'size': [
-      {
-        'date': new Date('2017-08-22'),
-        'waist': 50,
-        'hip': 50,
-        'pectoral': 90,
+        'suprailiaque': 1,
+        'waist': 70,
+        'hip': 70,
+        'pectoral': 110,
         'arm': 10,
-        'thigh': 10
+        'thigh': 40
       },
       {
         'date': new Date('2017-09-22'),
-        'waist': 50,
-        'hip': 50,
-        'pectoral': 90,
+        'height': 165,
+        'weight': 70,
+        'bicipital': 2,
+        'tricipital': 2,
+        'subscapulaire': 1,
+        'suprailiaque': 1,
+        'waist': 70,
+        'hip': 70,
+        'pectoral': 110,
         'arm': 10,
-        'thigh': 10
+        'thigh': 40
       }
     ]
   },
@@ -260,58 +218,20 @@ export let patientsData: IPatient[] = [
         'tarificationType': 'Type 1'
       }
     ],
-    'weight': [
-      {
-        'date': new Date('2017-08-02'),
-        'kg': 50
-      },
+    'evolution': [
       {
         'date': new Date('2017-09-22'),
-        'kg': 48
-      }
-    ],
-    'height':  [
-      {
-        'date': new Date('2017-08-22'),
-        'cm': 160
-      },
-      {
-        'date': new Date('2017-09-22'),
-        'cm': 160
-      }
-    ],
-    'skinfold': [
-      {
-        'date': new Date('2017-08-22'),
-        'bicipital': 2,
-        'tricipital': 2,
-        'subscapulaire': 2,
-        'suprailiaque': 2
-      },
-      {
-        'date': new Date('2017-09-22'),
+        'height': 155,
+        'weight': 65,
         'bicipital': 2,
         'tricipital': 2,
         'subscapulaire': 1,
-        'suprailiaque': 1
-      }
-    ],
-    'size': [
-      {
-        'date': new Date('2017-08-22'),
-        'waist': 50,
-        'hip': 50,
-        'pectoral': 90,
+        'suprailiaque': 1,
+        'waist': 70,
+        'hip': 70,
+        'pectoral': 110,
         'arm': 10,
-        'thigh': 10
-      },
-      {
-        'date': new Date('2017-09-22'),
-        'waist': 50,
-        'hip': 50,
-        'pectoral': 90,
-        'arm': 10,
-        'thigh': 10
+        'thigh': 40
       }
     ]
   },
@@ -345,20 +265,7 @@ export let patientsData: IPatient[] = [
         'tarificationType': 'Type 1'
       }
     ],
-    'weight': [
-      {
-        'date': new Date('2017-08-27'),
-        'kg': 90
-      }
-    ],
-    'height':  [
-      {
-        'date': new Date('2017-08-22'),
-        'cm': 160
-      }
-    ],
-    'skinfold': [],
-    'size': []
+    'evolution': []
   },
   {
     'id': 5,
@@ -402,61 +309,23 @@ export let patientsData: IPatient[] = [
         'tarificationType': 'Type 1'
       }
     ],
-    'weight': [
+    'evolution': [
       {
-        'date': new Date('2017-09-10'),
-        'kg': 50
-      },
-      {
-        'date': new Date('2017-09-22'),
-        'kg': 48
-      }
-    ],
-    'height':  [
-      {
-        'date': new Date('2017-08-22'),
-        'cm': 160
-      },
-      {
-        'date': new Date('2017-09-22'),
-        'cm': 160
-      }
-    ],
-    'skinfold': [
-      {
-        'date': new Date('2017-08-22'),
-        'bicipital': 2,
-        'tricipital': 2,
-        'subscapulaire': 2,
-        'suprailiaque': 2
-      },
-      {
-        'date': new Date('2017-09-22'),
+        'date': new Date('2018-02-22'),
+        'height': 195,
+        'weight': 70,
         'bicipital': 2,
         'tricipital': 2,
         'subscapulaire': 1,
-        'suprailiaque': 1
-      }
-    ],
-    'size': [
-      {
-        'date': new Date('2017-08-22'),
-        'waist': 50,
-        'hip': 50,
-        'pectoral': 90,
+        'suprailiaque': 1,
+        'waist': 70,
+        'hip': 70,
+        'pectoral': 110,
         'arm': 10,
-        'thigh': 10
-      },
-      {
-        'date': new Date('2017-09-22'),
-        'waist': 50,
-        'hip': 50,
-        'pectoral': 90,
-        'arm': 10,
-        'thigh': 10
+        'thigh': 40
       }
     ]
-  },    {
+  }, {
     'id': 6,
     'creationDate': new Date('2018-03-01'),
     'lastUpdate': new Date('2018-03-20'),
@@ -481,7 +350,7 @@ export let patientsData: IPatient[] = [
       {
         'index': 0,
         'title': 'Pilate',
-        'hoursPerWeek' : 9
+        'hoursPerWeek': 9
       }
     ],
     'consultation': [
@@ -498,58 +367,76 @@ export let patientsData: IPatient[] = [
         'tarificationType': 'Type 1'
       }
     ],
-    'weight': [
-      {
-        'date': new Date('2017-08-01'),
-        'kg': 50
-      },
-      {
-        'date': new Date('2017-09-22'),
-        'kg': 48
-      }
-    ],
-    'height':  [
+    'evolution': [
       {
         'date': new Date('2017-08-22'),
-        'cm': 160
-      },
-      {
-        'date': new Date('2017-09-22'),
-        'cm': 159
-      }
-    ],
-    'skinfold': [
-      {
-        'date': new Date('2017-08-22'),
-        'bicipital': 2,
-        'tricipital': 2,
-        'subscapulaire': 2,
-        'suprailiaque': 2
-      },
-      {
-        'date': new Date('2017-09-22'),
+        'height': 165,
+        'weight': 70,
         'bicipital': 2,
         'tricipital': 2,
         'subscapulaire': 1,
-        'suprailiaque': 1
-      }
-    ],
-    'size': [
-      {
-        'date': new Date('2017-08-22'),
-        'waist': 50,
-        'hip': 50,
-        'pectoral': 90,
+        'suprailiaque': 1,
+        'waist': 70,
+        'hip': 70,
+        'pectoral': 110,
         'arm': 10,
-        'thigh': 10
+        'thigh': 40
       },
       {
         'date': new Date('2017-09-22'),
-        'waist': 50,
-        'hip': 50,
-        'pectoral': 90,
+        'height': 165,
+        'weight': 70,
+        'bicipital': 2,
+        'tricipital': 2,
+        'subscapulaire': 1,
+        'suprailiaque': 1,
+        'waist': 70,
+        'hip': 70,
+        'pectoral': 110,
         'arm': 10,
-        'thigh': 10
+        'thigh': 40
+      },
+      {
+        'date': new Date('2017-10-22'),
+        'height': 165,
+        'weight': 70,
+        'bicipital': 2,
+        'tricipital': 2,
+        'subscapulaire': 1,
+        'suprailiaque': 1,
+        'waist': 70,
+        'hip': 70,
+        'pectoral': 110,
+        'arm': 10,
+        'thigh': 40
+      },
+      {
+        'date': new Date('2017-11-22'),
+        'height': 165,
+        'weight': 70,
+        'bicipital': 2,
+        'tricipital': 2,
+        'subscapulaire': 1,
+        'suprailiaque': 1,
+        'waist': 70,
+        'hip': 70,
+        'pectoral': 110,
+        'arm': 10,
+        'thigh': 40
+      },
+      {
+        'date': new Date('2017-12-22'),
+        'height': 165,
+        'weight': 70,
+        'bicipital': 2,
+        'tricipital': 2,
+        'subscapulaire': 1,
+        'suprailiaque': 1,
+        'waist': 70,
+        'hip': 70,
+        'pectoral': 110,
+        'arm': 10,
+        'thigh': 40
       }
     ]
   }
