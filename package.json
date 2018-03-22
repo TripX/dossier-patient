@@ -1,6 +1,6 @@
 {
   "name": "dossier_patient",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Dossier Patient - Angular 5 with Electron",
   "author": {
     "name": "Bastien ROUSSEAU",

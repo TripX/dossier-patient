@@ -1,6 +1,6 @@
 export const FAVORITE_CONTACT_TYPE: string[] = [
   'SMS',
-  'Email',
+  'Mail',
   'Téléphone Portable',
   'Téléphone Fixe'
 ];

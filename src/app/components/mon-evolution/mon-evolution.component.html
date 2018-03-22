@@ -17,6 +17,19 @@
         <mat-form-field>
           <input matInput placeholder="Age" [value]="patient.birthdate | calculateAge" disabled>
         </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Taille(cm)" formControlName="height" (keyup)="onKeyUp()">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Poids(kg)" formControlName="weight" (keyup)="onKeyUp()">
+        </mat-form-field>
+
+        <button mat-raised-button *ngIf="patient.id" [disabled]="tabForm.pristine" color="primary" (click)="savePatient()" class="save">
+          <mat-icon>trending_up</mat-icon>
+          <span class="align-middle"> Ajouter </span>
+        </button>
       </div>
     </mat-grid-tile>
 
@@ -25,131 +38,16 @@
         <div class="row lign" *ngFor="let lign of formattedPatientData">
           <span class="cell label">{{lign.label}}</span>
 
-          <div *ngFor="let data of lign.data" class="cell data">
-            {{data}}
+          <div class="cell data" [ngClass]="lign.class">
+            {{tabForm.get(lign.title).value}}
+          </div>
+
+          <div *ngFor="let data of lign.data" class="cell data" [ngClass]="data.class">
+            {{data.value}}
           </div>
         </div>
       </div>
     </mat-grid-tile>
-
-    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
-      <!--Ligne Poids-->
-    <!--</mat-grid-tile>-->
-
-    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
-      <!--Ligne Graphique Poids-->
-    <!--</mat-grid-tile>-->
-
-    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
-      <!--Ligne Plis B-->
-    <!--</mat-grid-tile>-->
-
-    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
-      <!--Ligne Graphique Plis B-->
-    <!--</mat-grid-tile>-->
-
-    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
-      <!--Ligne Plis T-->
-    <!--</mat-grid-tile>-->
-
-    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
-      <!--Ligne Graphique Plis T-->
-    <!--</mat-grid-tile>-->
-
-    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
-      <!--Ligne Plis Sous-->
-    <!--</mat-grid-tile>-->
-
-    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
-      <!--Ligne Graphique Plis Sous-->
-    <!--</mat-grid-tile>-->
-
-    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
-      <!--Ligne Plis Sup-->
-    <!--</mat-grid-tile>-->
-
-    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
-      <!--Ligne Graphique Plis Sup-->
-    <!--</mat-grid-tile>-->
-
-    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
-      <!--Ligne MG(%)-->
-    <!--</mat-grid-tile>-->
-
-    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
-      <!--Ligne Graphique MG(%)-->
-    <!--</mat-grid-tile>-->
-
-    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
-      <!--Ligne MG(kg)-->
-    <!--</mat-grid-tile>-->
-
-    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
-      <!--Ligne Graphique MG(kg)-->
-    <!--</mat-grid-tile>-->
-
-    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
-      <!--Ligne MM(%)-->
-    <!--</mat-grid-tile>-->
-
-    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
-      <!--Ligne Graphique MM(%)-->
-    <!--</mat-grid-tile>-->
-
-    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
-      <!--Ligne MM(kg)-->
-    <!--</mat-grid-tile>-->
-
-    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
-      <!--Ligne Graphique MM(kg)-->
-    <!--</mat-grid-tile>-->
-
-    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
-      <!--Tour de taille-->
-    <!--</mat-grid-tile>-->
-
-    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
-      <!--Ligne Graphique tour de taille-->
-    <!--</mat-grid-tile>-->
-
-    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
-      <!--Tour de hanche-->
-    <!--</mat-grid-tile>-->
-
-    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
-      <!--Ligne Graphique tour de hanche-->
-    <!--</mat-grid-tile>-->
-
-    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
-      <!--Tour de pec-->
-    <!--</mat-grid-tile>-->
-
-    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
-      <!--Ligne Graphique tour de pec-->
-    <!--</mat-grid-tile>-->
-
-    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
-      <!--Tour de bras-->
-    <!--</mat-grid-tile>-->
-
-    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
-      <!--Ligne Graphique tour de bras-->
-    <!--</mat-grid-tile>-->
-
-    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
-      <!--Tour de cuisse-->
-    <!--</mat-grid-tile>-->
-
-    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
-      <!--Ligne Graphique tour de cuisse-->
-    <!--</mat-grid-tile>-->
-
   </mat-grid-list>
-
-  <button mat-raised-button [disabled]="tabForm.pristine" color="primary" (click)="savePatient()" class="save">
-    <mat-icon>person_add</mat-icon>
-    <span class="align-middle" *ngIf="!patient.id"> Sauvegarder le nouveau patient</span>
-    <span class="align-middle" *ngIf="patient.id"> Sauvegarder les changements</span>
-  </button>
 
 </form>

@@ -34,6 +34,7 @@ import {MonEnqueteAlimentaireComponent} from './components/mon-enquete-alimentai
 
 import {BeautifyArrayPipe} from './pipes/beautify-array.pipe';
 import {CalculateAgePipe} from './pipes/calculate-age.pipe';
+import {ImcClassPipe} from './pipes/imc-class.pipe';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -51,7 +52,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     RecherchePatientComponent,
     MonEnqueteAlimentaireComponent,
     BeautifyArrayPipe,
-    CalculateAgePipe
+    CalculateAgePipe,
+    ImcClassPipe
   ],
   imports: [
     BrowserModule,
