@@ -20,7 +20,7 @@ export class ImcClassPipe implements PipeTransform {
         return 'yellow-cell'
       }
       if (value >= 19 && value <= 25) {
-        return 'yellow-cell'
+        return 'green-cell'
       }
     }
     return '';

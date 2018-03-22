@@ -19,7 +19,7 @@ import {FrenchDateAdapter} from '../../services/FrenchDateAdapter';
 })
 export class RecherchePatientComponent implements OnInit, AfterViewInit {
 
-  displayedColumnsSearch = ['groupPatient', 'name', 'firstname', 'birthdate', 'profession', 'email', 'mobile'];
+  displayedColumnsSearch = ['groupPatient', 'name', 'firstname', 'birthdate', 'profession', 'email', 'mobile', 'icon'];
   dataSource: MatTableDataSource<IPatient> = new MatTableDataSource();
   resultsLength = 0;
   isLoadingResults = true;
@@ -92,13 +92,14 @@ export class RecherchePatientComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = filterValue;
   }
 
-  goToFichePatient(patient: IPatient) {
+  goToFichePatient(patient: IPatient, onglet: number) {
+    console.log('patient', patient, onglet);
     if (patient) {
       this.onSearchPatient.emit(patient);
     } else {
       this.onSearchPatient.emit(NEW_PATIENT);
     }
-    this.onSelectedIndex.emit(1); // Redirection vers fiche patient
+    this.onSelectedIndex.emit(onglet);
   }
 
 }

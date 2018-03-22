@@ -340,7 +340,7 @@ export let patientsData: IPatient[] = [
     'favoriteContactType': 'Mail',
     'profession': 'Professeur',
     'maritalStatus': 'Mariée',
-    'groupPatient': ['Patients, Patients Coaching'],
+    'groupPatient': ['Patients', 'Patients Coaching'],
     'metabolism': 'A contracté tel maladie à tel moment, maigre',
     'healthHistory': 'Antécédents femme ...',
     'regularDoctor': 'Dr Test Femme',

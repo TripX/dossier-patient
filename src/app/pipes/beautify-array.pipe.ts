@@ -7,7 +7,7 @@ export class BeautifyArrayPipe implements PipeTransform {
 
   transform(value: any, args?: any): any {
     if (value) {
-      return value.join(' / ');
+      return value.join(' | ');
     }
   }
 

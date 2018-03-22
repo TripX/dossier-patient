@@ -1,27 +1,42 @@
 <mat-card>
   <mat-card-content>
     <mat-tab-group [selectedIndex]="selectedIndex" (selectedIndexChange)="onSelectedIndex($event)">
-      <mat-tab label="Rechercher un patient">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>search</mat-icon> <span class="align-super"> Rechercher un patient</span>
+        </ng-template>
         <div class="tab-content">
           <app-recherche-patient (onSelectedIndex)="onSelectedIndex($event)" (onSearchPatient)="onSearchPatient($event)"></app-recherche-patient>
         </div>
       </mat-tab>
-      <mat-tab label="Ma fiche patient">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>person</mat-icon> <span class="align-super"> Ma fiche patient</span>
+        </ng-template>
         <div class="tab-content">
           <app-fiche-patient (onSelectedIndex)="onSelectedIndex($event)" [patient]="searchedPatient"></app-fiche-patient>
         </div>
       </mat-tab>
-      <mat-tab label="Mon évolution">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>trending_up</mat-icon> <span class="align-super"> Mon évolution</span>
+        </ng-template>
         <div class="tab-content">
           <app-mon-evolution (onSelectedIndex)="onSelectedIndex($event)" [patient]="searchedPatient"></app-mon-evolution>
         </div>
       </mat-tab>
-      <mat-tab label="Ma balance énergétique">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>equalizer</mat-icon> <span class="align-super"> Ma balance énergétique</span>
+        </ng-template>
         <div class="tab-content">
           <app-ma-balance-energetique></app-ma-balance-energetique>
         </div>
       </mat-tab>
-      <mat-tab label="Mon enquête alimentaire">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>info</mat-icon> <span class="align-super"> Mon enquête alimentaire</span>
+        </ng-template>
         <div class="tab-content">
           <app-mon-enquete-alimentaire></app-mon-enquete-alimentaire>
         </div>

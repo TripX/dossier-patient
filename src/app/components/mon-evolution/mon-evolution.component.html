@@ -18,6 +18,7 @@
           <input matInput placeholder="Age" [value]="patient.birthdate | calculateAge" disabled>
         </mat-form-field>
 
+        <h3>Nouvelles données</h3>
         <mat-form-field>
           <input matInput placeholder="Taille(cm)" formControlName="height" (keyup)="onKeyUp()">
         </mat-form-field>
@@ -27,8 +28,7 @@
         </mat-form-field>
 
         <button mat-raised-button *ngIf="patient.id" [disabled]="tabForm.pristine" color="primary" (click)="savePatient()" class="save">
-          <mat-icon>trending_up</mat-icon>
-          <span class="align-middle"> Ajouter </span>
+          <span class="align-middle"> Sauvegarder les données</span>
         </button>
       </div>
     </mat-grid-tile>
