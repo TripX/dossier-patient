@@ -1,138 +1,148 @@
 <form [formGroup]="tabForm">
-  <mat-grid-list [cols]="10" rowHeight="50px">
 
-    <h3 *ngIf="!patient.id" class="header-new-patient">Nouveau Patient</h3>
+  <h3 *ngIf="!patient.id" class="header-new-patient">Nouveau Patient</h3>
 
-    <mat-grid-tile [colspan]="1" [rowspan]="21">
-      TODO NOM, Prénom, Age
-    </mat-grid-tile>
+  <mat-grid-list [cols]="20" [rowHeight]="800" class="grid-list-evolution">
 
-    <mat-grid-tile [colspan]="9" [rowspan]="1" class="border-cell" class="row">
-      Date
-      <div *ngFor="let d of date">
-        {{d}}
+    <mat-grid-tile [colspan]="3" [rowspan]="1" class="left-column">
+      <div class="column">
+        <mat-form-field>
+          <input matInput placeholder="Nom" [value]="patient.name" disabled>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Prénom" [value]="patient.firstname" disabled>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Age" [value]="patient.birthdate | calculateAge" disabled>
+        </mat-form-field>
       </div>
     </mat-grid-tile>
 
-    <mat-grid-tile [colspan]="9" [rowspan]="1" class="border-cell">
-      Ligne Taille
+    <mat-grid-tile [colspan]="17" [rowspan]="1">
+      <div class="column sub-grid-evolution">
+        <div class="row lign" *ngFor="let lign of formattedPatientData">
+          <span class="cell label">{{lign.label}}</span>
+
+          <div *ngFor="let data of lign.data" class="cell data">
+            {{data}}
+          </div>
+        </div>
+      </div>
     </mat-grid-tile>
 
-    <mat-grid-tile [colspan]="9" [rowspan]="1" class="border-cell">
-      <div #heightChart>Ligne Graphique Taille</div>
-    </mat-grid-tile>
+    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
+      <!--Ligne Poids-->
+    <!--</mat-grid-tile>-->
 
-    <mat-grid-tile [colspan]="9" [rowspan]="1" class="border-cell">
-      Ligne Poids
-    </mat-grid-tile>
+    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
+      <!--Ligne Graphique Poids-->
+    <!--</mat-grid-tile>-->
 
-    <mat-grid-tile [colspan]="9" [rowspan]="1" class="border-cell">
-      Ligne Graphique Poids
-    </mat-grid-tile>
+    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
+      <!--Ligne Plis B-->
+    <!--</mat-grid-tile>-->
 
-    <mat-grid-tile [colspan]="9" [rowspan]="1" class="border-cell">
-      Ligne Plis B
-    </mat-grid-tile>
+    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
+      <!--Ligne Graphique Plis B-->
+    <!--</mat-grid-tile>-->
 
-    <mat-grid-tile [colspan]="9" [rowspan]="1" class="border-cell">
-      Ligne Graphique Plis B
-    </mat-grid-tile>
+    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
+      <!--Ligne Plis T-->
+    <!--</mat-grid-tile>-->
 
-    <mat-grid-tile [colspan]="9" [rowspan]="1" class="border-cell">
-      Ligne Plis T
-    </mat-grid-tile>
+    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
+      <!--Ligne Graphique Plis T-->
+    <!--</mat-grid-tile>-->
 
-    <mat-grid-tile [colspan]="9" [rowspan]="1" class="border-cell">
-      Ligne Graphique Plis T
-    </mat-grid-tile>
+    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
+      <!--Ligne Plis Sous-->
+    <!--</mat-grid-tile>-->
 
-    <mat-grid-tile [colspan]="9" [rowspan]="1" class="border-cell">
-      Ligne Plis Sous
-    </mat-grid-tile>
+    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
+      <!--Ligne Graphique Plis Sous-->
+    <!--</mat-grid-tile>-->
 
-    <mat-grid-tile [colspan]="9" [rowspan]="1" class="border-cell">
-      Ligne Graphique Plis Sous
-    </mat-grid-tile>
+    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
+      <!--Ligne Plis Sup-->
+    <!--</mat-grid-tile>-->
 
-    <mat-grid-tile [colspan]="9" [rowspan]="1" class="border-cell">
-      Ligne Plis Sup
-    </mat-grid-tile>
+    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
+      <!--Ligne Graphique Plis Sup-->
+    <!--</mat-grid-tile>-->
 
-    <mat-grid-tile [colspan]="9" [rowspan]="1" class="border-cell">
-      Ligne Graphique Plis Sup
-    </mat-grid-tile>
+    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
+      <!--Ligne MG(%)-->
+    <!--</mat-grid-tile>-->
 
-    <mat-grid-tile [colspan]="9" [rowspan]="1" class="border-cell">
-      Ligne MG(%)
-    </mat-grid-tile>
+    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
+      <!--Ligne Graphique MG(%)-->
+    <!--</mat-grid-tile>-->
 
-    <mat-grid-tile [colspan]="9" [rowspan]="1" class="border-cell">
-      Ligne Graphique MG(%)
-    </mat-grid-tile>
+    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
+      <!--Ligne MG(kg)-->
+    <!--</mat-grid-tile>-->
 
-    <mat-grid-tile [colspan]="9" [rowspan]="1" class="border-cell">
-      Ligne MG(kg)
-    </mat-grid-tile>
+    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
+      <!--Ligne Graphique MG(kg)-->
+    <!--</mat-grid-tile>-->
 
-    <mat-grid-tile [colspan]="9" [rowspan]="1" class="border-cell">
-      Ligne Graphique MG(kg)
-    </mat-grid-tile>
+    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
+      <!--Ligne MM(%)-->
+    <!--</mat-grid-tile>-->
 
-    <mat-grid-tile [colspan]="9" [rowspan]="1" class="border-cell">
-      Ligne MM(%)
-    </mat-grid-tile>
+    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
+      <!--Ligne Graphique MM(%)-->
+    <!--</mat-grid-tile>-->
 
-    <mat-grid-tile [colspan]="9" [rowspan]="1" class="border-cell">
-      Ligne Graphique MM(%)
-    </mat-grid-tile>
+    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
+      <!--Ligne MM(kg)-->
+    <!--</mat-grid-tile>-->
 
-    <mat-grid-tile [colspan]="9" [rowspan]="1" class="border-cell">
-      Ligne MM(kg)
-    </mat-grid-tile>
+    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
+      <!--Ligne Graphique MM(kg)-->
+    <!--</mat-grid-tile>-->
 
-    <mat-grid-tile [colspan]="9" [rowspan]="1" class="border-cell">
-      Ligne Graphique MM(kg)
-    </mat-grid-tile>
+    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
+      <!--Tour de taille-->
+    <!--</mat-grid-tile>-->
 
-    <mat-grid-tile [colspan]="9" [rowspan]="1" class="border-cell">
-      Tour de taille
-    </mat-grid-tile>
+    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
+      <!--Ligne Graphique tour de taille-->
+    <!--</mat-grid-tile>-->
 
-    <mat-grid-tile [colspan]="9" [rowspan]="1" class="border-cell">
-      Ligne Graphique tour de taille
-    </mat-grid-tile>
+    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
+      <!--Tour de hanche-->
+    <!--</mat-grid-tile>-->
 
-    <mat-grid-tile [colspan]="9" [rowspan]="1" class="border-cell">
-      Tour de hanche
-    </mat-grid-tile>
+    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
+      <!--Ligne Graphique tour de hanche-->
+    <!--</mat-grid-tile>-->
 
-    <mat-grid-tile [colspan]="9" [rowspan]="1" class="border-cell">
-      Ligne Graphique tour de hanche
-    </mat-grid-tile>
+    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
+      <!--Tour de pec-->
+    <!--</mat-grid-tile>-->
 
-    <mat-grid-tile [colspan]="9" [rowspan]="1" class="border-cell">
-      Tour de pec
-    </mat-grid-tile>
+    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
+      <!--Ligne Graphique tour de pec-->
+    <!--</mat-grid-tile>-->
 
-    <mat-grid-tile [colspan]="9" [rowspan]="1" class="border-cell">
-      Ligne Graphique tour de pec
-    </mat-grid-tile>
+    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
+      <!--Tour de bras-->
+    <!--</mat-grid-tile>-->
 
-    <mat-grid-tile [colspan]="9" [rowspan]="1" class="border-cell">
-      Tour de bras
-    </mat-grid-tile>
+    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
+      <!--Ligne Graphique tour de bras-->
+    <!--</mat-grid-tile>-->
 
-    <mat-grid-tile [colspan]="9" [rowspan]="1" class="border-cell">
-      Ligne Graphique tour de bras
-    </mat-grid-tile>
+    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
+      <!--Tour de cuisse-->
+    <!--</mat-grid-tile>-->
 
-    <mat-grid-tile [colspan]="9" [rowspan]="1" class="border-cell">
-      Tour de cuisse
-    </mat-grid-tile>
-
-    <mat-grid-tile [colspan]="9" [rowspan]="1" class="border-cell">
-      Ligne Graphique tour de cuisse
-    </mat-grid-tile>
+    <!--<mat-grid-tile [colspan]="9" [rowspan]="1" class="lign">-->
+      <!--Ligne Graphique tour de cuisse-->
+    <!--</mat-grid-tile>-->
 
   </mat-grid-list>
 

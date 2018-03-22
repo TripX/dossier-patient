@@ -1,5 +1,5 @@
 export const GROUP_PATIENT: string[] = [
-  'Patient',
-  'Famille',
-  'Ami'
+  'Patients Novagym',
+  'Patients Coaching',
+  'Patients'
 ];

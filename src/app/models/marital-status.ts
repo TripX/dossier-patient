@@ -1,9 +1,9 @@
 export const MARITAL_STATUS: string[] = [
   'Couple',
-  'Marié',
+  'Célibataire',
   'Pacsé',
+  'Marié',
   'Divorcé',
   'Séparé',
-  'Célibataire',
   'Veuf'
 ];

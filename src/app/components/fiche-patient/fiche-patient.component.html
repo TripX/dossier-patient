@@ -37,7 +37,7 @@
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput placeholder="Age" [value]="age" [disabled]="!age">
+          <input matInput placeholder="Age" [value]="patient.birthdate | calculateAge" [disabled]="!patient.birthdate">
         </mat-form-field>
 
         <mat-form-field>

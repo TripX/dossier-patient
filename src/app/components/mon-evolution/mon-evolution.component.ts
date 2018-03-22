@@ -20,18 +20,7 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
   @Input() patient: IPatient;
   tabForm: FormGroup;
 
-  date: Array<string> = [];
-  height: Array<number> = [];
-  weight: Array<number> = [];
-  bicipital: Array<number> = [];
-  tricipital: Array<number> = [];
-  subscapulaire: Array<number> = [];
-  suprailiaque: Array<number> = [];
-  waist: Array<number> = [];
-  hip: Array<number> = [];
-  pectoral: Array<number> = [];
-  arm: Array<number> = [];
-  thigh: Array<number> = [];
+  formattedPatientData = [];
 
   constructor() {}
 
@@ -61,22 +50,56 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
     if (this.patient && this.patient.evolution) {
       const datePipe = new DatePipe('fr');
 
-      console.log('evolution data', this.patient.evolution);
+      this.formattedPatientData = [];
+
+      this.formattedPatientData.push({'label': '-', 'data': []});
+      this.formattedPatientData.push({'label': 'Taille(cm)', 'data': []});
+      this.formattedPatientData.push({'label': 'Poids(kg)', 'data': []});
+      this.formattedPatientData.push({'label': 'IMC(kg·m−2)', 'data': []});
+      this.formattedPatientData.push({'label': 'Plis b', 'data': []});
+      this.formattedPatientData.push({'label': 'Plis t', 'data': []});
+      this.formattedPatientData.push({'label': 'Plis sous', 'data': []});
+      this.formattedPatientData.push({'label': 'Plis sup', 'data': []});
+      this.formattedPatientData.push({'label': 'MG(%)', 'data': []});
+      this.formattedPatientData.push({'label': 'MG(kg)', 'data': []});
+      this.formattedPatientData.push({'label': 'MM(%)', 'data': []});
+      this.formattedPatientData.push({'label': 'MM(kg)', 'data': []});
+      this.formattedPatientData.push({'label': 'Tour taille', 'data': []});
+      this.formattedPatientData.push({'label': 'Tour hanche', 'data': []});
+      this.formattedPatientData.push({'label': 'Tour pec', 'data': []});
+      this.formattedPatientData.push({'label': 'Tour bras', 'data': []});
+      this.formattedPatientData.push({'label': 'Tour cuisse', 'data': []});
 
       Object.keys(this.patient.evolution).map(key => {
-        this.date.push(datePipe.transform(this.patient.evolution[key].date));
-        this.height.push(this.patient.evolution[key].height);
-        this.weight.push(this.patient.evolution[key].weight);
-        this.bicipital.push(this.patient.evolution[key].bicipital);
-        this.tricipital.push(this.patient.evolution[key].tricipital);
-        this.subscapulaire.push(this.patient.evolution[key].subscapulaire);
-        this.suprailiaque.push(this.patient.evolution[key].suprailiaque);
-        this.waist.push(this.patient.evolution[key].waist);
-        this.hip.push(this.patient.evolution[key].hip);
-        this.pectoral.push(this.patient.evolution[key].pectoral);
-        this.arm.push(this.patient.evolution[key].arm);
-        this.thigh.push(this.patient.evolution[key].thigh);
+        let idx = 0;
+        this.formattedPatientData[idx].data.unshift(datePipe.transform(this.patient.evolution[key].date, 'd/M/y'));
+        this.formattedPatientData[++idx].data.unshift(this.patient.evolution[key].height);
+
+        const weight = this.patient.evolution[key].weight;
+        this.formattedPatientData[++idx].data.unshift(weight);
+
+        const IMC = this.patient.evolution[key].height * weight; // TODO calcul
+        this.formattedPatientData[++idx].data.unshift(IMC);
+
+        this.formattedPatientData[++idx].data.unshift(this.patient.evolution[key].bicipital);
+        this.formattedPatientData[++idx].data.unshift(this.patient.evolution[key].tricipital);
+        this.formattedPatientData[++idx].data.unshift(this.patient.evolution[key].subscapulaire);
+        this.formattedPatientData[++idx].data.unshift(this.patient.evolution[key].suprailiaque);
+
+        const MG = 15; // en kg TODO calcul
+        const MM = weight - MG;
+        this.formattedPatientData[++idx].data.unshift(Number((MG * 100) / (MM + MG)).toFixed(2));
+        this.formattedPatientData[++idx].data.unshift(MG);
+        this.formattedPatientData[++idx].data.unshift(Number((MM * 100) / (MG + MM)).toFixed(2));
+        this.formattedPatientData[++idx].data.unshift(MM);
+        this.formattedPatientData[++idx].data.unshift(this.patient.evolution[key].waist);
+        this.formattedPatientData[++idx].data.unshift(this.patient.evolution[key].hip);
+        this.formattedPatientData[++idx].data.unshift(this.patient.evolution[key].pectoral);
+        this.formattedPatientData[++idx].data.unshift(this.patient.evolution[key].arm);
+        this.formattedPatientData[++idx].data.unshift(this.patient.evolution[key].thigh);
       });
+
+      // this.makeNewPlot(this.heightChart.nativeElement, this.date, this.height);
     }
   }
 
@@ -85,7 +108,7 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
     this.onSelectedIndex.emit(3); // Redirection vers ma balance énergétique
   }
 
-  makeNewTableAndPlot(divElement: HTMLElement, xData: Array<number | string>, yData: Array<number | string>) {
+  makeNewPlot(divElement: HTMLElement, xData: Array<number | string>, yData: Array<number | string>) {
     Plotly.newPlot(divElement, [{
       x: xData,
       y: yData

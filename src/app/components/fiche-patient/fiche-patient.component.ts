@@ -33,7 +33,6 @@ export class FichePatientComponent implements OnInit, AfterViewInit, OnChanges {
   tabForm: FormGroup;
   startToday: Date;
   startBirthDate: Date;
-  age: string;
   activities: IActivity[];
   indexSport: number;
   displayedColumnsConsultation = ['date', 'cost', 'tarificationType'];
@@ -43,7 +42,6 @@ export class FichePatientComponent implements OnInit, AfterViewInit, OnChanges {
 
   constructor(private dateAdapter: DateAdapter<Date>) {
     this.dateAdapter.setLocale('fr');
-    this.age = '';
     this.indexSport = 0;
     this.activities = [{
       index: this.indexSport,
@@ -102,12 +100,7 @@ export class FichePatientComponent implements OnInit, AfterViewInit, OnChanges {
       freeNotes: new FormControl()
     });
 
-    this.tabForm.valueChanges.subscribe(value => {
-        this.age = this.calculateAge(value.birthdate);
-      }
-    );
-
-    console.log('tabForm', this.tabForm);
+    console.log('tabForm fiche patient', this.tabForm);
 
   }
 
@@ -121,15 +114,6 @@ export class FichePatientComponent implements OnInit, AfterViewInit, OnChanges {
 
   removeActivity(activityToRemove: IActivity) {
     this.activities = this.activities.filter(activity => activity !== activityToRemove);
-  }
-
-  calculateAge(birthdate: Date): string {
-    if (birthdate) {
-      const ageDifMs = Date.now() - new Date(birthdate).getTime();
-      const ageDate = new Date(ageDifMs);
-      return Math.abs(ageDate.getUTCFullYear() - 1970).toString();
-    }
-    return null;
   }
 
   savePatient() {

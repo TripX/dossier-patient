@@ -31,7 +31,9 @@ import {MonEvolutionComponent} from './components/mon-evolution/mon-evolution.co
 import {MaBalanceEnergetiqueComponent} from './components/ma-balance-energetique/ma-balance-energetique.component';
 import {RecherchePatientComponent} from './components/recherche-patient/recherche-patient.component';
 import {MonEnqueteAlimentaireComponent} from './components/mon-enquete-alimentaire/mon-enquete-alimentaire.component';
+
 import {BeautifyArrayPipe} from './pipes/beautify-array.pipe';
+import {CalculateAgePipe} from './pipes/calculate-age.pipe';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -48,7 +50,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MaBalanceEnergetiqueComponent,
     RecherchePatientComponent,
     MonEnqueteAlimentaireComponent,
-    BeautifyArrayPipe
+    BeautifyArrayPipe,
+    CalculateAgePipe
   ],
   imports: [
     BrowserModule,
