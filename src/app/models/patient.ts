@@ -19,37 +19,9 @@ export const NEW_PATIENT: IPatient = this.patient = {
   'regularDoctor': '',
   'healthNote': '',
   'freeNotes': '',
-  'activity': [
-    {
-      'index': null,
-      'title': '',
-      'hoursPerWeek' : null
-    }
-  ],
-  'consultation': [
-    {
-      'date': null,
-      'cost': null,
-      'paymentMethod': '',
-      'tarificationType': ''
-    }
-  ],
-  'evolution': [
-    {
-      'date': new Date(),
-      'height': null,
-      'weight': null,
-      'bicipital': null,
-      'tricipital': null,
-      'subscapulaire': null,
-      'suprailiaque': null,
-      'waist': null,
-      'hip': null,
-      'pectoral': null,
-      'arm': null,
-      'thigh': null
-    }
-  ]
+  'activity': [],
+  'consultation': [],
+  'evolution': []
 };
 
 export interface IPatient {

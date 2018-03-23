@@ -93,7 +93,6 @@ export class RecherchePatientComponent implements OnInit, AfterViewInit {
   }
 
   goToFichePatient(patient: IPatient, onglet: number) {
-    console.log('patient', patient, onglet);
     if (patient) {
       this.onSearchPatient.emit(patient);
     } else {

@@ -12,6 +12,7 @@ import {MARITAL_STATUS} from '../../models/marital-status';
 import {FAVORITE_CONTACT_TYPE} from '../../models/favorite-contact-type';
 import {PAYMENT_METHOD} from '../../models/payment-method';
 import {TARIFICATION_TYPE} from '../../models/tarification-type';
+import {PatientsService} from '../../services/patient-service';
 
 @Component({
   selector: 'app-fiche-patient',
@@ -40,7 +41,8 @@ export class FichePatientComponent implements OnInit, AfterViewInit, OnChanges {
   @ViewChild(MatSort) sort: MatSort;
   @Output() onSelectedIndex = new EventEmitter<number>();
 
-  constructor(private dateAdapter: DateAdapter<Date>) {
+  constructor(private dateAdapter: DateAdapter<Date>,
+              private patientsService: PatientsService) {
     this.dateAdapter.setLocale('fr');
     this.indexSport = 0;
     this.activities = [{
@@ -75,7 +77,7 @@ export class FichePatientComponent implements OnInit, AfterViewInit, OnChanges {
     this.dataSource = new MatTableDataSource(this.patient.consultation);
 
     this.tabForm = new FormGroup({
-      group: new FormControl(),
+      groupPatient: new FormControl(),
       title: new FormControl(),
       firstname: new FormControl(),
       name: new FormControl(),
@@ -99,9 +101,6 @@ export class FichePatientComponent implements OnInit, AfterViewInit, OnChanges {
       consultationTarificationType: new FormControl(),
       freeNotes: new FormControl()
     });
-
-    console.log('tabForm fiche patient', this.tabForm);
-
   }
 
   addNewActivity() {
@@ -117,7 +116,36 @@ export class FichePatientComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   savePatient() {
-    console.log('save');
+    this.patient.groupPatient = this.tabForm.get('groupPatient').value;
+    this.patient.title = this.tabForm.get('title').value;
+    this.patient.firstname = this.tabForm.get('firstname').value;
+    this.patient.name = this.tabForm.get('name').value;
+    this.patient.sex = this.tabForm.get('sex').value;
+    this.patient.sex = this.tabForm.get('sex').value;
+    this.patient.birthdate = this.tabForm.get('birthdate').value;
+    this.patient.profession = this.tabForm.get('profession').value;
+    this.patient.maritalStatus = this.tabForm.get('maritalStatus').value;
+    this.patient.landline = this.tabForm.get('landline').value;
+    this.patient.mobile = this.tabForm.get('mobile').value;
+    this.patient.email = this.tabForm.get('email').value;
+    this.patient.creationDate = this.tabForm.get('creationDate').value;
+    this.patient.favoriteContactType = this.tabForm.get('favoriteContactType').value;
+    this.patient.metabolism = this.tabForm.get('metabolism').value;
+    this.patient.healthHistory = this.tabForm.get('healthHistory').value;
+    this.patient.regularDoctor = this.tabForm.get('regularDoctor').value;
+    this.patient.healthNote = this.tabForm.get('healthNote').value;
+    this.patient.activity.concat(this.activities);
+    this.patient.consultation.push({
+      'date': new Date(),
+      'cost': this.tabForm.get('consultationCost').value,
+      'paymentMethod': this.tabForm.get('consultationPaymentMethod').value,
+      'tarificationType': this.tabForm.get('consultationTarificationType').value
+    });
+    this.patient.freeNotes = this.tabForm.get('freeNotes').value;
+
+    this.patientsService.addPatient(this.patient);
+    // TODO Ajouter à la liste des patients cherchés
+
     this.onSelectedIndex.emit(2); // Redirection vers mon évolution
   }
 

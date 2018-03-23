@@ -6,7 +6,7 @@
   <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Rechercher un patient">
 </mat-form-field>
 
-<button mat-raised-button type="submit" class="left-space" color="primary" (click)="goToFichePatient()">
+<button mat-raised-button type="submit" class="left-space" color="primary" (click)="goToFichePatient(null, 1)">
   <mat-icon>add</mat-icon><span class="align-middle"> Ajouter un nouveau patient</span>
 </button>
 
@@ -15,37 +15,37 @@
 
     <ng-container matColumnDef="groupPatient">
       <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true"> Groupe </mat-header-cell>
-      <mat-cell *matCellDef="let patient" (click)="goToFichePatient(patient, 1)"> {{patient.groupPatient | beautifyArray}} </mat-cell>
+      <mat-cell *matCellDef="let patient"> {{patient.groupPatient | beautifyArray}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Nom </mat-header-cell>
-      <mat-cell *matCellDef="let patient" (click)="goToFichePatient(patient, 1)"> {{patient.name}} </mat-cell>
+      <mat-cell *matCellDef="let patient" > {{patient.name}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="firstname">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Prénom </mat-header-cell>
-      <mat-cell *matCellDef="let patient" (click)="goToFichePatient(patient, 1)"> {{patient.firstname}} </mat-cell>
+      <mat-cell *matCellDef="let patient" > {{patient.firstname}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="birthdate">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Date de naissance </mat-header-cell>
-      <mat-cell *matCellDef="let patient" (click)="goToFichePatient(patient, 1)"> {{patient.birthdate | date:'dd/MM/yyyy'}} </mat-cell>
+      <mat-cell *matCellDef="let patient" > {{patient.birthdate | date:'dd/MM/yyyy'}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="profession">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Profession </mat-header-cell>
-      <mat-cell *matCellDef="let patient" (click)="goToFichePatient(patient, 1)"> {{patient.profession}} </mat-cell>
+      <mat-cell *matCellDef="let patient" > {{patient.profession}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="email">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Mail </mat-header-cell>
-      <mat-cell *matCellDef="let patient" (click)="goToFichePatient(patient, 1)"> {{patient.email}} </mat-cell>
+      <mat-cell *matCellDef="let patient" > {{patient.email}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="mobile">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Téléphone mobile </mat-header-cell>
-      <mat-cell *matCellDef="let patient" (click)="goToFichePatient(patient, 1)"> {{patient.mobile}} </mat-cell>
+      <mat-cell *matCellDef="let patient" > {{patient.mobile}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="icon">
@@ -59,7 +59,7 @@
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumnsSearch"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumnsSearch;"></mat-row>
+    <mat-row *matRowDef="let row; columns: displayedColumnsSearch;" (click)="goToFichePatient(row, 1)"></mat-row>
   </mat-table>
 
   <div *ngIf="error" class="mat-error">{{error}}</div>

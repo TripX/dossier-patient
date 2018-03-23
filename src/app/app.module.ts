@@ -19,7 +19,6 @@ import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 import {ElectronService} from './providers/electron.service';
-import {SaveDataService} from './services/save-data.service';
 import {PatientsService} from './services/patient-service';
 
 import {WebviewDirective} from './directives/webview.directive';
@@ -73,7 +72,6 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   providers: [
     ElectronService,
-    SaveDataService,
     PatientsService
   ],
   bootstrap: [AppComponent]

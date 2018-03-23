@@ -17,14 +17,7 @@ export class SaveDataService {
 
   constructor(private http: HttpClient) { }
 
-  addPatient(patientData): Observable<void> {
-    patientData.id = Date.now();
-    return this.http.post<IPatient>(this.BASE_URL + 'api/patients', patientData)
-      .map(res => {
-        console.log(res);
-        this.patientSubject.next(patientData);
-      });
-  }
+  // TODO NOTE : NE PAS UTILISER CE SERVICE !
 
   getPatient(id): Observable<IPatient> {
     return this.http.get<IPatient>(this.BASE_URL + `api/patients/${id}`);

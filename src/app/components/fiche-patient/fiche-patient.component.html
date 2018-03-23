@@ -5,7 +5,7 @@
     <mat-grid-tile [colspan]="1" [rowspan]="2">
       <div class="column">
         <mat-form-field>
-          <mat-select placeholder="Groupe Patient" formControlName="group" multiple [(ngModel)]="patient.groupPatient">
+          <mat-select placeholder="Groupe Patient" formControlName="groupPatient" multiple [(ngModel)]="patient.groupPatient">
             <mat-option *ngFor="let group of groupPatient" [value]="group">{{group}}</mat-option>
           </mat-select>
         </mat-form-field>
@@ -127,7 +127,7 @@
           </div>
         </mat-tab>
 
-        <mat-tab [disabled]="!patient.consultation[0].cost">
+        <mat-tab [disabled]="!patient?.consultation[0]?.cost">
           <ng-template mat-tab-label>
             <mat-icon>history</mat-icon><span class="align-super"> Historique</span>
           </ng-template>
