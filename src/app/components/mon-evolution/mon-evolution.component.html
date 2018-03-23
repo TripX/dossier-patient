@@ -15,8 +15,16 @@
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput placeholder="Age" [value]="patient.birthdate | calculateAge" disabled>
+          <input matInput placeholder="sexe" [value]="patient.sex" disabled>
         </mat-form-field>
+
+        <mat-form-field>
+          <input #age matInput placeholder="Age" [value]="patient.birthdate | calculateAge" disabled>
+        </mat-form-field>
+
+        <div *ngIf="age.value < 18">
+          <mat-icon color="warn">warning</mat-icon> <span class="align-super warn">Patient de moins de 18 ans => Se reporter à la courbe de croissance pour l'IMC</span>
+        </div>
 
         <h3>Nouvelles données</h3>
         <mat-form-field>
@@ -24,7 +32,7 @@
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput placeholder="Poids(kg)" formControlName="weight" (keyup)="onKeyUp()">
+          <input matInput type="number" placeholder="Poids(kg)" formControlName="weight" (keyup)="onKeyUp()">
         </mat-form-field>
 
         <button mat-raised-button *ngIf="patient.id" [disabled]="tabForm.pristine" color="primary" (click)="savePatient()" class="save">
@@ -33,20 +41,36 @@
       </div>
     </mat-grid-tile>
 
-    <mat-grid-tile [colspan]="17" [rowspan]="1">
-      <div class="column sub-grid-evolution">
-        <div class="row lign" *ngFor="let lign of formattedPatientData">
-          <span class="cell label">{{lign.label}}</span>
+    <mat-grid-tile [colspan]="17" [rowspan]="1" class="right-grid">
+      <mat-tab-group>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span class="align-super"> Tableau </span>
+          </ng-template>
+          <div class="column sub-grid-evolution">
+            <div class="row lign" *ngFor="let lign of formattedPatientData">
+              <span class="cell label">{{lign.label}}</span>
 
-          <div class="cell data" [ngClass]="lign.class">
-            {{tabForm.get(lign.title).value}}
-          </div>
+              <div class="cell data" [ngClass]="lign.class">
+                {{tabForm.get(lign.title).value}}
+              </div>
 
-          <div *ngFor="let data of lign.data" class="cell data" [ngClass]="data.class">
-            {{data.value}}
+              <div *ngFor="let data of lign.data" class="cell data" [ngClass]="data.class">
+                {{data.value}}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span class="align-super"> Courbe de croissance</span>
+          </ng-template>
+          <div class="tab-content">
+            <img *ngIf="patient.sex === 'Masculin'" src="../../../assets/img/courbe-corpulence-garcon.gif">
+            <img *ngIf="patient.sex === 'Féminin'" src="../../../assets/img/courbe-corpulence-fille.gif">
+          </div>
+        </mat-tab>
+      </mat-tab-group>
     </mat-grid-tile>
   </mat-grid-list>
 

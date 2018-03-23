@@ -69,23 +69,46 @@
   float: right;
 }
 
-.black-cell {
+.maigreur-morbide-cell {
+  background: repeating-linear-gradient(
+      45deg,
+      black,
+      black 8px,
+      gray 12px,
+      gray 10px
+  );
+  color: white;
+}
+
+.maigreur-cell {
+  background: repeating-linear-gradient(
+      45deg,
+      red,
+      red 8px,
+      gray 12px,
+      gray 10px
+  );
+  color: white;
+}
+
+.souhaitable-cell {
+  background-color: rgba(22, 208, 22, 0.79);
+}
+
+.surpoids-cell {
+  background-color: orange;
+}
+
+.obesite-modere-cell {
+  background-color: red;
+  color: white;
+}
+
+.obesite-morbide-cell {
   background-color: black;
   color: white;
 }
 
-.red-cell {
-  background-color: red;
-}
-
-.orange-cell {
-  background-color: orange;
-}
-
-.yellow-cell {
-  background-color: yellow;
-}
-
-.green-cell {
-  background-color: rgba(22, 208, 22, 0.79);
+.warn {
+  color: orangered;
 }

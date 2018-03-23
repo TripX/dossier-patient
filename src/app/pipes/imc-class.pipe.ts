@@ -7,20 +7,18 @@ export class ImcClassPipe implements PipeTransform {
 
   transform(value: number | string, args?: any): string {
     if (value) {
-      if (value >= 0 && value < 7 || value > 40 && value <= 61) {
-        return 'black-cell'
-      }
-      if (value >= 7 && value < 16 || value > 35 && value <= 40) {
-        return 'red-cell'
-      }
-      if (value > 30 && value <= 35) {
-        return 'orange-cell'
-      }
-      if (value >= 16 && value < 19 || value > 25 && value <= 30) {
-        return 'yellow-cell'
-      }
-      if (value >= 19 && value <= 25) {
-        return 'green-cell'
+      if (value < 7) {
+        return 'maigreur-morbide-cell' // black
+      } else if (value < 18.5) {
+        return 'maigreur-cell' // red
+      } else if (value < 25) {
+        return 'souhaitable-cell' // green
+      } else if (value < 30) {
+        return 'surpoids-cell' // orange
+      } else if (value < 35) {
+        return 'obesite-modere-cell' // red
+      } else {
+        return 'obesite-morbide-cell'; // black
       }
     }
     return '';
