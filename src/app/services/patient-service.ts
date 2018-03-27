@@ -17,10 +17,7 @@ export class PatientsService {
     return this.http.get<IPatient[]>(requestUrl);
   }
 
-  addPatient(patientData: IPatient): Observable<void> {
-    return this.http.post<IPatient>(this.BASE_URL + 'api/patients', patientData)
-      .map(res => {
-        console.log('res add patient: ', res);
-      });
+  addPatient(patientData: IPatient): Observable<IPatient> {
+    return this.http.post<IPatient>(this.BASE_URL + 'api/patients', patientData);
   }
 }

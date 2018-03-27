@@ -116,6 +116,7 @@ export class FichePatientComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   savePatient() {
+    this.patient.id = 10; // TODO
     this.patient.groupPatient = this.tabForm.get('groupPatient').value;
     this.patient.title = this.tabForm.get('title').value;
     this.patient.firstname = this.tabForm.get('firstname').value;
@@ -143,7 +144,8 @@ export class FichePatientComponent implements OnInit, AfterViewInit, OnChanges {
     });
     this.patient.freeNotes = this.tabForm.get('freeNotes').value;
 
-    this.patientsService.addPatient(this.patient);
+    // TODO BEtter
+    this.patientsService.addPatient(this.patient).subscribe( patient => console.log('retour', patient), error => console.error(error));
     // TODO Ajouter à la liste des patients cherchés
 
     this.onSelectedIndex.emit(2); // Redirection vers mon évolution

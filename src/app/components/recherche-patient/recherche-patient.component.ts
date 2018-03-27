@@ -92,7 +92,8 @@ export class RecherchePatientComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = filterValue;
   }
 
-  goToFichePatient(patient: IPatient, onglet: number) {
+  goTo(patient: IPatient, onglet: number, event: Event) {
+    event.stopPropagation();
     if (patient) {
       this.onSearchPatient.emit(patient);
     } else {

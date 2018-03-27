@@ -28,11 +28,11 @@
 
         <h3>Nouvelles données</h3>
         <mat-form-field>
-          <input matInput placeholder="Taille(cm)" formControlName="height" (keyup)="onKeyUp()">
+          <input matInput placeholder="Taille(cm)" formControlName="height" (keyup)="updateData()">
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput type="number" placeholder="Poids(kg)" formControlName="weight" (keyup)="onKeyUp()">
+          <input matInput type="number" placeholder="Poids(kg)" formControlName="weight" (keyup)="updateData()">
         </mat-form-field>
 
         <button mat-raised-button *ngIf="patient.id" [disabled]="tabForm.pristine" color="primary" (click)="savePatient()" class="save">
@@ -66,8 +66,9 @@
             <span class="align-super"> Courbe de croissance</span>
           </ng-template>
           <div class="tab-content">
-            <img *ngIf="patient.sex === 'Masculin'" src="../../../assets/img/courbe-corpulence-garcon.gif">
-            <img *ngIf="patient.sex === 'Féminin'" src="../../../assets/img/courbe-corpulence-fille.gif">
+            <div #courbecorpulence></div>
+            <!--<img *ngIf="patient.sex === 'Masculin'" src="../../../assets/img/courbe-corpulence-garcon.gif">-->
+            <!--<img *ngIf="patient.sex === 'Féminin'" src="../../../assets/img/courbe-corpulence-fille.gif">-->
           </div>
         </mat-tab>
       </mat-tab-group>

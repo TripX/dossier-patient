@@ -5,6 +5,8 @@ import {FormControl, FormGroup} from '@angular/forms';
 import {DatePipe, registerLocaleData} from '@angular/common';
 import localeFR from '@angular/common/locales/fr';
 import {ImcClassPipe} from '../../pipes/imc-class.pipe';
+import {CORPULENCE_GARCON} from '../../models/corpulence-garcon';
+import {ScatterData} from 'plotly.js';
 
 registerLocaleData(localeFR);
 
@@ -17,6 +19,7 @@ registerLocaleData(localeFR);
 export class MonEvolutionComponent implements OnInit, OnChanges {
 
   @ViewChild('heightChart') heightChart;
+  @ViewChild('courbecorpulence') courbecorpulence;
   @Output() onSelectedIndex = new EventEmitter<number>();
   @Input() patient: IPatient;
   tabForm: FormGroup;
@@ -108,7 +111,11 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
         this.formattedPatientData[++idx].data.unshift({'value': this.patient.evolution[key].thigh, 'class': ''});
       });
 
-      // this.makeNewPlot(this.heightChart.nativeElement, this.date, this.height);
+      if (this.patient.sex === 'Masculin') {
+        this.plotCorpulence(CORPULENCE_GARCON);
+      } else {
+        // this.plotCorpulence(this.heightChart.nativeElement, this.date, this.height);
+      }
     }
   }
 
@@ -132,7 +139,7 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
     }
   }
 
-  onKeyUp() {
+  updateData() {
     const height = this.tabForm.get('height').value;
     const weight = this.tabForm.get('weight').value;
     if (height && weight) {
@@ -150,12 +157,31 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
     }
   }
 
-  makeNewPlot(divElement: HTMLElement, xData: Array<number | string>, yData: Array<number | string>) {
-    Plotly.newPlot(divElement, [{
-      x: xData,
-      y: yData
-    }], {
-      margin: {t: 0}
-    });
+  plotCorpulence(newData) {
+    const max = {
+      x: newData.x,
+      y: newData.miny,
+      fill: 'tonexty',
+      fillcolor: 'lightblue',
+      type: 'scatter',
+      mode: 'none'
+    };
+
+    const min = {
+      x: newData.x,
+      y: newData.maxy,
+      fill: 'tonexty',
+      fillcolor: 'transparent',
+      type: 'scatter',
+      mode: 'none'
+    };
+
+    const layout = {
+      title: 'Courbe de corpulence - Garçon'
+    };
+
+    const data = [min, max];
+
+    Plotly.newPlot(this.courbecorpulence.nativeElement, data as any, layout);
   }
 }
