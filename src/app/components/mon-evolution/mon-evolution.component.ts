@@ -7,6 +7,7 @@ import localeFR from '@angular/common/locales/fr';
 import {ImcClassPipe} from '../../pipes/imc-class.pipe';
 import {CORPULENCE_GARCON} from '../../models/corpulence-garcon';
 import {ScatterData} from 'plotly.js';
+import {CalculateAgePipe} from '../../pipes/calculate-age.pipe';
 
 registerLocaleData(localeFR);
 
@@ -58,6 +59,7 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: {[propertyName: string]: SimpleChange}) {
     if (this.patient && this.patient.evolution) {
+      const calculateAge = new CalculateAgePipe();
       const datePipe = new DatePipe('fr');
       const imcClassPipe = new ImcClassPipe();
 
@@ -81,9 +83,17 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
       this.formattedPatientData.push({'title': 'arm', 'label': 'Tour bras', 'data': []});
       this.formattedPatientData.push({'title': 'thigh', 'label': 'Tour cuisse', 'data': []});
 
+      const age = [];
+      const birthdate = this.patient.birthdate;
       Object.keys(this.patient.evolution).map(key => {
         let idx = 0;
-        this.formattedPatientData[idx].data.unshift({'value': datePipe.transform(this.patient.evolution[key].date, 'd/M/y'), 'class': ''});
+        const dateEvolution = datePipe.transform(this.patient.evolution[key].date, 'd/M/y');
+        this.formattedPatientData[idx].data.unshift({'value': dateEvolution, 'class': ''});
+
+        // Calcul de l'age au moment donné
+        const [day, month, year] = dateEvolution.split('/');
+        const calculatedAge = calculateAge.transform(birthdate, new Date(Number(year), Number(month) - 1, Number(day)));
+        age.push(calculatedAge);
 
         const height = this.patient.evolution[key].height;
         this.formattedPatientData[++idx].data.unshift({'value': height, 'class': ''});
@@ -92,7 +102,9 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
         this.formattedPatientData[++idx].data.unshift({'value': weight, 'class': ''});
 
         const IMC = this.calculateIMC(height, weight);
-        this.formattedPatientData[++idx].data.unshift({'value': IMC, 'class': imcClassPipe.transform(IMC)});
+        this.formattedPatientData[++idx].data.unshift(
+          {'value': IMC, 'class': Number(calculatedAge) > 17 ? imcClassPipe.transform(IMC) : ''}
+        );
 
         this.formattedPatientData[++idx].data.unshift({'value': this.patient.evolution[key].bicipital, 'class': ''});
         this.formattedPatientData[++idx].data.unshift({'value': this.patient.evolution[key].tricipital, 'class': ''});
@@ -111,8 +123,14 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
         this.formattedPatientData[++idx].data.unshift({'value': this.patient.evolution[key].thigh, 'class': ''});
       });
 
+      const imc = [];
+      this.formattedPatientData[3].data.forEach(function(element) {
+        imc.push(element.value);
+      });
+      console.log(age, imc);
+
       if (this.patient.sex === 'Masculin') {
-        this.plotCorpulence(CORPULENCE_GARCON);
+        this.plotCorpulence(CORPULENCE_GARCON, age, imc);
       } else {
         // this.plotCorpulence(this.heightChart.nativeElement, this.date, this.height);
       }
@@ -157,31 +175,72 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
     }
   }
 
-  plotCorpulence(newData) {
-    const max = {
-      x: newData.x,
-      y: newData.miny,
-      fill: 'tonexty',
-      fillcolor: 'lightblue',
+  plotCorpulence(constant, xData, yData) {
+
+    const imcData = {
+      name: '',
+      x: xData,
+      y: yData,
+      color: 'red',
       type: 'scatter',
+      line: {
+        shape: 'spline',
+        smoothing: 0.5
+      }
+    };
+
+    const max = {
+      name: '',
+      x: constant.x,
+      y: constant.miny,
+      fill: 'tonexty',
+      fillcolor: 'rgba(108, 154, 255, 0.37)',
+      type: 'scatter',
+      line: {
+        shape: 'spline',
+        smoothing: 0.5
+      },
       mode: 'none'
     };
 
     const min = {
-      x: newData.x,
-      y: newData.maxy,
-      fill: 'tonexty',
+      name: '',
+      x: constant.x,
+      y: constant.maxy,
+      fill: 'tozeroy',
       fillcolor: 'transparent',
       type: 'scatter',
       mode: 'none'
     };
 
     const layout = {
+      height: 600,
+      width: 600,
+      xaxis: {
+        title: 'Age',
+        range: [0, 18],
+        autotick: false,
+        ticks: 'outside',
+        dtick: 1,
+        ticklen: 8,
+        tickwidth: 2,
+        tickcolor: 'lightgrey'
+      },
+      yaxis: {
+        title: 'IMC',
+        range: [0, 27],
+        autotick: false,
+        ticks: 'outside',
+        dtick: 1,
+        ticklen: 8,
+        tickwidth: 2,
+        tickcolor: 'lightgrey'
+      },
       title: 'Courbe de corpulence - Garçon'
     };
 
-    const data = [min, max];
+    const data = [min, max, imcData];
 
-    Plotly.newPlot(this.courbecorpulence.nativeElement, data as any, layout);
+    Plotly.newPlot(this.courbecorpulence.nativeElement, data as any, layout as any);
   }
 }
