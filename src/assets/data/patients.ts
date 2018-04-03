@@ -50,6 +50,34 @@ export let patientsData: IPatient[] = [
     ],
     'evolution': [
       {
+        'date': new Date('1995-02-22'),
+        'height': 80,
+        'weight': 12,
+        'bicipital': 2,
+        'tricipital': 2,
+        'subscapulaire': 1,
+        'suprailiaque': 1,
+        'waist': 70,
+        'hip': 70,
+        'pectoral': 110,
+        'arm': 10,
+        'thigh': 40
+      },
+      {
+        'date': new Date('1998-12-22'),
+        'height': 80,
+        'weight': 12,
+        'bicipital': 2,
+        'tricipital': 2,
+        'subscapulaire': 1,
+        'suprailiaque': 1,
+        'waist': 70,
+        'hip': 70,
+        'pectoral': 110,
+        'arm': 10,
+        'thigh': 40
+      },
+      {
         'date': new Date('2017-08-22'),
         'height': 178,
         'weight': 80,

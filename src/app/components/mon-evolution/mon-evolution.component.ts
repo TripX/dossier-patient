@@ -5,7 +5,7 @@ import {FormControl, FormGroup} from '@angular/forms';
 import {DatePipe, registerLocaleData} from '@angular/common';
 import localeFR from '@angular/common/locales/fr';
 import {ImcClassPipe} from '../../pipes/imc-class.pipe';
-import {CORPULENCE_GARCON} from '../../models/corpulence-garcon';
+import {CORPULENCE_FILLE, CORPULENCE_GARCON} from '../../models/corpulence';
 import {ScatterData} from 'plotly.js';
 import {CalculateAgePipe} from '../../pipes/calculate-age.pipe';
 
@@ -19,9 +19,13 @@ registerLocaleData(localeFR);
 })
 export class MonEvolutionComponent implements OnInit, OnChanges {
 
+  showCourbeCroissance = false;
   @ViewChild('heightChart') heightChart;
   @ViewChild('courbecorpulence') courbecorpulence;
   @Output() onSelectedIndex = new EventEmitter<number>();
+  selectedIndexInside: number;
+  @ViewChild('insideTabGroup') insideTabGroup;
+
   @Input() patient: IPatient;
   tabForm: FormGroup;
 
@@ -30,6 +34,8 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
   constructor() {}
 
   ngOnInit() {
+
+    this.selectedIndexInside = 0;
 
     this.patient = NEW_PATIENT;
 
@@ -58,6 +64,8 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: {[propertyName: string]: SimpleChange}) {
+    this.selectedIndexInside = 0; // TODO NEXT sur le switch parfois la tab est vide ???
+
     if (this.patient && this.patient.evolution) {
       const calculateAge = new CalculateAgePipe();
       const datePipe = new DatePipe('fr');
@@ -84,6 +92,7 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
       this.formattedPatientData.push({'title': 'thigh', 'label': 'Tour cuisse', 'data': []});
 
       const age = [];
+      const imc = [];
       const birthdate = this.patient.birthdate;
       Object.keys(this.patient.evolution).map(key => {
         let idx = 0;
@@ -102,6 +111,7 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
         this.formattedPatientData[++idx].data.unshift({'value': weight, 'class': ''});
 
         const IMC = this.calculateIMC(height, weight);
+        imc.push(IMC);
         this.formattedPatientData[++idx].data.unshift(
           {'value': IMC, 'class': Number(calculatedAge) > 17 ? imcClassPipe.transform(IMC) : ''}
         );
@@ -123,17 +133,13 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
         this.formattedPatientData[++idx].data.unshift({'value': this.patient.evolution[key].thigh, 'class': ''});
       });
 
-      const imc = [];
-      this.formattedPatientData[3].data.forEach(function(element) {
-        imc.push(element.value);
-      });
-      console.log(age, imc);
-
       if (this.patient.sex === 'Masculin') {
-        this.plotCorpulence(CORPULENCE_GARCON, age, imc);
+        this.plotCorpulence(CORPULENCE_GARCON, age, imc, 'rgba(108, 154, 255, 0.37)', 'Courbe de corpulence - Garçon');
       } else {
-        // this.plotCorpulence(this.heightChart.nativeElement, this.date, this.height);
+        this.plotCorpulence(CORPULENCE_FILLE, age, imc, 'rgba(255, 154, 108, 0.37)', 'Courbe de corpulence - Fille');
       }
+
+      age.some(value => value < 18) ? this.showCourbeCroissance = true : this.showCourbeCroissance = false;
     }
   }
 
@@ -175,26 +181,26 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
     }
   }
 
-  plotCorpulence(constant, xData, yData) {
+  plotCorpulence(constant, xData, yData, color, title) {
 
     const imcData = {
       name: '',
       x: xData,
       y: yData,
-      color: 'red',
       type: 'scatter',
       line: {
+        color: 'green',
         shape: 'spline',
         smoothing: 0.5
       }
     };
 
-    const max = {
+    const min = {
       name: '',
       x: constant.x,
       y: constant.miny,
       fill: 'tonexty',
-      fillcolor: 'rgba(108, 154, 255, 0.37)',
+      fillcolor: color,
       type: 'scatter',
       line: {
         shape: 'spline',
@@ -203,7 +209,7 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
       mode: 'none'
     };
 
-    const min = {
+    const max = {
       name: '',
       x: constant.x,
       y: constant.maxy,
@@ -236,10 +242,10 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
         tickwidth: 2,
         tickcolor: 'lightgrey'
       },
-      title: 'Courbe de corpulence - Garçon'
+      title: title
     };
 
-    const data = [min, max, imcData];
+    const data = [max, min, imcData];
 
     Plotly.newPlot(this.courbecorpulence.nativeElement, data as any, layout as any);
   }
