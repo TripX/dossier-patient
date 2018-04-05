@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, EventEmitter} from '@angular/core';
 import {IPatient} from '../../models/patient';
 
 @Component({
@@ -10,9 +10,11 @@ export class DossierPatientComponent {
 
   selectedIndex = 0;
   searchedPatient: IPatient;
+  onSearch: boolean;
 
   onSelectedIndex(val: number) {
     this.selectedIndex = val;
+    val === 0 ? this.onSearch = true : this.onSearch = false;
   }
 
   onSearchPatient(patient: IPatient) {

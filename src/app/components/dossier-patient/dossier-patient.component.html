@@ -6,7 +6,7 @@
           <mat-icon>search</mat-icon> <span class="align-super"> Rechercher un patient</span>
         </ng-template>
         <div class="tab-content">
-          <app-recherche-patient (onSelectedIndex)="onSelectedIndex($event)" (onSearchPatient)="onSearchPatient($event)"></app-recherche-patient>
+          <app-recherche-patient (onSelectedIndex)="onSelectedIndex($event)" (onSearchPatient)="onSearchPatient($event)" [onSearch]="onSearch"></app-recherche-patient>
         </div>
       </mat-tab>
       <mat-tab>

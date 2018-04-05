@@ -12,6 +12,7 @@ if (serve) {
 }
 
 // SERVER SIDE BEGIN
+
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
@@ -44,12 +45,19 @@ api.post('/patients', (req, res) => {
   res.json(patient);
 });
 
-api.get('/search/:group/:name?/:sex?', (req, res) => {
+api.put('/patients/:id', (req, res) => {
+  const updatedPatient = req.body;
+  const index = initialPatients.indexOf(initialPatients.find(x => x.id === updatedPatient.id));
+  if (index !== -1) {
+    initialPatients[index] = updatedPatient;
+  }
+  res.json(updatedPatient);
+});
+
+/*api.get('/search/:group/:name?/:sex?', (req, res) => {
   const group = req.params.group;
   let name = req.params.name;
   let sex = req.params.sex;
-
-  console.log('params', req.params);
 
   let patients = getAllPatients().filter(j => (j.group.map( c => c.toLowerCase()).indexOf(group) !== -1));
   if (name) {
@@ -61,7 +69,7 @@ api.get('/search/:group/:name?/:sex?', (req, res) => {
     patients = patients.filter(j => (j.sex.toLowerCase() === sex));
   }
   res.json({ success: true, patients });
-});
+});*/
 
 api.get('/patients/:id', (req, res) => {
   const id = parseInt(req.params.id, 10);

@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, LOCALE_ID, OnChanges, OnInit, Output, SimpleChange, ViewChild} from '@angular/core';
 import * as Plotly from 'plotly.js/lib/core';
-import {IPatient, NEW_PATIENT} from '../../models/patient';
+import {IPatient, Patient} from '../../models/patient';
 import {FormControl, FormGroup} from '@angular/forms';
 import {DatePipe, registerLocaleData} from '@angular/common';
 import localeFR from '@angular/common/locales/fr';
@@ -34,10 +34,8 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
   constructor() {}
 
   ngOnInit() {
-
+    this.patient = new Patient().patient;
     this.selectedIndexInside = 0;
-
-    this.patient = NEW_PATIENT;
 
     const datePipe = new DatePipe('fr');
     this.tabForm = new FormGroup({
@@ -64,7 +62,7 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: {[propertyName: string]: SimpleChange}) {
-    this.selectedIndexInside = 0; // TODO NEXT sur le switch parfois la tab est vide ???
+    this.selectedIndexInside = 0; // TODO NEXT sur le switch parfois la tab est vide ??? // Tester avec 1??
 
     if (this.patient && this.patient.evolution) {
       const calculateAge = new CalculateAgePipe();
@@ -140,6 +138,12 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
       }
 
       age.some(value => value < 18) ? this.showCourbeCroissance = true : this.showCourbeCroissance = false;
+
+      // Remise à zéro des données en cours de saisie
+      this.tabForm.get('height').setValue('');
+      this.tabForm.get('weight').setValue('');
+      this.tabForm.get('imc').setValue('');
+      // TODO AUTRES DONNEES SAISIES
     }
   }
 

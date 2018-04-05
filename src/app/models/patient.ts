@@ -1,28 +1,35 @@
-export const NEW_PATIENT: IPatient = this.patient = {
-  'id': null,
-  'creationDate': new Date(),
-  'lastUpdate': new Date(),
-  'title': '',
-  'name': '',
-  'firstname': '',
-  'sex': '',
-  'birthdate': null,
-  'email': '',
-  'mobile': '',
-  'landline': '',
-  'favoriteContactType': '',
-  'profession': '',
-  'maritalStatus': '',
-  'groupPatient': [],
-  'metabolism': '',
-  'healthHistory': '',
-  'regularDoctor': '',
-  'healthNote': '',
-  'freeNotes': '',
-  'activity': [],
-  'consultation': [],
-  'evolution': []
-};
+export class Patient {
+
+  patient: IPatient;
+
+  constructor() {
+    this.patient = {
+      id: null,
+      creationDate: new Date(),
+      lastUpdate: new Date(),
+      title: '',
+      name: '',
+      firstname: '',
+      sex: '',
+      birthdate: null,
+      email: '',
+      mobile: '',
+      landline: '',
+      favoriteContactType: '',
+      profession: '',
+      maritalStatus: '',
+      groupPatient: [],
+      metabolism: '',
+      healthHistory: '',
+      regularDoctor: '',
+      healthNote: '',
+      freeNotes: '',
+      activity: [],
+      consultation: [],
+      evolution: []
+    }
+  }
+}
 
 export interface IPatient {
   id: number;

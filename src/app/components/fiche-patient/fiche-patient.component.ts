@@ -4,7 +4,7 @@ import {DateAdapter, MatSort, MatTableDataSource} from '@angular/material';
 
 import {FrenchDateAdapter} from '../../services/FrenchDateAdapter';
 
-import {IActivity, IConsultation, IPatient, NEW_PATIENT} from '../../models/patient';
+import {IActivity, IConsultation, IPatient, Patient} from '../../models/patient';
 import {GROUP_PATIENT} from '../../models/group-patient';
 import {TITLE_PATIENT} from '../../models/title-patient';
 import {SEX_PATIENT} from '../../models/sex-patient';
@@ -60,7 +60,7 @@ export class FichePatientComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngOnChanges(changes: {[propertyName: string]: SimpleChange}) {
-    if (this.patient) {
+    if (this.patient && this.patient.id) {
       if (this.patient.consultation) {
         this.dataSource.data = this.patient.consultation;
       }
@@ -71,9 +71,7 @@ export class FichePatientComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngOnInit() {
-
-    this.patient = NEW_PATIENT;
-
+    this.patient = new Patient().patient;
     this.dataSource = new MatTableDataSource(this.patient.consultation);
 
     this.tabForm = new FormGroup({
@@ -116,7 +114,6 @@ export class FichePatientComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   savePatient() {
-    this.patient.id = 10; // TODO
     this.patient.groupPatient = this.tabForm.get('groupPatient').value;
     this.patient.title = this.tabForm.get('title').value;
     this.patient.firstname = this.tabForm.get('firstname').value;
@@ -144,9 +141,7 @@ export class FichePatientComponent implements OnInit, AfterViewInit, OnChanges {
     });
     this.patient.freeNotes = this.tabForm.get('freeNotes').value;
 
-    // TODO BEtter
-    this.patientsService.addPatient(this.patient).subscribe( patient => console.log('retour', patient), error => console.error(error));
-    // TODO Ajouter à la liste des patients cherchés
+    this.patientsService.savePatient(this.patient);
 
     this.onSelectedIndex.emit(2); // Redirection vers mon évolution
   }

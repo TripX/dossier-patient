@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild} from '@angular/core';
 import {DateAdapter, MatPaginator, MatPaginatorIntl, MatSort, MatTableDataSource} from '@angular/material';
 import {merge} from 'rxjs/observable/merge';
 import {of as observableOf} from 'rxjs/observable/of';
@@ -7,7 +7,7 @@ import {map} from 'rxjs/operators/map';
 import {startWith} from 'rxjs/operators/startWith';
 import {switchMap} from 'rxjs/operators/switchMap';
 
-import {IPatient, NEW_PATIENT} from '../../models/patient';
+import {IPatient, Patient} from '../../models/patient';
 import {PatientsService} from '../../services/patient-service';
 import {FrenchDateAdapter} from '../../services/FrenchDateAdapter';
 
@@ -17,7 +17,7 @@ import {FrenchDateAdapter} from '../../services/FrenchDateAdapter';
   styleUrls: ['./recherche-patient.component.scss'],
   providers: [{provide: DateAdapter, useClass: FrenchDateAdapter}, MatPaginatorIntl]
 })
-export class RecherchePatientComponent implements OnInit, AfterViewInit {
+export class RecherchePatientComponent implements OnInit, OnChanges, AfterViewInit {
 
   displayedColumnsSearch = ['groupPatient', 'name', 'firstname', 'birthdate', 'profession', 'email', 'mobile', 'icon'];
   dataSource: MatTableDataSource<IPatient> = new MatTableDataSource();
@@ -27,6 +27,8 @@ export class RecherchePatientComponent implements OnInit, AfterViewInit {
 
   @Output() onSelectedIndex = new EventEmitter<number>();
   @Output() onSearchPatient = new EventEmitter<IPatient>();
+  @Input() onSearch: boolean;
+  updateData = new EventEmitter<number>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -59,13 +61,15 @@ export class RecherchePatientComponent implements OnInit, AfterViewInit {
     // If the user changes the sort order, reset back to the first page.
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
-    merge(this.sort.sortChange, this.paginator.page)
+    // If user come back to search
+    this.updateData.subscribe(() => this.onSearch);
+
+    merge(this.sort.sortChange, this.paginator.page, this.updateData)
       .pipe(
         startWith({}),
         switchMap(() => {
           this.isLoadingResults = true;
-          return this.patientsService!.findAllPatients(
-            this.sort.active, this.sort.direction, this.paginator.pageIndex);
+          return this.patientsService!.findAllPatients(this.sort.active, this.sort.direction, this.paginator.pageIndex);
         }),
         map(data => {
           // Flip flag to show that loading has finished.
@@ -84,6 +88,13 @@ export class RecherchePatientComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+  }
+
+  ngOnChanges() {
+    if (this.onSearch) {
+      this.updateData.emit(0);
+    }
   }
 
   applyFilter(filterValue: string) {
@@ -93,11 +104,13 @@ export class RecherchePatientComponent implements OnInit, AfterViewInit {
   }
 
   goTo(patient: IPatient, onglet: number, event: Event) {
-    event.stopPropagation();
+    if (event) {
+      event.stopPropagation();
+    }
     if (patient) {
       this.onSearchPatient.emit(patient);
     } else {
-      this.onSearchPatient.emit(NEW_PATIENT);
+      this.onSearchPatient.emit(new Patient().patient);
     }
     this.onSelectedIndex.emit(onglet);
   }
