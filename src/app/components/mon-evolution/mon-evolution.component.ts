@@ -23,23 +23,22 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
   @ViewChild('heightChart') heightChart;
   @ViewChild('courbecorpulence') courbecorpulence;
   @Output() onSelectedIndex = new EventEmitter<number>();
-  selectedIndexInside: number;
-  @ViewChild('insideTabGroup') insideTabGroup;
+
+  selectedIndexInside = 0;
 
   @Input() patient: IPatient;
-  tabForm: FormGroup;
-
   formattedPatientData = [];
+  tabForm: FormGroup;
 
   constructor() {}
 
   ngOnInit() {
     this.patient = new Patient().patient;
-    this.selectedIndexInside = 0;
 
     const datePipe = new DatePipe('fr');
     this.tabForm = new FormGroup({
       date: new FormControl(datePipe.transform(new Date(), 'd/M/y')),
+      age: new FormControl(),
       height: new FormControl(),
       weight: new FormControl(),
       imc: new FormControl(),
@@ -62,16 +61,20 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: {[propertyName: string]: SimpleChange}) {
-    this.selectedIndexInside = 0; // TODO NEXT sur le switch parfois la tab est vide ??? // Tester avec 1??
+    // this.onSelectedIndexInside(0);
+    // TODO Ne fonctionne pas car la page évolution n'est pas affiché et donc les mat-tab sont à null
+    // TODO La solution est de chargé la donnée au moment venu et non dés le début (voir lazy-loading)
 
     if (this.patient && this.patient.evolution) {
       const calculateAge = new CalculateAgePipe();
       const datePipe = new DatePipe('fr');
       const imcClassPipe = new ImcClassPipe();
 
+      // En étroite correspondance avec le tabForm, le paramètre title est le lien
       this.formattedPatientData = [];
 
       this.formattedPatientData.push({'title': 'date', 'label': ' ', 'data': []}); // Espace non sécable dans le label Alt+255
+      this.formattedPatientData.push({'title': 'age', 'label': 'Age', 'data': []});
       this.formattedPatientData.push({'title': 'height', 'label': 'Taille(cm)', 'data': []});
       this.formattedPatientData.push({'title': 'weight', 'label': 'Poids(kg)', 'data': []});
       this.formattedPatientData.push({'title': 'imc', 'label': 'IMC(kg·m−2)', 'data': []});
@@ -101,6 +104,9 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
         const [day, month, year] = dateEvolution.split('/');
         const calculatedAge = calculateAge.transform(birthdate, new Date(Number(year), Number(month) - 1, Number(day)));
         age.push(calculatedAge);
+        this.formattedPatientData[++idx].data.unshift(
+          {'value': calculatedAge, 'class': ''}
+        );
 
         const height = this.patient.evolution[key].height;
         this.formattedPatientData[++idx].data.unshift({'value': height, 'class': ''});
@@ -111,7 +117,7 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
         const IMC = this.calculateIMC(height, weight);
         imc.push(IMC);
         this.formattedPatientData[++idx].data.unshift(
-          {'value': IMC, 'class': Number(calculatedAge) > 17 ? imcClassPipe.transform(IMC) : ''}
+          {'value': IMC, 'class': Number(calculatedAge) > 17 ? imcClassPipe.transform(IMC) : 'young-person-cell'}
         );
 
         this.formattedPatientData[++idx].data.unshift({'value': this.patient.evolution[key].bicipital, 'class': ''});
@@ -140,11 +146,17 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
       age.some(value => value < 18) ? this.showCourbeCroissance = true : this.showCourbeCroissance = false;
 
       // Remise à zéro des données en cours de saisie
-      this.tabForm.get('height').setValue('');
-      this.tabForm.get('weight').setValue('');
-      this.tabForm.get('imc').setValue('');
-      // TODO AUTRES DONNEES SAISIES
+      if (this.tabForm) {
+        this.tabForm.get('height').setValue('');
+        this.tabForm.get('weight').setValue('');
+        this.tabForm.get('imc').setValue('');
+        // TODO AUTRES DONNEES SAISIES
+      }
     }
+  }
+
+  onSelectedIndexInside(val: number) {
+    this.selectedIndexInside = val;
   }
 
   savePatient() {

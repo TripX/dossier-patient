@@ -15,7 +15,7 @@
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput placeholder="sexe" [value]="patient.sex" disabled>
+          <input matInput placeholder="Sexe" [value]="patient.sex" disabled>
         </mat-form-field>
 
         <mat-form-field>
@@ -42,7 +42,7 @@
     </mat-grid-tile>
 
     <mat-grid-tile [colspan]="17" [rowspan]="1" class="right-grid">
-      <mat-tab-group [(selectedIndex)]="selectedIndexInside">
+      <mat-tab-group [selectedIndex]="selectedIndexInside" (selectedIndexChange)="onSelectedIndexInside($event)">
         <mat-tab>
           <ng-template mat-tab-label>
             <span class="align-super"> Tableau </span>
