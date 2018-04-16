@@ -141,7 +141,15 @@ export class FichePatientComponent implements OnInit, AfterViewInit, OnChanges {
     });
     this.patient.freeNotes = this.tabForm.get('freeNotes').value;
 
-    this.patientsService.savePatient(this.patient);
+    if (!this.patient.id) {
+      this.patientsService.addPatient(this.patient).subscribe( res => {
+        console.log(res);
+      });
+    } else {
+      this.patientsService.updatePatient(this.patient).subscribe( res => {
+        console.log(res);
+      });
+    }
 
     this.onSelectedIndex.emit(2); // Redirection vers mon évolution
   }

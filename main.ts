@@ -17,9 +17,27 @@ if (serve) {
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const Datastore = require('nedb')
-  , db = new Datastore({ filename: 'src/assets/db/patients.db', autoload: true });
 
+// Préparation du versionning
+import fs = require('fs');
+const pathPatients = './db/patients.db';
+const pathPatientsVersion = './db/' + new Date().getDate() + '/patients.db';
+fs.open(pathPatients, 'wx', (err, fd) => {
+  if (err) {
+    if (err.code === 'ENOENT') {
+      console.error('Pas de BDD, Création de la BDD');
+      fs.writeFileSync(pathPatients, []);
+    } else {
+      throw err;
+    }
+  }
+
+  // Versionning des données
+  fs.writeFileSync(pathPatientsVersion, fs.readFileSync(pathPatients));
+});
+
+const Datastore = require('nedb')
+  , db = new Datastore({ filename: pathPatients, autoload: true });
 
 // TODO TO USE TO Ajout faux patients
 /*import {patientsData} from './src/assets/data/patients';
@@ -45,16 +63,16 @@ api.get('/patients', (req, res) => {
   });
 });
 
-/*api.get('/patients/:id', (req, res) => {
+api.get('/patients/:id', (req, res) => {
   const id = parseInt(req.params.id, 10);
   db.findOne({ id: id}, function (err, doc) {
     if (doc.id) {
       res.json({ success: true, patient: doc});
     } else {
-      res.json({ success: false, message: `pas de patient pour id ${id}`});
+      res.json({ success: false, message: `Pas de patient pour l'id : ${id}`});
     }
   });
-});*/
+});
 
 // Nouveau patient
 api.post('/patients', (req, res) => {
@@ -64,30 +82,14 @@ api.post('/patients', (req, res) => {
   });
 });
 
-// TODO Modification patient
-/*api.post('/patients/update', (req, res) => {
-
-  console.log('req.body', req.body);
-  res.json(req);*/
-
-  /*db.remove({ id: req.body.id }, {}, function (err, numRemoved) {
-    // numRemoved = 1
-  });
-
+// Modification patient
+api.put('/patients/:id', (req, res) => {
+  const id = parseInt(req.params.id, 10);
   const patient = req.body;
-  db.insert(patient, function (err, newDoc) {
-    res.json(newDoc);
-  });*/
-
-  /*db.update({ id: req.body.id }, req.body, {}, function (err, numReplaced) {
-    // numReplaced = 1
-    // The doc #3 has been replaced by { _id: 'id3', planet: 'Pluton' }
-    // Note that the _id is kept unchanged, and the document has been replaced
-    // (the 'system' and inhabited fields are not here anymore)
-    console.log('err', err);
+  db.update({ id: id }, patient, {}, function (err, numReplaced) {
     res.json(numReplaced);
-  });*/
-// });
+  });
+});
 
 /*api.get('/search/:group/:name?/:sex?', (req, res) => {
   const group = req.params.group;

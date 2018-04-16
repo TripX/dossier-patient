@@ -7,34 +7,29 @@ import {Subject} from 'rxjs/Rx';
 @Injectable()
 export class PatientsService {
 
-  private BASE_URL = 'http://localhost:4201/';
-
+  private BASE_URL = 'http://localhost:4201/api/patients';
   searchResultSubject = new Subject();
 
   constructor(private http: HttpClient) {}
 
   findAllPatients(sort: string, order: string, page: number): Observable<IPatient[]> {
-    const href = this.BASE_URL + 'api/patients';
-    const requestUrl = `${href}?sort=${sort}&order=${order}&page=${page + 1}`;
-
-    return this.http.get<IPatient[]>(requestUrl);
+    return this.http.get<IPatient[]>(`${this.BASE_URL}?sort=${sort}&order=${order}&page=${page + 1}`);
   }
 
-  savePatient(patientData: IPatient): Observable<IPatient> {
-    if (!patientData.id) {
-      patientData.id = new Date().getTime();
-      return this.http.post<IPatient>(this.BASE_URL + 'api/patients', patientData);
-    } else {
-      console.log('call put', patientData);
-      return this.http.post<IPatient>(this.BASE_URL + 'api/patients/update', patientData);
-    }
+  addPatient(patientData: IPatient): Observable<IPatient> {
+    patientData.id = new Date().getTime();
+    return this.http.post<IPatient>(this.BASE_URL, patientData);
+  }
+
+  updatePatient(patientData: IPatient): Observable<IPatient> {
+    return this.http.put<IPatient>(`${this.BASE_URL}/${patientData.id}`, patientData)
   }
 
   getPatient(id): Observable<IPatient> {
-    return this.http.get<IPatient>(this.BASE_URL + `api/patients/${id}`);
+    return this.http.get<IPatient>(`${this.BASE_URL}/${id}`);
   }
 
-  searchPatient(criteria): Observable<Array<IPatient>> {
+  /*searchPatient(criteria): Observable<Array<IPatient>> {
     let sex = '';
     let name = '';
     if (criteria.name) {
@@ -45,5 +40,5 @@ export class PatientsService {
     }
     return this.http.get<Array<IPatient>>(`${this.BASE_URL}api/search/${criteria.group.toLowerCase()}${name}${sex}`)
       .do(res => this.searchResultSubject.next(res));
-  }
+  }*/
 }

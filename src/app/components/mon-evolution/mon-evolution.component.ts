@@ -1,13 +1,13 @@
 import {Component, EventEmitter, Input, LOCALE_ID, OnChanges, OnInit, Output, SimpleChange, ViewChild} from '@angular/core';
-import * as Plotly from 'plotly.js/lib/core';
-import {IPatient, Patient} from '../../models/patient';
 import {FormControl, FormGroup} from '@angular/forms';
 import {DatePipe, registerLocaleData} from '@angular/common';
 import localeFR from '@angular/common/locales/fr';
+
+import * as Plotly from 'plotly.js/lib/core';
 import {ImcClassPipe} from '../../pipes/imc-class.pipe';
-import {CORPULENCE_FILLE, CORPULENCE_GARCON} from '../../models/corpulence';
-import {ScatterData} from 'plotly.js';
 import {CalculateAgePipe} from '../../pipes/calculate-age.pipe';
+import {IPatient, Patient} from '../../models/patient';
+import {CORPULENCE_FILLE, CORPULENCE_GARCON} from '../../models/corpulence';
 
 registerLocaleData(localeFR);
 
