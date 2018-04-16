@@ -25,7 +25,8 @@ export class PatientsService {
       patientData.id = new Date().getTime();
       return this.http.post<IPatient>(this.BASE_URL + 'api/patients', patientData);
     } else {
-      return this.http.put<IPatient>(this.BASE_URL + 'api/patients/' + patientData.id, patientData);
+      console.log('call put', patientData);
+      return this.http.post<IPatient>(this.BASE_URL + 'api/patients/update', patientData);
     }
   }
 

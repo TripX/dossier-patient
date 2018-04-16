@@ -12,18 +12,22 @@ if (serve) {
 }
 
 // SERVER SIDE BEGIN
+// TODO mettre dans un fichier server.js séparé
 
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const Datastore = require('nedb')
+  , db = new Datastore({ filename: 'src/assets/db/patients.db', autoload: true });
 
-import {patientsData} from './src/assets/data/patients';
+
+// TODO TO USE TO Ajout faux patients
+/*import {patientsData} from './src/assets/data/patients';
 const initialPatients = patientsData;
-let addedPatients = [];
-
-const getAllPatients = () => {
-  return [...addedPatients, ...initialPatients];
-};
+db.insert(initialPatients, function (err, newDoc) {   // Callback is optional
+  // newDoc is the newly inserted document, including its _id
+  // newDoc has no key called notToBeSaved since its value was undefined
+});*/
 
 app.use(bodyParser.json());
 
@@ -36,23 +40,54 @@ app.use((req, res, next) => {
 const api = express.Router();
 
 api.get('/patients', (req, res) => {
-  res.json(getAllPatients());
+  db.find({}, function (err, docs) {
+    res.json(docs);
+  });
 });
 
+/*api.get('/patients/:id', (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  db.findOne({ id: id}, function (err, doc) {
+    if (doc.id) {
+      res.json({ success: true, patient: doc});
+    } else {
+      res.json({ success: false, message: `pas de patient pour id ${id}`});
+    }
+  });
+});*/
+
+// Nouveau patient
 api.post('/patients', (req, res) => {
   const patient = req.body;
-  addedPatients = [patient, ...addedPatients];
-  res.json(patient);
+  db.insert(patient, function (err, newDoc) {
+    res.json(newDoc);
+  });
 });
 
-api.put('/patients/:id', (req, res) => {
-  const updatedPatient = req.body;
-  const index = initialPatients.indexOf(initialPatients.find(x => x.id === updatedPatient.id));
-  if (index !== -1) {
-    initialPatients[index] = updatedPatient;
-  }
-  res.json(updatedPatient);
-});
+// TODO Modification patient
+/*api.post('/patients/update', (req, res) => {
+
+  console.log('req.body', req.body);
+  res.json(req);*/
+
+  /*db.remove({ id: req.body.id }, {}, function (err, numRemoved) {
+    // numRemoved = 1
+  });
+
+  const patient = req.body;
+  db.insert(patient, function (err, newDoc) {
+    res.json(newDoc);
+  });*/
+
+  /*db.update({ id: req.body.id }, req.body, {}, function (err, numReplaced) {
+    // numReplaced = 1
+    // The doc #3 has been replaced by { _id: 'id3', planet: 'Pluton' }
+    // Note that the _id is kept unchanged, and the document has been replaced
+    // (the 'system' and inhabited fields are not here anymore)
+    console.log('err', err);
+    res.json(numReplaced);
+  });*/
+// });
 
 /*api.get('/search/:group/:name?/:sex?', (req, res) => {
   const group = req.params.group;
@@ -70,16 +105,6 @@ api.put('/patients/:id', (req, res) => {
   }
   res.json({ success: true, patients });
 });*/
-
-api.get('/patients/:id', (req, res) => {
-  const id = parseInt(req.params.id, 10);
-  const patient = getAllPatients().filter(p => p.id === id);
-  if (patient.length === 1) {
-    res.json({ success: true, patient: patient[0]});
-  } else {
-    res.json({ success: false, message: `pas de patient pour id ${id}`});
-  }
-});
 
 app.use('/api', api);
 
