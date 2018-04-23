@@ -5,11 +5,10 @@
 /tmp
 /out-tsc
 /app-builds
-/db
+main.js
 
 # dependencies
 /node_modules
-/backend/node_modules
 
 # IDEs and editors
 /.idea

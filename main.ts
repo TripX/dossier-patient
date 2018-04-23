@@ -1,26 +1,30 @@
-import {app as appElectron, BrowserWindow, screen} from 'electron';
+import { app, BrowserWindow, screen } from 'electron';
 import * as path from 'path';
+import * as url from 'url';
 
 let win, serve;
 const args = process.argv.slice(1);
 serve = args.some(val => val === '--serve');
-import * as url from 'url';
 
-if (serve) {
-  require('electron-reload')(__dirname, {
-  });
+try {
+  require('dotenv').config();
+} catch {
+  console.log('asar');
 }
 
-// SERVER SIDE BEGIN
+
+// import './server.js';
 // TODO mettre dans un fichier server.js séparé
 
+// SERVER SIDE BEGIN
 const express = require('express');
-const app = express();
+const appExpress = express();
 const bodyParser = require('body-parser');
 
-// Préparation du versionning
-import fs = require('fs');
 const pathPatients = './db/patients.db';
+// Versionning
+/* TODO
+import fs = require('fs');
 const pathPatientsVersion = './db/' + new Date().getDate() + '/patients.db';
 fs.open(pathPatients, 'wx', (err, fd) => {
   if (err) {
@@ -35,6 +39,7 @@ fs.open(pathPatients, 'wx', (err, fd) => {
   // Versionning des données
   fs.writeFileSync(pathPatientsVersion, fs.readFileSync(pathPatients));
 });
+*/
 
 const Datastore = require('nedb')
   , db = new Datastore({ filename: pathPatients, autoload: true });
@@ -47,9 +52,9 @@ db.insert(initialPatients, function (err, newDoc) {   // Callback is optional
   // newDoc has no key called notToBeSaved since its value was undefined
 });*/
 
-app.use(bodyParser.json());
+appExpress.use(bodyParser.json());
 
-app.use((req, res, next) => {
+appExpress.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
   next();
@@ -108,14 +113,15 @@ api.put('/patients/:id', (req, res) => {
   res.json({ success: true, patients });
 });*/
 
-app.use('/api', api);
+appExpress.use('/api', api);
 
 const port = 4201;
 
-app.listen(port, () => {
+appExpress.listen(port, () => {
   console.log(`listening on port ${port}`);
 });
 // SERVER SIDE END
+
 
 function createWindow() {
 
@@ -130,17 +136,19 @@ function createWindow() {
     height: size.height
   });
 
-  // and load the index.html of the app.
-  win.loadURL(url.format({
-    protocol: 'file:',
-    pathname: path.join(__dirname, '/index.html'),
-    slashes:  true
-  }));
-
-  // Open the DevTools.
   if (serve) {
-    win.webContents.openDevTools();
+    require('electron-reload')(__dirname, {
+     electron: require(`${__dirname}/node_modules/electron`)});
+    win.loadURL('http://localhost:4200');
+  } else {
+    win.loadURL(url.format({
+      pathname: path.join(__dirname, 'dist/index.html'),
+      protocol: 'file:',
+      slashes: true
+    }));
   }
+
+  win.webContents.openDevTools();
 
   // Emitted when the window is closed.
   win.on('closed', () => {
@@ -156,18 +164,18 @@ try {
   // This method will be called when Electron has finished
   // initialization and is ready to create browser windows.
   // Some APIs can only be used after this event occurs.
-  appElectron.on('ready', createWindow);
+  app.on('ready', createWindow);
 
   // Quit when all windows are closed.
-  appElectron.on('window-all-closed', () => {
+  app.on('window-all-closed', () => {
     // On OS X it is common for applications and their menu bar
     // to stay active until the user quits explicitly with Cmd + Q
     if (process.platform !== 'darwin') {
-      appElectron.quit();
+      app.quit();
     }
   });
 
-  appElectron.on('activate', () => {
+  app.on('activate', () => {
     // On OS X it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
     if (win === null) {
