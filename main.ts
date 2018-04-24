@@ -23,7 +23,8 @@ const bodyParser = require('body-parser');
 
 const pathPatients = './db/patients.db';
 // Versionning
-/* TODO
+/* TODO Devrait plutôt être fait à la fermeture !! */
+/*
 import fs = require('fs');
 const pathPatientsVersion = './db/' + new Date().getDate() + '/patients.db';
 fs.open(pathPatients, 'wx', (err, fd) => {
@@ -37,9 +38,10 @@ fs.open(pathPatients, 'wx', (err, fd) => {
   }
 
   // Versionning des données
-  fs.writeFileSync(pathPatientsVersion, fs.readFileSync(pathPatients));
+  fs.writeFile(pathPatientsVersion, fs.readFile(pathPatients, (x => console.log('ReadFile : ', x))));
 });
 */
+
 
 const Datastore = require('nedb')
   , db = new Datastore({ filename: pathPatients, autoload: true });
