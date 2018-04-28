@@ -2,6 +2,9 @@ import { app, BrowserWindow, screen } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 
+import fs = require('fs');
+import {mkdir} from 'fs';
+
 let win, serve;
 const args = process.argv.slice(1);
 serve = args.some(val => val === '--serve');
@@ -12,36 +15,12 @@ try {
   console.log('asar');
 }
 
-
-// import './server.js';
-// TODO mettre dans un fichier server.js séparé
-
 // SERVER SIDE BEGIN
 const express = require('express');
 const appExpress = express();
 const bodyParser = require('body-parser');
 
-const pathPatients = './db/patients.db';
-// Versionning
-/* TODO Devrait plutôt être fait à la fermeture !! */
-/*
-import fs = require('fs');
-const pathPatientsVersion = './db/' + new Date().getDate() + '/patients.db';
-fs.open(pathPatients, 'wx', (err, fd) => {
-  if (err) {
-    if (err.code === 'ENOENT') {
-      console.error('Pas de BDD, Création de la BDD');
-      fs.writeFileSync(pathPatients, []);
-    } else {
-      throw err;
-    }
-  }
-
-  // Versionning des données
-  fs.writeFile(pathPatientsVersion, fs.readFile(pathPatients, (x => console.log('ReadFile : ', x))));
-});
-*/
-
+const pathPatients = 'C:/DossierPatient/db/patients.db';
 
 const Datastore = require('nedb')
   , db = new Datastore({ filename: pathPatients, autoload: true });
@@ -124,6 +103,19 @@ appExpress.listen(port, () => {
 });
 // SERVER SIDE END
 
+function ensureExists(pathFile, mask, cb) {
+  fs.mkdir(pathFile, mask, function(err) {
+    if (err) {
+      if (err.code === 'EEXIST') {
+        cb(null); // ignore the error if the folder already exists
+      } else {
+        cb(err); // something else went wrong
+      }
+    } else {
+      cb(null); // successfully created folder
+    }
+  });
+}
 
 function createWindow() {
 
@@ -170,6 +162,9 @@ try {
 
   // Quit when all windows are closed.
   app.on('window-all-closed', () => {
+
+    versionning();
+
     // On OS X it is common for applications and their menu bar
     // to stay active until the user quits explicitly with Cmd + Q
     if (process.platform !== 'darwin') {
@@ -188,4 +183,69 @@ try {
 } catch (e) {
   // Catch Error
   // throw e;
+}
+
+
+function versionning() {
+  // Versionning BDD
+  const pathDossierPatient = 'C:/DossierPatient';
+  const pathDropbox = pathDossierPatient + '/Dropbox';
+  const pathDB = pathDropbox + '/db';
+  const pathVersion = pathDB + '/' + (new Date().getDate()).toString();
+  const fileName = 'patients.db';
+  const allRWEPermissions = parseInt('0777', 8);
+  ensureExists(pathDossierPatient, allRWEPermissions, function(errDossierPatient) {
+    if (errDossierPatient) {
+      // S'il n'existe pas, création du Dossier Patient
+      fs.mkdir(pathDossierPatient);
+    }
+  });
+  ensureExists(pathDropbox, allRWEPermissions, function(errDropbox) {
+    if (errDropbox) {
+      // S'il n'existe pas, création du Dossier Dropbox
+      fs.mkdir(pathDropbox);
+    }
+  });
+  ensureExists(pathDB, allRWEPermissions, function(errDB) {
+    if (errDB) {
+      // S'il n'existe pas, création du Dossier Dropbox
+      fs.mkdir(pathDB);
+    }
+  });
+  ensureExists(pathVersion, allRWEPermissions, function (errVersion) {
+    if (errVersion) {
+      // S'il n'existe pas, création du dossier de version
+      fs.mkdir(pathVersion);
+    }
+
+    // Versionning = copie du fichier db
+    function copyFile(source, target, cb) {
+      var cbCalled = false;
+
+      var rd = fs.createReadStream(source);
+      rd.on("error", function(err) {
+        done(err);
+      });
+      var wr = fs.createWriteStream(target);
+      wr.on("error", function(err) {
+        done(err);
+      });
+      wr.on("close", function(ex) {
+        done(ex);
+      });
+      rd.pipe(wr);
+
+      function done(err) {
+        if (!cbCalled) {
+          cb(err);
+          cbCalled = true;
+        }
+      }
+    }
+
+    copyFile(pathPatients, pathVersion, x => console.log(x));
+
+    /*fs.writeFile(pathVersion + '/' + fileName,
+      fs.readFile(pathPatients, (x => console.log('ReadFile : ', x))), x => console.log('WriteFile : ', x));*/
+  });
 }
