@@ -3,7 +3,6 @@ import * as path from 'path';
 import * as url from 'url';
 
 import fs = require('fs');
-import {mkdir} from 'fs';
 
 let win, serve;
 const args = process.argv.slice(1);
@@ -21,6 +20,7 @@ const appExpress = express();
 const bodyParser = require('body-parser');
 
 const pathPatients = 'C:/DossierPatient/db/patients.db';
+const pathHome: string = process.env.HOMEPATH || 'C:/DossierPatient/dropboxOnError/';
 
 const Datastore = require('nedb')
   , db = new Datastore({ filename: pathPatients, autoload: true });
@@ -103,20 +103,6 @@ appExpress.listen(port, () => {
 });
 // SERVER SIDE END
 
-function ensureExists(pathFile, mask, cb) {
-  fs.mkdir(pathFile, mask, function(err) {
-    if (err) {
-      if (err.code === 'EEXIST') {
-        cb(null); // ignore the error if the folder already exists
-      } else {
-        cb(err); // something else went wrong
-      }
-    } else {
-      cb(null); // successfully created folder
-    }
-  });
-}
-
 function createWindow() {
 
   const electronScreen = screen;
@@ -185,19 +171,49 @@ try {
   // throw e;
 }
 
+function ensureExists(pathFile, mask, cb) {
+  fs.mkdir(pathFile, mask, function(err) {
+    if (err) {
+      if (err.code === 'EEXIST') {
+        cb(null); // ignore the error if the folder already exists
+      } else {
+        cb(err); // something else went wrong
+      }
+    } else {
+      cb(null); // successfully created folder
+    }
+  });
+}
 
 function versionning() {
+  // Today Date
+  const today = new Date();
+  const dd: number = today.getDate();
+  const mm: number = today.getMonth() + 1;
+  const yyyy: string = today.getFullYear().toString();
+
+  let day = 'NotADay';
+  let month = 'NotAMonth';
+  if (dd < 10) {
+    day = '0' + dd.toString();
+  }
+
+  if (mm < 10) {
+    month = '0' + mm.toString();
+  }
+
+  const todayDate: string = month + day + yyyy;
+
   // Versionning BDD
-  const pathDossierPatient = 'C:/DossierPatient';
-  const pathDropbox = pathDossierPatient + '/Dropbox';
-  const pathDB = pathDropbox + '/db';
-  const pathVersion = pathDB + '/' + (new Date().getDate()).toString();
-  const fileName = 'patients.db';
+  const pathDropbox: string = pathHome + '/Dropbox';
+  const pathDB: string = pathDropbox + '/DossierPatient';
+  const pathVersion: string = pathDB + '/Version' + yyyy;
+  const fileName: string = todayDate + '_patients.db';
   const allRWEPermissions = parseInt('0777', 8);
-  ensureExists(pathDossierPatient, allRWEPermissions, function(errDossierPatient) {
+  ensureExists(pathHome, allRWEPermissions, function(errDossierPatient) {
     if (errDossierPatient) {
       // S'il n'existe pas, création du Dossier Patient
-      fs.mkdir(pathDossierPatient);
+      fs.mkdir(pathHome);
     }
   });
   ensureExists(pathDropbox, allRWEPermissions, function(errDropbox) {
@@ -219,33 +235,6 @@ function versionning() {
     }
 
     // Versionning = copie du fichier db
-    function copyFile(source, target, cb) {
-      var cbCalled = false;
-
-      var rd = fs.createReadStream(source);
-      rd.on("error", function(err) {
-        done(err);
-      });
-      var wr = fs.createWriteStream(target);
-      wr.on("error", function(err) {
-        done(err);
-      });
-      wr.on("close", function(ex) {
-        done(ex);
-      });
-      rd.pipe(wr);
-
-      function done(err) {
-        if (!cbCalled) {
-          cb(err);
-          cbCalled = true;
-        }
-      }
-    }
-
-    copyFile(pathPatients, pathVersion, x => console.log(x));
-
-    /*fs.writeFile(pathVersion + '/' + fileName,
-      fs.readFile(pathPatients, (x => console.log('ReadFile : ', x))), x => console.log('WriteFile : ', x));*/
+    fs.writeFileSync(pathVersion + '/' + fileName, fs.readFileSync(pathPatients));
   });
 }
