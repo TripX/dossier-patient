@@ -27,17 +27,14 @@ const Datastore = require('nedb')
 
 // TODO TO USE TO Ajout faux patients
 /*import {patientsData} from './src/assets/data/patients';
-const initialPatients = patientsData;
-db.insert(initialPatients, function (err, newDoc) {   // Callback is optional
-  // newDoc is the newly inserted document, including its _id
-  // newDoc has no key called notToBeSaved since its value was undefined
-});*/
+db.insert(patientsData, function (err, newDoc) {});*/
 
 appExpress.use(bodyParser.json());
 
 appExpress.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
   next();
 });
 
@@ -74,6 +71,15 @@ api.put('/patients/:id', (req, res) => {
   const patient = req.body;
   db.update({ id: id }, patient, {}, function (err, numReplaced) {
     res.json(numReplaced);
+  });
+});
+
+// Suppression patient
+api.delete('/patients/:id', (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  const patient = req.body;
+  db.remove({ id: id }, {}, function (err, numRemoved) {
+    res.json(numRemoved);
   });
 });
 

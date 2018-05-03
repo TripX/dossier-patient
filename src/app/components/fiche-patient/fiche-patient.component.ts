@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {DateAdapter, MatSort, MatTableDataSource} from '@angular/material';
+import {DateAdapter, MatDialog, MatSort, MatTableDataSource} from '@angular/material';
 
 import {FrenchDateAdapter} from '../../services/FrenchDateAdapter';
 
@@ -13,6 +13,7 @@ import {FAVORITE_CONTACT_TYPE} from '../../models/favorite-contact-type';
 import {PAYMENT_METHOD} from '../../models/payment-method';
 import {TARIFICATION_TYPE} from '../../models/tarification-type';
 import {PatientsService} from '../../services/patient-service';
+import {DialogRemoveComponent} from '../dialog-remove/dialog-remove.component';
 
 @Component({
   selector: 'app-fiche-patient',
@@ -39,10 +40,11 @@ export class FichePatientComponent implements OnInit, AfterViewInit, OnChanges {
   displayedColumnsConsultation = ['date', 'cost', 'tarificationType'];
   dataSource: MatTableDataSource<IConsultation>;
   @ViewChild(MatSort) sort: MatSort;
-  @Output() onSelectedIndex = new EventEmitter<number>();
+  @Output() outSelectedIndex = new EventEmitter<number>();
 
   constructor(private dateAdapter: DateAdapter<Date>,
-              private patientsService: PatientsService) {
+              private patientsService: PatientsService,
+              private dialog: MatDialog) {
     this.dateAdapter.setLocale('fr');
     this.indexSport = 0;
     this.activities = [{
@@ -151,7 +153,25 @@ export class FichePatientComponent implements OnInit, AfterViewInit, OnChanges {
       });
     }
 
-    this.onSelectedIndex.emit(2); // Redirection vers mon évolution
+    this.outSelectedIndex.emit(2); // Redirection vers mon évolution
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(DialogRemoveComponent, {
+      height: 'auto'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Suppression du patient
+        if (this.patient.id) {
+          this.patientsService.removePatient(this.patient).subscribe( res => {
+            console.log(res);
+          });
+        }
+        this.outSelectedIndex.emit(0); // Redirection vers recherche
+      }
+    });
   }
 
 }

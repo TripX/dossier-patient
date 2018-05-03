@@ -14,7 +14,7 @@
           <mat-icon>person</mat-icon> <span class="align-super"> Ma fiche patient</span>
         </ng-template>
         <div class="tab-content">
-          <app-fiche-patient (onSelectedIndex)="onSelectedIndex($event)" [patient]="searchedPatient"></app-fiche-patient>
+          <app-fiche-patient (outSelectedIndex)="onSelectedIndex($event)" [patient]="searchedPatient"></app-fiche-patient>
         </div>
       </mat-tab>
       <mat-tab>

@@ -2,13 +2,11 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {IPatient} from '../models/patient';
-import {Subject} from 'rxjs/Rx';
 
 @Injectable()
 export class PatientsService {
 
   private BASE_URL = 'http://localhost:4201/api/patients';
-  searchResultSubject = new Subject();
 
   constructor(private http: HttpClient) {}
 
@@ -22,7 +20,11 @@ export class PatientsService {
   }
 
   updatePatient(patientData: IPatient): Observable<IPatient> {
-    return this.http.put<IPatient>(`${this.BASE_URL}/${patientData.id}`, patientData)
+    return this.http.put<IPatient>(`${this.BASE_URL}/${patientData.id}`, patientData);
+  }
+
+  removePatient(patientData: IPatient): Observable<IPatient> {
+    return this.http.delete<IPatient>(`${this.BASE_URL}/${patientData.id}`);
   }
 
   getPatient(id): Observable<IPatient> {

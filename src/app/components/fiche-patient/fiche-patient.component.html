@@ -193,6 +193,8 @@
     </mat-grid-tile>
   </mat-grid-list>
 
+  <button mat-button mat-raised-button *ngIf="patient.id" (click)="openDialog()"><mat-icon>delete</mat-icon></button>
+
   <button mat-raised-button [disabled]="tabForm.pristine" color="primary" (click)="savePatient()" class="save">
     <mat-icon>person_add</mat-icon>
     <span class="align-middle" *ngIf="!patient.id"> Sauvegarder le nouveau patient</span>
