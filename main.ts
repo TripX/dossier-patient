@@ -20,7 +20,6 @@ const appExpress = express();
 const bodyParser = require('body-parser');
 
 const pathPatients = 'C:/DossierPatient/db/patients.db';
-const pathHome: string = process.env.HOMEPATH || 'C:/DossierPatient/dropboxOnError/';
 
 const Datastore = require('nedb')
   , db = new Datastore({ filename: pathPatients, autoload: true });
@@ -211,6 +210,7 @@ function versionning() {
   const todayDate: string = month + day + yyyy;
 
   // Versionning BDD
+  const pathHome: string = process.env.HOMEPATH || 'C:/DossierPatient/dropboxOnError/';
   const pathDropbox: string = pathHome + '/Dropbox';
   const pathDB: string = pathDropbox + '/DossierPatient';
   const pathVersion: string = pathDB + '/Version' + yyyy;

@@ -1,11 +1,7 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild} from '@angular/core';
 import {DateAdapter, MatPaginator, MatPaginatorIntl, MatSort, MatTableDataSource} from '@angular/material';
-import {merge} from 'rxjs/observable/merge';
-import {of as observableOf} from 'rxjs/observable/of';
-import {catchError} from 'rxjs/operators/catchError';
-import {map} from 'rxjs/operators/map';
-import {startWith} from 'rxjs/operators/startWith';
-import {switchMap} from 'rxjs/operators/switchMap';
+import {merge, of as observableOf} from 'rxjs';
+import {catchError, map, startWith, switchMap} from 'rxjs/operators';
 
 import {IPatient, Patient} from '../../models/patient';
 import {PatientsService} from '../../services/patient-service';
@@ -25,8 +21,8 @@ export class RecherchePatientComponent implements OnInit, OnChanges, AfterViewIn
   isLoadingResults = true;
   error = '';
 
-  @Output() onSelectedIndex = new EventEmitter<number>();
-  @Output() onSearchPatient = new EventEmitter<IPatient>();
+  @Output() outSelectedIndex = new EventEmitter<number>();
+  @Output() outSearchPatient = new EventEmitter<IPatient>();
   @Input() onSearch: boolean;
   updateData = new EventEmitter<number>();
 
@@ -69,7 +65,7 @@ export class RecherchePatientComponent implements OnInit, OnChanges, AfterViewIn
         startWith({}),
         switchMap(() => {
           this.isLoadingResults = true;
-          return this.patientsService!.findAllPatients(this.sort.active, this.sort.direction, this.paginator.pageIndex);
+          return this.patientsService.findAllPatients(this.sort.active, this.sort.direction, this.paginator.pageIndex);
         }),
         map(data => {
           // Flip flag to show that loading has finished.
@@ -108,11 +104,11 @@ export class RecherchePatientComponent implements OnInit, OnChanges, AfterViewIn
       event.stopPropagation();
     }
     if (patient) {
-      this.onSearchPatient.emit(patient);
+      this.outSearchPatient.emit(patient);
     } else {
-      this.onSearchPatient.emit(new Patient().patient);
+      this.outSearchPatient.emit(new Patient().patient);
     }
-    this.onSelectedIndex.emit(onglet);
+    this.outSelectedIndex.emit(onglet);
   }
 
 }

@@ -11,7 +11,6 @@ import {SEX_PATIENT} from '../../models/sex-patient';
 import {MARITAL_STATUS} from '../../models/marital-status';
 import {FAVORITE_CONTACT_TYPE} from '../../models/favorite-contact-type';
 import {PAYMENT_METHOD} from '../../models/payment-method';
-import {TARIFICATION_TYPE} from '../../models/tarification-type';
 import {PatientsService} from '../../services/patient-service';
 import {DialogRemoveComponent} from '../dialog-remove/dialog-remove.component';
 
@@ -29,7 +28,7 @@ export class FichePatientComponent implements OnInit, AfterViewInit, OnChanges {
   maritalStatus: string[] = MARITAL_STATUS;
   favoriteContactType: string[] = FAVORITE_CONTACT_TYPE;
   paymentMethod: string[] = PAYMENT_METHOD;
-  tarificationType: string[] = TARIFICATION_TYPE;
+  defaultCost = 45;
 
   @Input() patient: IPatient;
   tabForm: FormGroup;
@@ -62,19 +61,34 @@ export class FichePatientComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngOnChanges(changes: {[propertyName: string]: SimpleChange}) {
-    if (this.patient && this.patient.id) {
-      if (this.patient.consultation) {
-        this.dataSource.data = this.patient.consultation;
-      }
-      if (this.patient.activity) {
-        this.activities = this.patient.activity;
-      }
+    if (this.tabForm) {
+      this.tabForm.get('groupPatient').setValue(this.patient.groupPatient);
+      this.tabForm.get('title').setValue(this.patient.title);
+      this.tabForm.get('firstname').setValue(this.patient.firstname);
+      this.tabForm.get('name').setValue(this.patient.name);
+      this.tabForm.get('sex').setValue(this.patient.sex);
+      this.tabForm.get('birthdate').setValue(this.patient.birthdate);
+      this.tabForm.get('profession').setValue(this.patient.profession);
+      this.tabForm.get('maritalStatus').setValue(this.patient.maritalStatus);
+      this.tabForm.get('landline').setValue(this.patient.landline);
+      this.tabForm.get('mobile').setValue(this.patient.mobile);
+      this.tabForm.get('email').setValue(this.patient.email);
+      this.tabForm.get('creationDate').setValue(this.patient.creationDate);
+      this.tabForm.get('favoriteContactType').setValue(this.patient.favoriteContactType);
+      this.tabForm.get('metabolism').setValue(this.patient.metabolism);
+      this.tabForm.get('healthHistory').setValue(this.patient.healthHistory);
+      this.tabForm.get('regularDoctor').setValue(this.patient.regularDoctor);
+      this.tabForm.get('healthNote').setValue(this.patient.healthNote);
+      this.tabForm.get('freeNotes').setValue(this.patient.freeNotes);
+
+      this.dataSource.data = this.patient.consultation;
+      this.activities = this.patient.activity;
     }
   }
 
   ngOnInit() {
     this.patient = new Patient().patient;
-    this.dataSource = new MatTableDataSource(this.patient.consultation);
+    this.dataSource = new MatTableDataSource();
 
     this.tabForm = new FormGroup({
       groupPatient: new FormControl(),
@@ -96,7 +110,8 @@ export class FichePatientComponent implements OnInit, AfterViewInit, OnChanges {
       healthNote: new FormControl(),
       activityTitle: new FormControl(),
       activityHoursPerWeek: new FormControl(),
-      consultationCost: new FormControl(),
+      consultationDate: new FormControl(new Date()),
+      consultationCost: new FormControl(this.defaultCost),
       consultationPaymentMethod: new FormControl(),
       consultationTarificationType: new FormControl(),
       freeNotes: new FormControl()
@@ -136,7 +151,7 @@ export class FichePatientComponent implements OnInit, AfterViewInit, OnChanges {
     this.patient.healthNote = this.tabForm.get('healthNote').value;
     this.patient.activity.concat(this.activities);
     this.patient.consultation.push({
-      'date': new Date(),
+      'date': this.tabForm.get('consultationDate').value,
       'cost': this.tabForm.get('consultationCost').value,
       'paymentMethod': this.tabForm.get('consultationPaymentMethod').value,
       'tarificationType': this.tabForm.get('consultationTarificationType').value
