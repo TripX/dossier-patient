@@ -135,7 +135,7 @@
             <mat-icon>history</mat-icon><span class="align-super"> Historique</span>
           </ng-template>
           <div class="column">
-            <mat-table #table [dataSource]="dataSource" matSort matSortActive="date" matSortDisableClear matSortDirection="asc">
+            <mat-table #table [dataSource]="dataSource" matSort matSortActive="date" matSortDisableClear matSortDirection="desc">
 
               <ng-container matColumnDef="date">
                 <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true"> Date </mat-header-cell>
@@ -168,18 +168,20 @@
     <mat-grid-tile [colspan]="1" [rowspan]="1">
       <div class="column">
         <div class="row" *ngFor="let activity of activities">
-          <button class="sport-retrait" mat-button color="primary" (click)="removeActivity(activity)">
+          <button type="button" class="sport-retrait" mat-button color="primary" (click)="removeActivity(activity)">
             <mat-icon>delete</mat-icon>
           </button>
           <mat-form-field class="sport-input">
-            <input matInput placeholder="Sport" [value]="activity.title" formControlName="activityTitle">
+            <input matInput placeholder="Sport" #sportTitle [value]="activity.title"
+                   formControlName="activityTitle" (keyup)="updateActivityTitle(activity, sportTitle.value)">
           </mat-form-field>
           <mat-form-field class="sport-hour-input">
-            <input matInput placeholder="H / Sem." [value]="activity.hoursPerWeek" formControlName="activityHoursPerWeek" class="break-word">
+            <input matInput placeholder="H / Sem." class="break-word" #sportHours [value]="activity.hoursPerWeek"
+                   formControlName="activityHoursPerWeek" (keyup)="updateActivityHours(activity, sportHours.value)">
           </mat-form-field>
         </div>
         <div class="row">
-          <button mat-raised-button (click)="addNewActivity()" color="primary">
+          <button type="button" mat-raised-button (click)="addNewActivity()" color="primary">
             <mat-icon>add</mat-icon><span class="align-middle"> Ajouter un sport</span>
           </button>
         </div>
@@ -196,9 +198,9 @@
     </mat-grid-tile>
   </mat-grid-list>
 
-  <button mat-button mat-raised-button *ngIf="patient.id" color="warn" (click)="openDialog()"><mat-icon>delete</mat-icon></button>
+  <button type="button" mat-button mat-raised-button *ngIf="patient.id" color="warn" (click)="openDialog()"><mat-icon>delete</mat-icon></button>
 
-  <button mat-raised-button [disabled]="tabForm.pristine" color="primary" (click)="savePatient()" class="save">
+  <button type="submit" mat-raised-button [disabled]="tabForm.pristine && !sportIsUpdated" color="primary" (click)="savePatient()" class="save">
     <mat-icon>person_add</mat-icon>
     <span class="align-middle" *ngIf="!patient.id"> Sauvegarder le nouveau patient</span>
     <span class="align-middle" *ngIf="patient.id"> Sauvegarder les changements</span>

@@ -27,7 +27,7 @@ export class Patient {
       activity: [],
       consultation: [],
       evolution: []
-    }
+    };
   }
 }
 
@@ -71,16 +71,16 @@ export interface IConsultation {
 }
 
 export interface IEvolution {
-  date: Date,
-  height: number,
-  weight: number,
-  bicipital: number,
-  tricipital: number,
-  subscapulaire: number,
-  suprailiaque: number,
-  waist: number,
-  hip: number,
-  pectoral: number,
-  arm: number,
-  thigh: number
+  date: Date;
+  height: number;
+  weight: number;
+  bicipital: number;
+  tricipital: number;
+  subscapulaire: number;
+  suprailiaque: number;
+  waist: number;
+  hip: number;
+  pectoral: number;
+  arm: number;
+  thigh: number;
 }

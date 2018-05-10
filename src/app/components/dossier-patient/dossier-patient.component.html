@@ -23,7 +23,7 @@
           <mat-icon>trending_up</mat-icon> <span class="align-super"> Mon évolution</span>
         </ng-template>
         <div class="tab-content">
-          <app-mon-evolution (onSelectedIndex)="onSelectedIndex($event)" [patient]="searchedPatient"></app-mon-evolution>
+          <app-mon-evolution (outSelectedIndex)="onSelectedIndex($event)" [patient]="searchedPatient"></app-mon-evolution>
         </div>
       </mat-tab>
       <mat-tab>

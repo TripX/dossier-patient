@@ -22,7 +22,7 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
   showCourbeCroissance = false;
   @ViewChild('heightChart') heightChart;
   @ViewChild('courbecorpulence') courbecorpulence;
-  @Output() onSelectedIndex = new EventEmitter<number>();
+  @Output() outSelectedIndex = new EventEmitter<number>();
 
   selectedIndexInside = 0;
 
@@ -161,11 +161,11 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
 
   savePatient() {
     console.log('save');
-    this.onSelectedIndex.emit(3); // Redirection vers ma balance énergétique
+    this.outSelectedIndex.emit(3); // Redirection vers ma balance énergétique
   }
 
   calculateIMC(height: number, weight: number): string {
-    return Number(weight / Math.pow(Number(height / 100), 2)).toFixed(2)
+    return Number(weight / Math.pow(Number(height / 100), 2)).toFixed(2);
   }
 
   calculateMGandMM(weight) { // TODO !!!!!!!
@@ -176,7 +176,7 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
       'mgKg': MG,
       'mmPercent': Number((MM * 100) / (MG + MM)).toFixed(2),
       'mmKg': MM
-    }
+    };
   }
 
   updateData() {

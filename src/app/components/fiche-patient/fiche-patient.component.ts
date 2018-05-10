@@ -29,6 +29,7 @@ export class FichePatientComponent implements OnInit, AfterViewInit, OnChanges {
   favoriteContactType: string[] = FAVORITE_CONTACT_TYPE;
   paymentMethod: string[] = PAYMENT_METHOD;
   defaultCost = 45;
+  sportIsUpdated = false;
 
   @Input() patient: IPatient;
   tabForm: FormGroup;
@@ -83,6 +84,7 @@ export class FichePatientComponent implements OnInit, AfterViewInit, OnChanges {
 
       this.dataSource.data = this.patient.consultation;
       this.activities = this.patient.activity;
+      this.sportIsUpdated = false;
     }
   }
 
@@ -124,10 +126,22 @@ export class FichePatientComponent implements OnInit, AfterViewInit, OnChanges {
       title: '',
       hoursPerWeek: null
     });
+    this.sportIsUpdated = true;
+  }
+
+  updateActivityTitle(activityToUpdate, newTitle) {
+    this.activities.find(activity => activity.index === activityToUpdate.index).title = newTitle;
+    this.sportIsUpdated = true;
+  }
+
+  updateActivityHours(activityToUpdate, newHours) {
+    this.activities.find(activity => activity.index === activityToUpdate.index).hoursPerWeek = newHours;
+    this.sportIsUpdated = true;
   }
 
   removeActivity(activityToRemove: IActivity) {
     this.activities = this.activities.filter(activity => activity !== activityToRemove);
+    this.sportIsUpdated = true;
   }
 
   savePatient() {
@@ -149,7 +163,7 @@ export class FichePatientComponent implements OnInit, AfterViewInit, OnChanges {
     this.patient.healthHistory = this.tabForm.get('healthHistory').value;
     this.patient.regularDoctor = this.tabForm.get('regularDoctor').value;
     this.patient.healthNote = this.tabForm.get('healthNote').value;
-    this.patient.activity.concat(this.activities);
+    this.patient.activity = this.activities;
     this.patient.consultation.push({
       'date': this.tabForm.get('consultationDate').value,
       'cost': this.tabForm.get('consultationCost').value,
@@ -160,14 +174,16 @@ export class FichePatientComponent implements OnInit, AfterViewInit, OnChanges {
 
     if (!this.patient.id) {
       this.patientsService.addPatient(this.patient).subscribe( res => {
-        console.log(res);
+        console.log(res, this.patient);
       });
     } else {
       this.patientsService.updatePatient(this.patient).subscribe( res => {
-        console.log(res);
+        console.log(res, this.patient);
       });
     }
 
+    this.sportIsUpdated = false;
+    this.tabForm.markAsPristine();
     this.outSelectedIndex.emit(2); // Redirection vers mon évolution
   }
 

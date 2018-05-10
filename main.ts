@@ -137,6 +137,8 @@ function createWindow() {
 
   // Emitted when the window is closed.
   win.on('closed', () => {
+    versionning();
+
     // Dereference the window object, usually you would store window
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
@@ -153,9 +155,6 @@ try {
 
   // Quit when all windows are closed.
   app.on('window-all-closed', () => {
-
-    versionning();
-
     // On OS X it is common for applications and their menu bar
     // to stay active until the user quits explicitly with Cmd + Q
     if (process.platform !== 'darwin') {
@@ -191,26 +190,20 @@ function ensureExists(pathFile, mask, cb) {
 }
 
 function versionning() {
-  // Today Date
   const today = new Date();
   const dd: number = today.getDate();
   const mm: number = today.getMonth() + 1;
   const yyyy: string = today.getFullYear().toString();
 
-  let day = 'NotADay';
-  let month = 'NotAMonth';
-  if (dd < 10) {
-    day = '0' + dd.toString();
-  }
-
-  if (mm < 10) {
-    month = '0' + mm.toString();
-  }
+  let day;
+  let month;
+  day = dd < 10 ? '0' + dd.toString() : dd.toString();
+  month = mm < 10 ? '0' + mm.toString() : mm.toString();
 
   const todayDate: string = month + day + yyyy;
 
   // Versionning BDD
-  const pathHome: string = process.env.HOMEPATH || 'C:/DossierPatient/dropboxOnError/';
+  const pathHome: string = process.env.USERPROFILE || 'C:/DossierPatient/dropboxOnError/';
   const pathDropbox: string = pathHome + '/Dropbox';
   const pathDB: string = pathDropbox + '/DossierPatient';
   const pathVersion: string = pathDB + '/Version' + yyyy;

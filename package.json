@@ -1,7 +1,7 @@
 {
   "name": "Dossier-patient",
-  "version": "0.4.0",
-  "description": "Angular 5 with Electron (Typescript + SASS + Hot Reload)",
+  "version": "0.5.0",
+  "description": "Application de gestion de patient",
   "homepage": "",
   "author": {
     "name": "Bastien Rousseau",
@@ -9,7 +9,7 @@
   },
   "keywords": [
     "angular",
-    "angular 5",
+    "angular 6",
     "electron",
     "typescript",
     "sass"
@@ -25,10 +25,10 @@
     "ng:serve": "ng serve -o",
     "electron:tsc": "tsc main.ts",
     "electron:serve": "wait-on http-get://localhost:4200/ && npm run electron:tsc && electron . --serve",
-    "electron:local": "npm run build:prod && electron .",
-    "electron:linux": "npm run build:prod && npx electron-builder build --linux",
-    "electron:windows": "npm run build:prod && npx electron-builder build --windows",
-    "electron:mac": "npm run build:prod && npx electron-builder build --mac",
+    "electron:local": "npm run build --prod && electron .",
+    "electron:linux": "npm run build --prod && npx electron-builder build --linux",
+    "electron:windows": "npm run build --prod && npx electron-builder build --windows",
+    "electron:mac": "npm run build --prod && npx electron-builder build --mac",
     "test": "karma start ./karma.conf.js",
     "pree2e:build": "webdriver-manager update --gecko false && npm run ng serve",
     "pree2e:protractor": "wait-on http-get://localhost:4200/ && protractor ./protractor.conf.js",
