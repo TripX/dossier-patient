@@ -42,6 +42,7 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
       height: new FormControl(),
       weight: new FormControl(),
       imc: new FormControl(),
+      bodyWater: new FormControl(),
       bicipital: new FormControl(),
       tricipital: new FormControl(),
       subscapulaire: new FormControl(),
@@ -78,6 +79,7 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
       this.formattedPatientData.push({'title': 'height', 'label': 'Taille(cm)', 'data': []});
       this.formattedPatientData.push({'title': 'weight', 'label': 'Poids(kg)', 'data': []});
       this.formattedPatientData.push({'title': 'imc', 'label': 'IMC(kg·m−2)', 'data': []});
+      this.formattedPatientData.push({'title': 'bodyWater', 'label': 'MH(%)', 'data': []});
       this.formattedPatientData.push({'title': 'bicipital', 'label': 'Plis b', 'data': []});
       this.formattedPatientData.push({'title': 'tricipital', 'label': 'Plis t', 'data': []});
       this.formattedPatientData.push({'title': 'subscapulaire', 'label': 'Plis sous', 'data': []});
@@ -93,7 +95,7 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
       this.formattedPatientData.push({'title': 'thigh', 'label': 'Tour cuisse', 'data': []});
 
       const age = [];
-      const imc = [];
+      const imcTable = [];
       const birthdate = this.patient.birthdate;
       Object.keys(this.patient.evolution).map(key => {
         let idx = 0;
@@ -115,11 +117,12 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
         this.formattedPatientData[++idx].data.unshift({'value': weight, 'class': ''});
 
         const IMC = this.calculateIMC(height, weight);
-        imc.push(IMC);
+        imcTable.push(IMC);
         this.formattedPatientData[++idx].data.unshift(
           {'value': IMC, 'class': Number(calculatedAge) > 17 ? imcClassPipe.transform(IMC) : 'young-person-cell'}
         );
 
+        this.formattedPatientData[++idx].data.unshift({'value': this.patient.evolution[key].bodyWater, 'class': ''});
         this.formattedPatientData[++idx].data.unshift({'value': this.patient.evolution[key].bicipital, 'class': ''});
         this.formattedPatientData[++idx].data.unshift({'value': this.patient.evolution[key].tricipital, 'class': ''});
         this.formattedPatientData[++idx].data.unshift({'value': this.patient.evolution[key].subscapulaire, 'class': ''});
@@ -138,30 +141,24 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
       });
 
       if (this.patient.sex === 'Masculin') {
-        this.plotCorpulence(CORPULENCE_GARCON, age, imc, 'rgba(108, 154, 255, 0.37)', 'Courbe de corpulence - Garçon');
+        this.plotCorpulence(CORPULENCE_GARCON, age, imcTable, 'rgba(108, 154, 255, 0.37)', 'Courbe de corpulence - Garçon');
       } else {
-        this.plotCorpulence(CORPULENCE_FILLE, age, imc, 'rgba(255, 154, 108, 0.37)', 'Courbe de corpulence - Fille');
+        this.plotCorpulence(CORPULENCE_FILLE, age, imcTable, 'rgba(255, 154, 108, 0.37)', 'Courbe de corpulence - Fille');
       }
 
       age.some(value => value < 18) ? this.showCourbeCroissance = true : this.showCourbeCroissance = false;
 
       // Remise à zéro des données en cours de saisie
       if (this.tabForm) {
+        const calculatedAge = calculateAge.transform(birthdate, new Date());
+        this.tabForm.get('age').setValue(calculatedAge);
         this.tabForm.get('height').setValue('');
         this.tabForm.get('weight').setValue('');
         this.tabForm.get('imc').setValue('');
+        this.tabForm.get('bodyWater').setValue('');
         // TODO AUTRES DONNEES SAISIES
       }
     }
-  }
-
-  onSelectedIndexInside(val: number) {
-    this.selectedIndexInside = val;
-  }
-
-  savePatient() {
-    console.log('save');
-    this.outSelectedIndex.emit(3); // Redirection vers ma balance énergétique
   }
 
   calculateIMC(height: number, weight: number): string {
@@ -187,7 +184,7 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
       this.tabForm.get('imc').setValue(imc);
 
       const imcClassPipe = new ImcClassPipe();
-      this.formattedPatientData[3].class = imcClassPipe.transform(imc);
+      this.formattedPatientData[4].class = imcClassPipe.transform(imc);
 
       // const masse = this.calculateMGandMM(weight); // TODO
       // this.tabForm.get('mgPercent').setValue(masse.mgPercent);
@@ -195,6 +192,15 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
       // this.tabForm.get('mmPercent').setValue(masse.mmPercent);
       // this.tabForm.get('mmKg').setValue(masse.mmKg);
     }
+  }
+
+  onSelectedIndexInside(val: number) {
+    this.selectedIndexInside = val;
+  }
+
+  savePatient() {
+    console.log('save'); // TODO
+    this.outSelectedIndex.emit(3); // Redirection vers ma balance énergétique
   }
 
   plotCorpulence(constant, xData, yData, color, title) {

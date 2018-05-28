@@ -74,6 +74,7 @@ export interface IEvolution {
   date: Date;
   height: number;
   weight: number;
+  bodyWater: number;
   bicipital: number;
   tricipital: number;
   subscapulaire: number;
