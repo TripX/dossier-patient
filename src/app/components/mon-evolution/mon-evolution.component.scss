@@ -4,11 +4,12 @@
 }
 
 $border: #c3d9ff 1px solid;
+$heightCell: 34px;
 .grid-list-evolution {
   margin: 10px;
 
   .right-grid {
-    margin-left: 10px;
+    margin-left: 20px;
 
     .sub-grid-evolution {
       border-top: $border;
@@ -18,8 +19,9 @@ $border: #c3d9ff 1px solid;
         font-weight: bold;
       }
       .lign {
-        border-bottom: $border;
         border-right: $border;
+        border-bottom: $border;
+        height: $heightCell;
 
         .cell {
           border-right: $border;
@@ -29,9 +31,11 @@ $border: #c3d9ff 1px solid;
         }
 
         .label {
+          border-bottom: 0!important;
           text-align: left;
           font-weight: bold;
-          width: 80px;
+          width: 180px;
+          height: $heightCell;
         }
       }
     }

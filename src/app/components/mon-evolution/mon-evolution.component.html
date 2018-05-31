@@ -2,9 +2,9 @@
 
   <h3 *ngIf="!patient.id" class="header-new-patient">Nouveau Patient</h3>
 
-  <mat-grid-list [cols]="20" [rowHeight]="850" class="grid-list-evolution">
+  <mat-grid-list [cols]="21" [rowHeight]="800" class="grid-list-evolution">
 
-    <mat-grid-tile [colspan]="3" [rowspan]="1" class="left-column">
+    <mat-grid-tile [colspan]="2" [rowspan]="1" class="left-column">
       <div class="column">
         <mat-form-field>
           <input matInput placeholder="Nom" [value]="patient.name" disabled>
@@ -26,21 +26,8 @@
           <mat-icon color="warn">warning</mat-icon> <span class="align-super warn">Patient de moins de 18 ans => Se reporter à la courbe de croissance pour l'IMC</span>
         </div>
 
-        <h3>Nouvelles données</h3>
-        <mat-form-field>
-          <input matInput type="number" placeholder="Taille(cm)" formControlName="height" (keyup)="updateData()">
-        </mat-form-field>
-
-        <mat-form-field>
-          <input matInput type="number" placeholder="Poids(kg)" formControlName="weight" (keyup)="updateData()">
-        </mat-form-field>
-
-        <mat-form-field>
-          <input matInput type="number" placeholder="Masse Hydrique (%)" formControlName="bodyWater">
-        </mat-form-field>
-
         <button mat-raised-button *ngIf="patient.id" [disabled]="tabForm.pristine" color="primary" (click)="savePatient()" class="save">
-          <span class="align-middle"> Sauvegarder les données</span>
+          <span class="align-middle"> Sauvegarder </span>
         </button>
       </div>
     </mat-grid-tile>
@@ -53,10 +40,10 @@
           </ng-template>
           <div class="column sub-grid-evolution">
             <div class="row lign" *ngFor="let lign of formattedPatientData">
-              <span class="cell label">{{lign.label}}</span>
-
-              <div class="cell data" [ngClass]="lign.class">
-                {{tabForm.get(lign.title).value}}
+              <div class="label" [ngClass]="lign.class">
+                <mat-form-field>
+                  <input matInput type="number" placeholder="{{lign.label}}" formControlName="{{lign.title}}" (keyup)="updateData()">
+                </mat-form-field>
               </div>
 
               <div *ngFor="let data of lign.data" class="cell data" [ngClass]="data.class">

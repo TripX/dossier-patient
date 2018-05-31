@@ -43,6 +43,8 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
       weight: new FormControl(),
       imc: new FormControl(),
       bodyWater: new FormControl(),
+      boneMineral: new FormControl(),
+      metabolicAge: new FormControl(),
       bicipital: new FormControl(),
       tricipital: new FormControl(),
       subscapulaire: new FormControl(),
@@ -79,7 +81,9 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
       this.formattedPatientData.push({'title': 'height', 'label': 'Taille(cm)', 'data': []});
       this.formattedPatientData.push({'title': 'weight', 'label': 'Poids(kg)', 'data': []});
       this.formattedPatientData.push({'title': 'imc', 'label': 'IMC(kg·m−2)', 'data': []});
-      this.formattedPatientData.push({'title': 'bodyWater', 'label': 'MH(%)', 'data': []});
+      this.formattedPatientData.push({'title': 'bodyWater', 'label': 'Masse Hydrique (%)', 'data': []});
+      this.formattedPatientData.push({'title': 'boneMineral', 'label': 'Masse Minérale Osseuse', 'data': []});
+      this.formattedPatientData.push({'title': 'metabolicAge', 'label': 'Age Métabolique', 'data': []});
       this.formattedPatientData.push({'title': 'bicipital', 'label': 'Plis b', 'data': []});
       this.formattedPatientData.push({'title': 'tricipital', 'label': 'Plis t', 'data': []});
       this.formattedPatientData.push({'title': 'subscapulaire', 'label': 'Plis sous', 'data': []});
@@ -123,6 +127,8 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
         );
 
         this.formattedPatientData[++idx].data.unshift({'value': this.patient.evolution[key].bodyWater, 'class': ''});
+        this.formattedPatientData[++idx].data.unshift({'value': this.patient.evolution[key].boneMineral, 'class': ''});
+        this.formattedPatientData[++idx].data.unshift({'value': this.patient.evolution[key].metabolicAge, 'class': ''});
         this.formattedPatientData[++idx].data.unshift({'value': this.patient.evolution[key].bicipital, 'class': ''});
         this.formattedPatientData[++idx].data.unshift({'value': this.patient.evolution[key].tricipital, 'class': ''});
         this.formattedPatientData[++idx].data.unshift({'value': this.patient.evolution[key].subscapulaire, 'class': ''});
@@ -156,6 +162,8 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
         this.tabForm.get('weight').setValue('');
         this.tabForm.get('imc').setValue('');
         this.tabForm.get('bodyWater').setValue('');
+        this.tabForm.get('boneMineral').setValue('');
+        this.tabForm.get('metabolicAge').setValue('');
         // TODO AUTRES DONNEES SAISIES
       }
     }

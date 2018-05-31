@@ -75,6 +75,8 @@ export interface IEvolution {
   height: number;
   weight: number;
   bodyWater: number;
+  boneMineral: number;
+  metabolicAge: number;
   bicipital: number;
   tricipital: number;
   subscapulaire: number;

@@ -1,6 +1,4 @@
-import {IPatient} from '../../app/models/patient';
-
-export let patientsData: IPatient[] = [
+export let patientsData = [
   {
     'id': 1,
     'creationDate': new Date('2017-08-01'),
