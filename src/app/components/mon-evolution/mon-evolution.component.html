@@ -36,13 +36,14 @@
       <mat-tab-group [selectedIndex]="selectedIndexInside" (selectedIndexChange)="onSelectedIndexInside($event)">
         <mat-tab>
           <ng-template mat-tab-label>
-            <span class="align-super"> Tableau </span>
+            <span class="align-super">Evolution</span>
           </ng-template>
           <div class="column sub-grid-evolution">
             <div class="row lign" *ngFor="let lign of formattedPatientData">
               <div class="label" [ngClass]="lign.class">
                 <mat-form-field>
-                  <input matInput type="number" placeholder="{{lign.label}}" formControlName="{{lign.title}}" (keyup)="updateData()">
+                  <input matInput type="{{lign.title === 'date' ? 'string' : 'number'}}" placeholder="{{lign.label}}"
+                         formControlName="{{lign.title}}" (keyup)="updateData()" [disabled]="lign.disabled">
                 </mat-form-field>
               </div>
 
@@ -54,7 +55,7 @@
         </mat-tab>
         <mat-tab [disabled]="!showCourbeCroissance">
           <ng-template mat-tab-label>
-            <span class="align-super"> Courbe de croissance </span>
+            <span class="align-super">Courbe de croissance</span>
           </ng-template>
           <div class="tab-content">
             <div #courbecorpulence></div>
