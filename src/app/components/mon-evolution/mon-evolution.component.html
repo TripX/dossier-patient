@@ -42,8 +42,8 @@
             <div class="row lign" *ngFor="let lign of formattedPatientData">
               <div class="cell label">{{lign.label}}</div>
               <div class="cell data" [ngClass]="lign.class">
-                <input matInput type="{{lign.title === 'date' ? 'string' : 'number'}}"
-                       formControlName="{{lign.title}}" (keyup)="updateData()" [disabled]="lign.disabled">
+                <input matInput type="string"
+                       formControlName="{{lign.title}}" (keyup)="updateData()">
               </div>
 
               <div *ngFor="let data of lign.data" class="cell data" [ngClass]="data.class">

@@ -8,6 +8,8 @@ import {ImcClassPipe} from '../../pipes/imc-class.pipe';
 import {CalculateAgePipe} from '../../pipes/calculate-age.pipe';
 import {IPatient, Patient} from '../../models/patient';
 import {CORPULENCE_FILLE, CORPULENCE_GARCON} from '../../models/corpulence';
+import {Log} from '@angular/core/testing/src/logger';
+import {PatientsService} from '../../services/patient-service';
 
 registerLocaleData(localeFR);
 
@@ -30,7 +32,7 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
   formattedPatientData = [];
   tabForm: FormGroup;
 
-  constructor() {}
+  constructor(private patientsService: PatientsService) {}
 
   ngOnInit() {
     this.patient = new Patient().patient;
@@ -75,27 +77,27 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
 
       // En étroite correspondance avec le tabForm, le paramètre title est le lien
       this.formattedPatientData = [];
-      this.formattedPatientData.push({'title': 'date', 'label': 'Date', 'data': [], 'disabled': true});
-      this.formattedPatientData.push({'title': 'age', 'label': 'Age', 'data': [], 'disabled': true});
-      this.formattedPatientData.push({'title': 'height', 'label': 'Taille(cm)', 'data': [], 'disabled': false});
-      this.formattedPatientData.push({'title': 'weight', 'label': 'Poids(kg)', 'data': [], 'disabled': false});
-      this.formattedPatientData.push({'title': 'imc', 'label': 'IMC(kg·m−2)', 'data': [], 'disabled': false});
-      this.formattedPatientData.push({'title': 'bodyWater', 'label': 'Masse Hydrique (%)', 'data': [], 'disabled': false});
-      this.formattedPatientData.push({'title': 'boneMineral', 'label': 'Masse Minérale Osseuse', 'data': [], 'disabled': false});
-      this.formattedPatientData.push({'title': 'metabolicAge', 'label': 'Age Métabolique', 'data': [], 'disabled': false});
-      this.formattedPatientData.push({'title': 'bicipital', 'label': 'Plis b', 'data': [], 'disabled': false});
-      this.formattedPatientData.push({'title': 'tricipital', 'label': 'Plis t', 'data': [], 'disabled': false});
-      this.formattedPatientData.push({'title': 'subscapulaire', 'label': 'Plis sous', 'data': [], 'disabled': false});
-      this.formattedPatientData.push({'title': 'suprailiaque', 'label': 'Plis sup', 'data': [], 'disabled': false});
-      this.formattedPatientData.push({'title': 'mgPercent', 'label': 'MG(%)', 'data': [], 'disabled': false});
-      this.formattedPatientData.push({'title': 'mgKg', 'label': 'MG(kg)', 'data': [], 'disabled': false});
-      this.formattedPatientData.push({'title': 'mmPercent', 'label': 'MM(%)', 'data': [], 'disabled': false});
-      this.formattedPatientData.push({'title': 'mmKg', 'label': 'MM(kg)', 'data': [], 'disabled': false});
-      this.formattedPatientData.push({'title': 'waist', 'label': 'Tour taille', 'data': [], 'disabled': false});
-      this.formattedPatientData.push({'title': 'hip', 'label': 'Tour hanche', 'data': [], 'disabled': false});
-      this.formattedPatientData.push({'title': 'pectoral', 'label': 'Tour pec', 'data': [], 'disabled': false});
-      this.formattedPatientData.push({'title': 'arm', 'label': 'Tour bras', 'data': [], 'disabled': false});
-      this.formattedPatientData.push({'title': 'thigh', 'label': 'Tour cuisse', 'data': [], 'disabled': false});
+      this.formattedPatientData.push({'title': 'date', 'label': 'Date', 'data': []});
+      this.formattedPatientData.push({'title': 'age', 'label': 'Age', 'data': []});
+      this.formattedPatientData.push({'title': 'height', 'label': 'Taille(cm)', 'data': []});
+      this.formattedPatientData.push({'title': 'weight', 'label': 'Poids(kg)', 'data': []});
+      this.formattedPatientData.push({'title': 'imc', 'label': 'IMC(kg·m−2)', 'data': []});
+      this.formattedPatientData.push({'title': 'bodyWater', 'label': 'Masse Hydrique (%)', 'data': []});
+      this.formattedPatientData.push({'title': 'boneMineral', 'label': 'Masse Minérale Osseuse', 'data': []});
+      this.formattedPatientData.push({'title': 'metabolicAge', 'label': 'Age Métabolique', 'data': []});
+      this.formattedPatientData.push({'title': 'bicipital', 'label': 'Plis b', 'data': []});
+      this.formattedPatientData.push({'title': 'tricipital', 'label': 'Plis t', 'data': []});
+      this.formattedPatientData.push({'title': 'subscapulaire', 'label': 'Plis sous', 'data': []});
+      this.formattedPatientData.push({'title': 'suprailiaque', 'label': 'Plis sup', 'data': []});
+      this.formattedPatientData.push({'title': 'mgPercent', 'label': 'MG(%)', 'data': []});
+      this.formattedPatientData.push({'title': 'mgKg', 'label': 'MG(kg)', 'data': []});
+      this.formattedPatientData.push({'title': 'mmPercent', 'label': 'MM(%)', 'data': []});
+      this.formattedPatientData.push({'title': 'mmKg', 'label': 'MM(kg)', 'data': []});
+      this.formattedPatientData.push({'title': 'waist', 'label': 'Tour taille', 'data': []});
+      this.formattedPatientData.push({'title': 'hip', 'label': 'Tour hanche', 'data': []});
+      this.formattedPatientData.push({'title': 'pectoral', 'label': 'Tour pec', 'data': []});
+      this.formattedPatientData.push({'title': 'arm', 'label': 'Tour bras', 'data': []});
+      this.formattedPatientData.push({'title': 'thigh', 'label': 'Tour cuisse', 'data': []});
 
       const age = [];
       const imcTable = [];
@@ -122,7 +124,7 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
         const IMC = this.calculateIMC(height, weight);
         imcTable.push(IMC);
         this.formattedPatientData[++idx].data.unshift(
-          {'value': IMC, 'class': Number(calculatedAge) > 17 ? imcClassPipe.transform(IMC) : 'young-person-cell'}
+          {'value': IMC, 'class': Number(calculatedAge) >= 18 ? imcClassPipe.transform(IMC) : 'young-person-cell'}
         );
 
         this.formattedPatientData[++idx].data.unshift({'value': this.patient.evolution[key].bodyWater, 'class': ''});
@@ -133,7 +135,8 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
         this.formattedPatientData[++idx].data.unshift({'value': this.patient.evolution[key].subscapulaire, 'class': ''});
         this.formattedPatientData[++idx].data.unshift({'value': this.patient.evolution[key].suprailiaque, 'class': ''});
 
-        const masse = this.calculateMGandMM(weight); // TODO
+        const masse = this.calculateMGandMM(calculatedAge, weight, this.patient.evolution[key].bicipital,
+          this.patient.evolution[key].tricipital, this.patient.evolution[key].subscapulaire, this.patient.evolution[key].suprailiaque);
         this.formattedPatientData[++idx].data.unshift({'value': masse.mgPercent, 'class': ''});
         this.formattedPatientData[++idx].data.unshift({'value': masse.mgKg, 'class': ''});
         this.formattedPatientData[++idx].data.unshift({'value': masse.mmPercent, 'class': ''});
@@ -163,8 +166,45 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
         this.tabForm.get('bodyWater').setValue('');
         this.tabForm.get('boneMineral').setValue('');
         this.tabForm.get('metabolicAge').setValue('');
-        // TODO AUTRES DONNEES SAISIES
+        this.tabForm.get('bicipital').setValue('');
+        this.tabForm.get('tricipital').setValue('');
+        this.tabForm.get('subscapulaire').setValue('');
+        this.tabForm.get('suprailiaque').setValue('');
+        this.tabForm.get('mgPercent').setValue('');
+        this.tabForm.get('mgKg').setValue('');
+        this.tabForm.get('mmPercent').setValue('');
+        this.tabForm.get('mmKg').setValue('');
+        this.tabForm.get('waist').setValue('');
+        this.tabForm.get('hip').setValue('');
+        this.tabForm.get('pectoral').setValue('');
+        this.tabForm.get('arm').setValue('');
+        this.tabForm.get('thigh').setValue('');
       }
+    }
+  }
+
+  updateData() {
+    const height = this.tabForm.get('height').value;
+    const weight = this.tabForm.get('weight').value;
+    const age = this.tabForm.get('age').value;
+    if (age && height && weight) {
+      const imc = this.calculateIMC(height, weight);
+      this.tabForm.get('imc').setValue(imc);
+
+      const imcClassPipe = new ImcClassPipe();
+      this.formattedPatientData[4].class = Number(age) >= 18 ? imcClassPipe.transform(imc) : 'young-person-cell';
+    }
+
+    const bicipital = this.tabForm.get('bicipital').value;
+    const tricipital = this.tabForm.get('tricipital').value;
+    const subscapulaire = this.tabForm.get('subscapulaire').value;
+    const suprailiaque = this.tabForm.get('suprailiaque').value;
+    if (age && weight && bicipital && tricipital && subscapulaire && suprailiaque) {
+      const masse = this.calculateMGandMM(age, weight, bicipital, tricipital, subscapulaire, suprailiaque);
+      this.tabForm.get('mgPercent').setValue(masse.mgPercent);
+      this.tabForm.get('mgKg').setValue(masse.mgKg);
+      this.tabForm.get('mmPercent').setValue(masse.mmPercent);
+      this.tabForm.get('mmKg').setValue(masse.mmKg);
     }
   }
 
@@ -172,33 +212,63 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
     return Number(weight / Math.pow(Number(height / 100), 2)).toFixed(2);
   }
 
-  calculateMGandMM(weight) { // TODO !!!!!!!
-    const MG = 15;
-    const MM = weight - MG;
-    return {
-      'mgPercent': Number((MG * 100) / (MM + MG)).toFixed(2),
-      'mgKg': MG,
-      'mmPercent': Number((MM * 100) / (MG + MM)).toFixed(2),
-      'mmKg': MM
-    };
+  calculateMGandMM(age, weight, bicipital, tricipital, subscapulaire, suprailiaque) {
+    const sexe = this.patient.sex.toString();
+    const C = this.getCM(age, sexe)[0];
+    const M = this.getCM(age, sexe)[1];
+    console.log(C, M);
+    const plis = Number(bicipital) + Number(tricipital) + Number(subscapulaire) + Number(suprailiaque);
+    const MG = (495 / Number(C - (M * (Math.log10(plis))))) - 450;
+    const MM = 100 - MG;
+
+    if (C === 0 && M === 0) {
+      return {
+        'mgPercent': '-',
+        'mgKg': '-',
+        'mmPercent': '-',
+        'mmKg': '-'
+      };
+    } else {
+      return {
+        'mgPercent': Number(MG).toFixed(2),
+        'mgKg': Number((MG * weight) / 100).toFixed(2),
+        'mmPercent': Number(MM).toFixed(2),
+        'mmKg': Number(MM * weight / 100).toFixed(2)
+      };
+    }
   }
 
-  updateData() {
-    const height = this.tabForm.get('height').value;
-    const weight = this.tabForm.get('weight').value;
-    if (height && weight) {
-      const imc = this.calculateIMC(height, weight);
-      this.tabForm.get('imc').setValue(imc);
-
-      const imcClassPipe = new ImcClassPipe();
-      this.formattedPatientData[4].class = imcClassPipe.transform(imc);
-
-      // const masse = this.calculateMGandMM(weight); // TODO
-      // this.tabForm.get('mgPercent').setValue(masse.mgPercent);
-      // this.tabForm.get('mgKg').setValue(masse.mgKg);
-      // this.tabForm.get('mmPercent').setValue(masse.mmPercent);
-      // this.tabForm.get('mmKg').setValue(masse.mmKg);
+  getCM(age: number, sexe: string): number[] {
+    if (sexe === 'Masculin') {
+      if (age < 17) {
+        return [0, 0];
+      } else if (age >= 17 && age <= 19) {
+        return [1.1620, 0.0678];
+      } else if (age >= 20 && age <= 29) {
+        return [1.1631, 0.0632];
+      } else if (age >= 30 && age <= 39) {
+        return [1.1422, 0.0544];
+      } else if (age >= 40 && age <= 49) {
+        return [1.1620, 0.0700];
+      } else if (age >= 50) {
+        return [1.1620, 0.0678];
+      }
+    } else {
+      if (age < 17) {
+        return [0, 0];
+      } else if (age >= 17 && age <= 19) {
+        return [1.1549, 0.0678];
+      } else if (age >= 20 && age <= 29) {
+        return [1.1599, 0.0717];
+      } else if (age >= 30 && age <= 39) {
+        return [1.1423, 0.0632];
+      } else if (age >= 40 && age <= 49) {
+        return [1.1333, 0.0612];
+      } else if (age >= 50) {
+        return [1.1339, 0.0645];
+      }
     }
+
   }
 
   onSelectedIndexInside(val: number) {
@@ -206,7 +276,30 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
   }
 
   savePatient() {
-    console.log('save'); // TODO
+    this.patient.evolution.unshift({
+      date: this.tabForm.get('date').value, // TODO problème de date
+      height: this.tabForm.get('height').value,
+      weight: this.tabForm.get('weight').value,
+      bodyWater: this.tabForm.get('bodyWater').value,
+      boneMineral: this.tabForm.get('boneMineral').value,
+      metabolicAge: this.tabForm.get('metabolicAge').value,
+      bicipital: this.tabForm.get('bicipital').value,
+      tricipital: this.tabForm.get('tricipital').value,
+      subscapulaire: this.tabForm.get('subscapulaire').value,
+      suprailiaque: this.tabForm.get('suprailiaque').value,
+      waist: this.tabForm.get('waist').value,
+      hip: this.tabForm.get('hip').value,
+      pectoral: this.tabForm.get('pectoral').value,
+      arm: this.tabForm.get('arm').value,
+      thigh: this.tabForm.get('thigh').value,
+    });
+
+    this.patientsService.updatePatient(this.patient).subscribe( res => {
+      console.log(res, this.patient);
+    });
+
+    this.tabForm.markAsPristine();
+    // TODO remettre une colonne vide (recharger la page ?)
     this.outSelectedIndex.emit(3); // Redirection vers ma balance énergétique
   }
 
