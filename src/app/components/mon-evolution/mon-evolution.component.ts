@@ -75,7 +75,7 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
 
       // En étroite correspondance avec le tabForm, le paramètre title est le lien
       this.formattedPatientData = [];
-      this.formattedPatientData.push({'title': 'date', 'label': ' ', 'data': [], 'disabled': true});
+      this.formattedPatientData.push({'title': 'date', 'label': 'Date', 'data': [], 'disabled': true});
       this.formattedPatientData.push({'title': 'age', 'label': 'Age', 'data': [], 'disabled': true});
       this.formattedPatientData.push({'title': 'height', 'label': 'Taille(cm)', 'data': [], 'disabled': false});
       this.formattedPatientData.push({'title': 'weight', 'label': 'Poids(kg)', 'data': [], 'disabled': false});

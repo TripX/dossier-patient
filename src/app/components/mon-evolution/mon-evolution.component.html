@@ -2,7 +2,7 @@
 
   <h3 *ngIf="!patient.id" class="header-new-patient">Nouveau Patient</h3>
 
-  <mat-grid-list [cols]="21" [rowHeight]="800" class="grid-list-evolution">
+  <mat-grid-list [cols]="20" [rowHeight]="820" class="grid-list-evolution">
 
     <mat-grid-tile [colspan]="2" [rowspan]="1" class="left-column">
       <div class="column">
@@ -32,7 +32,7 @@
       </div>
     </mat-grid-tile>
 
-    <mat-grid-tile [colspan]="18" [rowspan]="1" class="right-grid">
+    <mat-grid-tile [colspan]="17" [rowspan]="1" class="right-grid">
       <mat-tab-group [selectedIndex]="selectedIndexInside" (selectedIndexChange)="onSelectedIndexInside($event)">
         <mat-tab>
           <ng-template mat-tab-label>
@@ -40,11 +40,10 @@
           </ng-template>
           <div class="column sub-grid-evolution">
             <div class="row lign" *ngFor="let lign of formattedPatientData">
-              <div class="label" [ngClass]="lign.class">
-                <mat-form-field>
-                  <input matInput type="{{lign.title === 'date' ? 'string' : 'number'}}" placeholder="{{lign.label}}"
-                         formControlName="{{lign.title}}" (keyup)="updateData()" [disabled]="lign.disabled">
-                </mat-form-field>
+              <div class="cell label">{{lign.label}}</div>
+              <div class="cell data" [ngClass]="lign.class">
+                <input matInput type="{{lign.title === 'date' ? 'string' : 'number'}}"
+                       formControlName="{{lign.title}}" (keyup)="updateData()" [disabled]="lign.disabled">
               </div>
 
               <div *ngFor="let data of lign.data" class="cell data" [ngClass]="data.class">
