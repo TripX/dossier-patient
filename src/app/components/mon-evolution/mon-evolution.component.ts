@@ -10,6 +10,8 @@ import {IPatient, Patient} from '../../models/patient';
 import {CORPULENCE_FILLE, CORPULENCE_GARCON} from '../../models/corpulence';
 import {Log} from '@angular/core/testing/src/logger';
 import {PatientsService} from '../../services/patient-service';
+import {DateAdapter} from '@angular/material';
+import {FrenchDateAdapter} from '../../services/FrenchDateAdapter';
 
 registerLocaleData(localeFR);
 
@@ -276,8 +278,9 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
   }
 
   savePatient() {
+    const date = (this.tabForm.get('date').value).split('/');
     this.patient.evolution.unshift({
-      date: this.tabForm.get('date').value, // TODO problème de date
+      date:  new Date(Number(date[2]), Number(date[1]) - 1, Number(date[0]), 12),
       height: this.tabForm.get('height').value,
       weight: this.tabForm.get('weight').value,
       bodyWater: this.tabForm.get('bodyWater').value,
@@ -299,7 +302,7 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
     });
 
     this.tabForm.markAsPristine();
-    // TODO remettre une colonne vide (recharger la page ?)
+    this.tabForm.reset();
     this.outSelectedIndex.emit(3); // Redirection vers ma balance énergétique
   }
 

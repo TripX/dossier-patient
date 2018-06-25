@@ -37,7 +37,7 @@
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput placeholder="Age" [value]="patient.birthdate | calculateAge" [disabled]="!patient.birthdate">
+          <input matInput placeholder="Age" [value]="patient.birthdate ? patient.birthdate : tabForm.get('birthdate').value | calculateAge" [disabled]="!patient.birthdate">
         </mat-form-field>
 
         <mat-form-field>

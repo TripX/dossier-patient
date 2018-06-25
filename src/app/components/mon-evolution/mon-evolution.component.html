@@ -42,7 +42,7 @@
             <div class="row lign" *ngFor="let lign of formattedPatientData">
               <div class="cell label">{{lign.label}}</div>
               <div class="cell data" [ngClass]="lign.class">
-                <input matInput type="string"
+                <input matInput type="text"
                        formControlName="{{lign.title}}" (keyup)="updateData()">
               </div>
 
