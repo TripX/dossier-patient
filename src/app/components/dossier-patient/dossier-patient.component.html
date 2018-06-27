@@ -10,7 +10,7 @@
                                  (outSearchPatient)="onSearchPatient($event)" [onSearch]="onSearch"></app-recherche-patient>
         </div>
       </mat-tab>
-      <mat-tab>
+      <mat-tab [disabled]="selectedIndex === 0">
         <ng-template mat-tab-label>
           <mat-icon>person</mat-icon> <span class="align-super"> Ma fiche patient</span>
         </ng-template>
@@ -18,7 +18,7 @@
           <app-fiche-patient (outSelectedIndex)="onSelectedIndex($event)" [patient]="searchedPatient"></app-fiche-patient>
         </div>
       </mat-tab>
-      <mat-tab>
+      <mat-tab [disabled]="selectedIndex === 0">
         <ng-template mat-tab-label>
           <mat-icon>trending_up</mat-icon> <span class="align-super"> Mon évolution</span>
         </ng-template>
@@ -26,7 +26,7 @@
           <app-mon-evolution (outSelectedIndex)="onSelectedIndex($event)" [patient]="searchedPatient"></app-mon-evolution>
         </div>
       </mat-tab>
-      <mat-tab>
+      <mat-tab [disabled]="selectedIndex === 0">
         <ng-template mat-tab-label>
           <mat-icon>equalizer</mat-icon> <span class="align-super"> Ma balance énergétique</span>
         </ng-template>
@@ -34,7 +34,7 @@
           <app-ma-balance-energetique></app-ma-balance-energetique>
         </div>
       </mat-tab>
-      <mat-tab>
+      <mat-tab [disabled]="selectedIndex === 0">
         <ng-template mat-tab-label>
           <mat-icon>info</mat-icon> <span class="align-super"> Mon enquête alimentaire</span>
         </ng-template>

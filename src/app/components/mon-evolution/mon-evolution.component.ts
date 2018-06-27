@@ -6,12 +6,11 @@ import localeFR from '@angular/common/locales/fr';
 import * as Plotly from 'plotly.js/lib/core';
 import {ImcClassPipe} from '../../pipes/imc-class.pipe';
 import {CalculateAgePipe} from '../../pipes/calculate-age.pipe';
-import {IPatient, Patient} from '../../models/patient';
+import {IActivity, IPatient, Patient} from '../../models/patient';
 import {CORPULENCE_FILLE, CORPULENCE_GARCON} from '../../models/corpulence';
-import {Log} from '@angular/core/testing/src/logger';
 import {PatientsService} from '../../services/patient-service';
-import {DateAdapter} from '@angular/material';
-import {FrenchDateAdapter} from '../../services/FrenchDateAdapter';
+import {MatDialog} from '@angular/material';
+import {DialogRemoveComponent} from '../dialog-remove/dialog-remove.component';
 
 registerLocaleData(localeFR);
 
@@ -34,7 +33,8 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
   formattedPatientData = [];
   tabForm: FormGroup;
 
-  constructor(private patientsService: PatientsService) {}
+  constructor(private patientsService: PatientsService,
+              private dialog: MatDialog) {}
 
   ngOnInit() {
     this.patient = new Patient().patient;
@@ -218,7 +218,6 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
     const sexe = this.patient.sex.toString();
     const C = this.getCM(age, sexe)[0];
     const M = this.getCM(age, sexe)[1];
-    console.log(C, M);
     const plis = Number(bicipital) + Number(tricipital) + Number(subscapulaire) + Number(suprailiaque);
     const MG = (495 / Number(C - (M * (Math.log10(plis))))) - 450;
     const MM = 100 - MG;
@@ -304,6 +303,25 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
     this.tabForm.markAsPristine();
     this.tabForm.reset();
     this.outSelectedIndex.emit(3); // Redirection vers ma balance énergétique
+  }
+
+  openDialog(evolutionToRemove) {
+    const dialogRef = this.dialog.open(DialogRemoveComponent, {
+      height: 'auto'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Suppression évolution
+        this.patient.evolution = this.patient.evolution.filter(evolution => evolution !== evolutionToRemove);
+        if (this.patient.id) {
+          this.patientsService.updatePatient(this.patient).subscribe( res => {
+            console.log(res);
+          });
+        }
+        this.outSelectedIndex.emit(0); // Redirection vers recherche
+      }
+    });
   }
 
   plotCorpulence(constant, xData, yData, color, title) {

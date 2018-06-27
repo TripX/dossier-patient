@@ -46,8 +46,17 @@
                        formControlName="{{lign.title}}" (keyup)="updateData()">
               </div>
 
-              <div *ngFor="let data of lign.data" class="cell data" [ngClass]="data.class">
+              <div *ngFor="let data of lign.data" class="cell" [ngClass]="data.class">
                 {{data.value}}
+              </div>
+            </div>
+            <div class="row lign">
+              <div class="cell label"></div>
+              <div class="cell"></div>
+              <div class="button-remove" *ngFor="let evolution of patient.evolution">
+                <button type="button" mat-button mat-raised-button color="warn" (click)="openDialog(evolution)">
+                  <mat-icon>delete</mat-icon>
+                </button>
               </div>
             </div>
           </div>

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {IPatient} from '../models/patient';
+import {IEvolution, IPatient} from '../models/patient';
 
 @Injectable()
 export class PatientsService {
