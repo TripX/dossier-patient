@@ -71,6 +71,7 @@ export interface IConsultation {
 }
 
 export interface IEvolution {
+  idEvolution: number;
   date: Date;
   height: number;
   weight: number;

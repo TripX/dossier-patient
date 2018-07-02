@@ -114,7 +114,7 @@ export class FichePatientComponent implements OnInit, AfterViewInit, OnChanges {
       activityHoursPerWeek: new FormControl(),
       consultationDate: new FormControl(new Date()),
       consultationCost: new FormControl(this.defaultCost),
-      consultationPaymentMethod: new FormControl(),
+      consultationPaymentMethod: new FormControl(''),
       consultationTarificationType: new FormControl(),
       freeNotes: new FormControl()
     });
@@ -150,7 +150,6 @@ export class FichePatientComponent implements OnInit, AfterViewInit, OnChanges {
     this.patient.firstname = this.tabForm.get('firstname').value;
     this.patient.name = this.tabForm.get('name').value;
     this.patient.sex = this.tabForm.get('sex').value;
-    this.patient.sex = this.tabForm.get('sex').value;
     this.patient.birthdate = this.tabForm.get('birthdate').value;
     this.patient.profession = this.tabForm.get('profession').value;
     this.patient.maritalStatus = this.tabForm.get('maritalStatus').value;
@@ -182,6 +181,8 @@ export class FichePatientComponent implements OnInit, AfterViewInit, OnChanges {
       });
     }
 
+    this.tabForm.get('consultationPaymentMethod').setValue('');
+    this.tabForm.get('consultationTarificationType').setValue('');
     this.sportIsUpdated = false;
     this.tabForm.markAsPristine();
     this.outSelectedIndex.emit(2); // Redirection vers mon évolution

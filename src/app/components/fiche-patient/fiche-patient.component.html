@@ -37,7 +37,7 @@
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput placeholder="Age" [value]="patient.birthdate ? patient.birthdate : tabForm.get('birthdate').value | calculateAge" [disabled]="!patient.birthdate">
+          <input matInput placeholder="Age" [value]="tabForm.get('birthdate').value | calculateAge">
         </mat-form-field>
 
         <mat-form-field>
@@ -114,6 +114,7 @@
               <input matInput [matDatepicker]="consultationPicker" placeholder="Date" formControlName="consultationDate">
               <mat-datepicker-toggle matSuffix [for]="consultationPicker"></mat-datepicker-toggle>
               <mat-datepicker #consultationPicker startView="year" [startAt]="startToday"></mat-datepicker>
+              Nouveau paiement
             </mat-form-field>
             <mat-form-field>
               <input matInput type="number" placeholder="Montant consultation" formControlName="consultationCost">

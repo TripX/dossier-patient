@@ -72,7 +72,11 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
     // TODO Ne fonctionne pas car la page évolution n'est pas affiché et donc les mat-tab sont à null
     // TODO La solution est de chargé la donnée au moment venu et non dés le début (voir lazy-loading)
 
-    if (this.patient && this.patient.evolution) {
+    this.updateFormatedData();
+  }
+
+  updateFormatedData() {
+    if (this.patient) {
       const calculateAge = new CalculateAgePipe();
       const datePipe = new DatePipe('fr');
       const imcClassPipe = new ImcClassPipe();
@@ -123,7 +127,7 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
         const weight = this.patient.evolution[key].weight;
         this.formattedPatientData[++idx].data.unshift({'value': weight, 'class': ''});
 
-        const IMC = this.calculateIMC(height, weight);
+        const IMC = height > 0 && weight > 0 ? this.calculateIMC(height, weight) : '';
         imcTable.push(IMC);
         this.formattedPatientData[++idx].data.unshift(
           {'value': IMC, 'class': Number(calculatedAge) >= 18 ? imcClassPipe.transform(IMC) : 'young-person-cell'}
@@ -190,11 +194,11 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
     const weight = this.tabForm.get('weight').value;
     const age = this.tabForm.get('age').value;
     if (age && height && weight) {
-      const imc = this.calculateIMC(height, weight);
+      const imc = height > 0 && weight > 0 ? this.calculateIMC(height, weight) : '';
       this.tabForm.get('imc').setValue(imc);
 
       const imcClassPipe = new ImcClassPipe();
-      this.formattedPatientData[4].class = Number(age) >= 18 ? imcClassPipe.transform(imc) : 'young-person-cell';
+      this.formattedPatientData[4].class = Number(age) >= 18 ? imcClassPipe.transform(Number(imc)) : 'young-person-cell';
     }
 
     const bicipital = this.tabForm.get('bicipital').value;
@@ -211,7 +215,7 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
   }
 
   calculateIMC(height: number, weight: number): string {
-    return Number(weight / Math.pow(Number(height / 100), 2)).toFixed(2);
+      return Number(weight / Math.pow(Number(height / 100), 2)).toFixed(2);
   }
 
   calculateMGandMM(age, weight, bicipital, tricipital, subscapulaire, suprailiaque) {
@@ -222,7 +226,7 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
     const MG = (495 / Number(C - (M * (Math.log10(plis))))) - 450;
     const MM = 100 - MG;
 
-    if (C === 0 && M === 0) {
+    if ((C === 0 && M === 0) || MG <= 0) {
       return {
         'mgPercent': '-',
         'mgKg': '-',
@@ -279,6 +283,7 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
   savePatient() {
     const date = (this.tabForm.get('date').value).split('/');
     this.patient.evolution.unshift({
+      idEvolution: new Date().getTime(),
       date:  new Date(Number(date[2]), Number(date[1]) - 1, Number(date[0]), 12),
       height: this.tabForm.get('height').value,
       weight: this.tabForm.get('weight').value,
@@ -298,6 +303,7 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
 
     this.patientsService.updatePatient(this.patient).subscribe( res => {
       console.log(res, this.patient);
+      this.updateFormatedData();
     });
 
     this.tabForm.markAsPristine();
@@ -313,10 +319,12 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         // Suppression évolution
+        console.log('ToRemove', evolutionToRemove);
         this.patient.evolution = this.patient.evolution.filter(evolution => evolution !== evolutionToRemove);
         if (this.patient.id) {
           this.patientsService.updatePatient(this.patient).subscribe( res => {
-            console.log(res);
+            console.log('retour update', res);
+            this.updateFormatedData();
           });
         }
         this.outSelectedIndex.emit(0); // Redirection vers recherche

@@ -27,7 +27,7 @@ $border: #c3d9ff 1px solid;
           text-align: center;
         }
         .data {
-          background-color: rgba(230, 230, 250, 0.62);
+          border-right: 1px dodgerblue dashed;
         }
         .button-remove {
           border-right: $border;
