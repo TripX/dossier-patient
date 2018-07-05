@@ -107,14 +107,15 @@
       <mat-tab-group>
         <mat-tab>
           <ng-template mat-tab-label>
-            <mat-icon>add</mat-icon><span class="align-super"> Nouveau</span>
+            <mat-icon>add</mat-icon>
+            <span class="align-super"> Nouveau</span>
           </ng-template>
           <div class="column">
             <mat-form-field>
-              <input matInput [matDatepicker]="consultationPicker" placeholder="Date" formControlName="consultationDate">
+              <input matInput [matDatepicker]="consultationPicker" placeholder="Date"
+                     formControlName="consultationDate">
               <mat-datepicker-toggle matSuffix [for]="consultationPicker"></mat-datepicker-toggle>
               <mat-datepicker #consultationPicker startView="year" [startAt]="startToday"></mat-datepicker>
-              Nouveau paiement
             </mat-form-field>
             <mat-form-field>
               <input matInput type="number" placeholder="Montant consultation" formControlName="consultationCost">
@@ -133,29 +134,36 @@
 
         <mat-tab [disabled]="!patient?.consultation[0]?.cost">
           <ng-template mat-tab-label>
-            <mat-icon>history</mat-icon><span class="align-super"> Historique</span>
+            <mat-icon>history</mat-icon>
+            <span class="align-super"> Historique</span>
           </ng-template>
           <div class="column">
-            <mat-table #table [dataSource]="dataSource" matSort matSortActive="date" matSortDisableClear matSortDirection="desc">
+            <mat-table #table [dataSource]="dataSource" matSort matSortActive="date" matSortDisableClear
+                       matSortDirection="desc">
 
               <ng-container matColumnDef="date">
-                <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true"> Date </mat-header-cell>
-                <mat-cell *matCellDef="let consultation"> {{consultation.date | date:'dd/MM/yyyy'}} </mat-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true"> Date</mat-header-cell>
+                <mat-cell *matCellDef="let consultation">
+                  <button type="button" mat-button mat-raised-button color="warn" (click)="removeConsultation(consultation)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                  {{consultation.date | date:'dd/MM/yyyy'}}
+                </mat-cell>
               </ng-container>
 
               <ng-container matColumnDef="cost">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> Montant </mat-header-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Montant</mat-header-cell>
                 <mat-cell *matCellDef="let consultation"> {{consultation.cost}} €</mat-cell>
               </ng-container>
 
               <ng-container matColumnDef="paymentMethod">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> Mode de réglement </mat-header-cell>
-                <mat-cell *matCellDef="let consultation"> {{consultation.paymentMethod}} </mat-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Mode de réglement</mat-header-cell>
+                <mat-cell *matCellDef="let consultation"> {{consultation.paymentMethod}}</mat-cell>
               </ng-container>
 
               <ng-container matColumnDef="tarificationType">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> Raison tarification </mat-header-cell>
-                <mat-cell *matCellDef="let consultation"> {{consultation.tarificationType}} </mat-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Raison tarification</mat-header-cell>
+                <mat-cell *matCellDef="let consultation"> {{consultation.tarificationType}}</mat-cell>
               </ng-container>
 
               <mat-header-row *matHeaderRowDef="displayedColumnsConsultation"></mat-header-row>
@@ -183,7 +191,8 @@
         </div>
         <div class="row">
           <button type="button" mat-raised-button (click)="addNewActivity()" color="primary">
-            <mat-icon>add</mat-icon><span class="align-middle"> Ajouter un sport</span>
+            <mat-icon>add</mat-icon>
+            <span class="align-middle"> Ajouter un sport</span>
           </button>
         </div>
       </div>
@@ -197,14 +206,29 @@
         </mat-form-field>
       </div>
     </mat-grid-tile>
+
+    <mat-grid-tile [colspan]="2" [rowspan]="1">
+      <button type="button" mat-button mat-raised-button *ngIf="patient.id" color="warn" (click)="openDialog()">
+        <mat-icon>delete</mat-icon>
+        <span class="align-middle"> Supprimer ce patient</span>
+      </button>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="1" [rowspan]="1">
+      <button type="button" mat-raised-button (click)="addNewPayment()" color="primary" [disabled]="paymentDone">
+        <mat-icon *ngIf="!paymentDone">add</mat-icon>
+        <span class="align-middle warn" *ngIf="paymentDone">Paiement effectué - Penser a sauvegarder !</span>
+        <span class="align-middle" *ngIf="!paymentDone">Payer consultation</span>
+      </button>
+    </mat-grid-tile>
+
+    <mat-grid-tile [colspan]="1" [rowspan]="1">
+      <button type="submit" mat-raised-button [disabled]="tabForm.pristine && !sportIsUpdated" color="primary"
+              (click)="savePatient()" class="save">
+        <mat-icon>person_add</mat-icon>
+        <span class="align-middle" *ngIf="!patient.id"> Sauvegarder le nouveau patient</span>
+        <span class="align-middle" *ngIf="patient.id"> Sauvegarder les changements</span>
+      </button>
+    </mat-grid-tile>
   </mat-grid-list>
-
-  <button type="button" mat-button mat-raised-button *ngIf="patient.id" color="warn" (click)="openDialog()"><mat-icon>delete</mat-icon></button>
-
-  <button type="submit" mat-raised-button [disabled]="tabForm.pristine && !sportIsUpdated" color="primary" (click)="savePatient()" class="save">
-    <mat-icon>person_add</mat-icon>
-    <span class="align-middle" *ngIf="!patient.id"> Sauvegarder le nouveau patient</span>
-    <span class="align-middle" *ngIf="patient.id"> Sauvegarder les changements</span>
-  </button>
 
 </form>

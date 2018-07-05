@@ -30,6 +30,7 @@ export class FichePatientComponent implements OnInit, AfterViewInit, OnChanges {
   paymentMethod: string[] = PAYMENT_METHOD;
   defaultCost = 45;
   sportIsUpdated = false;
+  paymentDone = false;
 
   @Input() patient: IPatient;
   tabForm: FormGroup;
@@ -120,6 +121,22 @@ export class FichePatientComponent implements OnInit, AfterViewInit, OnChanges {
     });
   }
 
+  addNewPayment() {
+    const newConsultation = {
+      date: this.tabForm.get('consultationDate').value,
+      cost: this.tabForm.get('consultationCost').value,
+      paymentMethod: this.tabForm.get('consultationPaymentMethod').value,
+      tarificationType: this.tabForm.get('consultationTarificationType').value,
+    };
+    this.patient.consultation.push(newConsultation);
+    this.paymentDone = true;
+    this.tabForm.markAsDirty();
+  }
+
+  removeConsultation(consultationToRemove: IConsultation) {
+    this.patient.consultation = this.patient.consultation.filter(consultation => consultation !== consultationToRemove);
+  }
+
   addNewActivity() {
     this.activities.push({
       index: ++this.indexSport,
@@ -163,12 +180,6 @@ export class FichePatientComponent implements OnInit, AfterViewInit, OnChanges {
     this.patient.regularDoctor = this.tabForm.get('regularDoctor').value;
     this.patient.healthNote = this.tabForm.get('healthNote').value;
     this.patient.activity = this.activities;
-    this.patient.consultation.push({
-      'date': this.tabForm.get('consultationDate').value,
-      'cost': this.tabForm.get('consultationCost').value,
-      'paymentMethod': this.tabForm.get('consultationPaymentMethod').value,
-      'tarificationType': this.tabForm.get('consultationTarificationType').value
-    });
     this.patient.freeNotes = this.tabForm.get('freeNotes').value;
 
     if (!this.patient.id) {
@@ -183,6 +194,7 @@ export class FichePatientComponent implements OnInit, AfterViewInit, OnChanges {
 
     this.tabForm.get('consultationPaymentMethod').setValue('');
     this.tabForm.get('consultationTarificationType').setValue('');
+    this.paymentDone = false;
     this.sportIsUpdated = false;
     this.tabForm.markAsPristine();
     this.outSelectedIndex.emit(2); // Redirection vers mon évolution

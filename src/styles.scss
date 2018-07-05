@@ -51,6 +51,7 @@
 }
 .align-middle {
   vertical-align: middle;
+  text-align: center;
 }
 
 .align-super {
@@ -65,7 +66,7 @@
 }
 
 // Bouton save
-.save, .remove {
+.save {
   float: right;
 }
 
