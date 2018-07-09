@@ -23,7 +23,7 @@
         </mat-form-field>
 
         <div *ngIf="age.value < 18">
-          <mat-icon color="warn">warning</mat-icon> <span class="align-super warn">Patient de moins de 18 ans => Se reporter à la courbe de croissance pour l'IMC</span>
+          <mat-icon color="warn">warning</mat-icon> <span class="align-super warn">Patient de moins de 18 ans => Voir la courbe de croissance pour l'IMC</span>
         </div>
 
         <button mat-raised-button *ngIf="patient.id" [disabled]="tabForm.pristine" color="primary" (click)="savePatient()" class="save">
@@ -52,10 +52,10 @@
             </div>
             <div class="row lign">
               <div class="cell label"></div>
-              <div class="cell"></div>
-              <div class="button-remove" *ngFor="let evolution of patient.evolution">
+              <div class="cell info">Nouvelles données</div>
+              <div class="button-remove" *ngFor="let evolution of evolutionButtonRemove">
                 <button type="button" mat-button mat-raised-button color="warn" (click)="openDialog(evolution)">
-                  <mat-icon>delete</mat-icon>
+                  <mat-icon>delete</mat-icon> {{evolution.idEvolution}}
                 </button>
               </div>
             </div>

@@ -129,12 +129,15 @@ export class FichePatientComponent implements OnInit, AfterViewInit, OnChanges {
       tarificationType: this.tabForm.get('consultationTarificationType').value,
     };
     this.patient.consultation.push(newConsultation);
+    this.dataSource.data = this.patient.consultation;
     this.paymentDone = true;
     this.tabForm.markAsDirty();
   }
 
   removeConsultation(consultationToRemove: IConsultation) {
     this.patient.consultation = this.patient.consultation.filter(consultation => consultation !== consultationToRemove);
+    this.dataSource.data = this.patient.consultation;
+    this.tabForm.markAsDirty();
   }
 
   addNewActivity() {
@@ -183,13 +186,9 @@ export class FichePatientComponent implements OnInit, AfterViewInit, OnChanges {
     this.patient.freeNotes = this.tabForm.get('freeNotes').value;
 
     if (!this.patient.id) {
-      this.patientsService.addPatient(this.patient).subscribe( res => {
-        console.log(res, this.patient);
-      });
+      this.patientsService.addPatient(this.patient).subscribe();
     } else {
-      this.patientsService.updatePatient(this.patient).subscribe( res => {
-        console.log(res, this.patient);
-      });
+      this.patientsService.updatePatient(this.patient).subscribe();
     }
 
     this.tabForm.get('consultationPaymentMethod').setValue('');
@@ -209,9 +208,7 @@ export class FichePatientComponent implements OnInit, AfterViewInit, OnChanges {
       if (result) {
         // Suppression du patient
         if (this.patient.id) {
-          this.patientsService.removePatient(this.patient).subscribe( res => {
-            console.log(res);
-          });
+          this.patientsService.removePatient(this.patient).subscribe();
         }
         this.outSelectedIndex.emit(0); // Redirection vers recherche
       }

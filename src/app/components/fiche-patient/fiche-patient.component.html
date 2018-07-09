@@ -1,5 +1,5 @@
 <form [formGroup]="tabForm">
-  <mat-grid-list cols="4" rowHeight="1:0.8">
+  <mat-grid-list cols="4" rowHeight="1:0.9">
 
     <h3 *ngIf="!patient.id" class="header-new-patient">Nouveau Patient</h3>
     <mat-grid-tile [colspan]="1" [rowspan]="2">
@@ -144,9 +144,9 @@
               <ng-container matColumnDef="date">
                 <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true"> Date</mat-header-cell>
                 <mat-cell *matCellDef="let consultation">
-                  <button type="button" mat-button mat-raised-button color="warn" (click)="removeConsultation(consultation)">
+                  <div (click)="removeConsultation(consultation)" class="warn remove-consultation">
                     <mat-icon>delete</mat-icon>
-                  </button>
+                  </div>
                   {{consultation.date | date:'dd/MM/yyyy'}}
                 </mat-cell>
               </ng-container>

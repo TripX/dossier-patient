@@ -6,7 +6,7 @@ import localeFR from '@angular/common/locales/fr';
 import * as Plotly from 'plotly.js/lib/core';
 import {ImcClassPipe} from '../../pipes/imc-class.pipe';
 import {CalculateAgePipe} from '../../pipes/calculate-age.pipe';
-import {IActivity, IPatient, Patient} from '../../models/patient';
+import {IActivity, IEvolution, IPatient, Patient} from '../../models/patient';
 import {CORPULENCE_FILLE, CORPULENCE_GARCON} from '../../models/corpulence';
 import {PatientsService} from '../../services/patient-service';
 import {MatDialog} from '@angular/material';
@@ -32,6 +32,7 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
   @Input() patient: IPatient;
   formattedPatientData = [];
   tabForm: FormGroup;
+  evolutionButtonRemove: IEvolution[];
 
   constructor(private patientsService: PatientsService,
               private dialog: MatDialog) {}
@@ -63,20 +64,21 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
       arm: new FormControl(),
       thigh: new FormControl()
     });
-
-    console.log('tabForm evolution', this.tabForm);
   }
 
   ngOnChanges(changes: {[propertyName: string]: SimpleChange}) {
-    // this.onSelectedIndexInside(0);
-    // TODO Ne fonctionne pas car la page évolution n'est pas affiché et donc les mat-tab sont à null
-    // TODO La solution est de chargé la donnée au moment venu et non dés le début (voir lazy-loading)
-
     this.updateFormatedData();
   }
 
   updateFormatedData() {
     if (this.patient) {
+      this.evolutionButtonRemove = this.patient.evolution.slice();
+      this.evolutionButtonRemove.sort(
+        function(a, b) {
+          return (b.idEvolution > a.idEvolution) ? 1 : ((a.idEvolution > b.idEvolution) ? -1 : 0);
+        }
+      );
+
       const calculateAge = new CalculateAgePipe();
       const datePipe = new DatePipe('fr');
       const imcClassPipe = new ImcClassPipe();
@@ -282,7 +284,7 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
 
   savePatient() {
     const date = (this.tabForm.get('date').value).split('/');
-    this.patient.evolution.unshift({
+    this.patient.evolution.push({
       idEvolution: new Date().getTime(),
       date:  new Date(Number(date[2]), Number(date[1]) - 1, Number(date[0]), 12),
       height: this.tabForm.get('height').value,
@@ -302,13 +304,11 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
     });
 
     this.patientsService.updatePatient(this.patient).subscribe( res => {
-      console.log(res, this.patient);
       this.updateFormatedData();
     });
 
     this.tabForm.markAsPristine();
     this.tabForm.reset();
-    this.outSelectedIndex.emit(3); // Redirection vers ma balance énergétique
   }
 
   openDialog(evolutionToRemove) {
@@ -319,15 +319,16 @@ export class MonEvolutionComponent implements OnInit, OnChanges {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         // Suppression évolution
-        console.log('ToRemove', evolutionToRemove);
-        this.patient.evolution = this.patient.evolution.filter(evolution => evolution !== evolutionToRemove);
+        console.log('avant', this.patient.evolution);
+        console.log(evolutionToRemove);
+        this.patient.evolution = this.patient.evolution
+          .filter(evolution => evolution !== evolutionToRemove);
+        console.log('après', this.patient.evolution);
+
         if (this.patient.id) {
-          this.patientsService.updatePatient(this.patient).subscribe( res => {
-            console.log('retour update', res);
-            this.updateFormatedData();
-          });
+          this.patientsService.updatePatient(this.patient).subscribe();
+          this.updateFormatedData();
         }
-        this.outSelectedIndex.emit(0); // Redirection vers recherche
       }
     });
   }
