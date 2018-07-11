@@ -1,3 +1,51 @@
-<p>
-  En construction.
-</p>
+<h3 *ngIf="!patient.id" class="header-new-patient">Nouveau Patient</h3>
+
+<mat-grid-list [cols]="20" [rowHeight]="820" class="grid-list-evolution">
+
+  <mat-grid-tile [colspan]="2" [rowspan]="1" class="left-column">
+    <div class="column">
+      <mat-form-field>
+        <input matInput placeholder="Nom" [value]="patient.name" disabled>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Prénom" [value]="patient.firstname" disabled>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Sexe" [value]="patient.sex" disabled>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input #age matInput placeholder="Age" [value]="patient.birthdate | calculateAge" disabled>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="height">
+        <input matInput placeholder="Taille" [value]="height" disabled>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="weight">
+        <input matInput placeholder="Poids" [value]="weight" disabled>
+      </mat-form-field>
+
+    </div>
+  </mat-grid-tile>
+
+  <mat-grid-tile [colspan]="5" [rowspan]="1" class="right-grid">
+    <div class="column">
+      <div class="row energy">
+        <h2>Besoins énergétiques</h2>
+          <span>DEB todo kCal</span>
+          NAP <span>todo</span>
+          BE <span>todo</span> kCal
+      </div>
+
+      <div class="row energy">
+        <h2>Apports énergétiques</h2>
+        <div>
+            AET <span>todo</span> % => <span>todo</span> kCal
+        </div>
+      </div>
+    </div>
+  </mat-grid-tile>
+</mat-grid-list>

@@ -1,0 +1,11 @@
+$border: #c3d9ff 1px solid;
+.grid-list-evolution {
+  .right-grid {
+    margin-left: 20px;
+    .energy {
+      border: $border;
+      margin: 15px;
+      padding: 10px;
+    }
+  }
+}

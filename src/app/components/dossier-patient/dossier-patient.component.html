@@ -31,7 +31,7 @@
           <mat-icon>equalizer</mat-icon> <span class="align-super"> Ma balance énergétique</span>
         </ng-template>
         <div class="tab-content">
-          <app-ma-balance-energetique></app-ma-balance-energetique>
+          <app-ma-balance-energetique (outSelectedIndex)="onSelectedIndex($event)" [patient]="searchedPatient"></app-ma-balance-energetique>
         </div>
       </mat-tab>
       <mat-tab [disabled]="selectedIndex === 0">

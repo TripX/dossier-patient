@@ -22,7 +22,7 @@
           <input #age matInput placeholder="Age" [value]="patient.birthdate | calculateAge" disabled>
         </mat-form-field>
 
-        <div *ngIf="age.value < 18">
+        <div *ngIf="age.value && age.value < 18">
           <mat-icon color="warn">warning</mat-icon> <span class="align-super warn">Patient de moins de 18 ans => Voir la courbe de croissance pour l'IMC</span>
         </div>
 
@@ -55,7 +55,7 @@
               <div class="cell info">Nouvelles données</div>
               <div class="button-remove" *ngFor="let evolution of evolutionButtonRemove">
                 <button type="button" mat-button mat-raised-button color="warn" (click)="openDialog(evolution)">
-                  <mat-icon>delete</mat-icon> {{evolution.idEvolution}}
+                  <mat-icon>delete</mat-icon>
                 </button>
               </div>
             </div>

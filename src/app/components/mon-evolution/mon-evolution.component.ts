@@ -6,7 +6,7 @@ import localeFR from '@angular/common/locales/fr';
 import * as Plotly from 'plotly.js/lib/core';
 import {ImcClassPipe} from '../../pipes/imc-class.pipe';
 import {CalculateAgePipe} from '../../pipes/calculate-age.pipe';
-import {IActivity, IEvolution, IPatient, Patient} from '../../models/patient';
+import {IEvolution, IPatient, Patient} from '../../models/patient';
 import {CORPULENCE_FILLE, CORPULENCE_GARCON} from '../../models/corpulence';
 import {PatientsService} from '../../services/patient-service';
 import {MatDialog} from '@angular/material';
