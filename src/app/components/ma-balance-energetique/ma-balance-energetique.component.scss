@@ -5,7 +5,11 @@ $border: #c3d9ff 1px solid;
     .energy {
       border: $border;
       margin: 15px;
-      padding: 10px;
+      padding: 0 10px;
     }
   }
+}
+
+.size-input {
+  width: 25%;
 }

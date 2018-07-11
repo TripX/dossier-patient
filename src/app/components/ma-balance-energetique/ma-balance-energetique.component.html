@@ -31,20 +31,28 @@
     </div>
   </mat-grid-tile>
 
-  <mat-grid-tile [colspan]="5" [rowspan]="1" class="right-grid">
+  <mat-grid-tile [colspan]="7" [rowspan]="1" class="right-grid">
     <div class="column">
-      <div class="row energy">
+      <div class="energy">
         <h2>Besoins énergétiques</h2>
-          <span>DEB todo kCal</span>
-          NAP <span>todo</span>
-          BE <span>todo</span> kCal
+        <p>DEB = <strong>{{deb}}</strong> kCal</p>
+        <p>NAP =
+          <mat-form-field>
+            <mat-select placeholder="" #nap>
+              <mat-option *ngFor="let nap of napOptions" [value]="nap.value">{{nap.value}} - {{nap.title}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </p>
+        <p>BE = <strong *ngIf="deb && nap && nap.value">{{calculateBE(deb, nap.value)}}</strong> kCal</p>
       </div>
 
-      <div class="row energy">
+      <div class="energy">
         <h2>Apports énergétiques</h2>
-        <div>
-            AET <span>todo</span> % => <span>todo</span> kCal
-        </div>
+        <p>AET =
+          <mat-form-field class="size-input">
+            <input #aet matInput type="number" placeholder="Pourcentage">
+          </mat-form-field>
+          % => <strong *ngIf="aet && aet.value">{{calculateAET(aet.value, calculateBE(deb, nap.value))}}</strong> kCal</p>
       </div>
     </div>
   </mat-grid-tile>
