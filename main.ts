@@ -22,7 +22,8 @@ const bodyParser = require('body-parser');
 const pathPatients = 'C:/DossierPatient/db/patients.db';
 
 const Datastore = require('nedb')
-  , db = new Datastore({ filename: pathPatients, autoload: true });
+  // , db = new Datastore({ filename: pathPatients, autoload: true });
+  , db = new Datastore();
 
 // MOCK Ajout faux patients
 import {patientsData} from './src/assets/data/patients';
