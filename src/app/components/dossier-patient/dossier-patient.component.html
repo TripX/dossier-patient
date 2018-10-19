@@ -34,14 +34,14 @@
           <app-ma-balance-energetique (outSelectedIndex)="onSelectedIndex($event)" [patient]="searchedPatient"></app-ma-balance-energetique>
         </div>
       </mat-tab>
-      <mat-tab [disabled]="selectedIndex === 0">
-        <ng-template mat-tab-label>
-          <mat-icon>info</mat-icon> <span class="align-super"> Mon enquête alimentaire</span>
-        </ng-template>
-        <div class="tab-content">
-          <app-mon-enquete-alimentaire></app-mon-enquete-alimentaire>
-        </div>
-      </mat-tab>
+      <!--<mat-tab [disabled]="selectedIndex === 0">-->
+        <!--<ng-template mat-tab-label>-->
+          <!--<mat-icon>info</mat-icon> <span class="align-super"> Mon enquête alimentaire</span>-->
+        <!--</ng-template>-->
+        <!--<div class="tab-content">-->
+          <!--<app-mon-enquete-alimentaire></app-mon-enquete-alimentaire>-->
+        <!--</div>-->
+      <!--</mat-tab>-->
     </mat-tab-group>
   </mat-card-content>
 </mat-card>

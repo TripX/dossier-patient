@@ -24,9 +24,9 @@ const pathPatients = 'C:/DossierPatient/db/patients.db';
 const Datastore = require('nedb')
   , db = new Datastore({ filename: pathPatients, autoload: true });
 
-// TODO TO USE TO Ajout faux patients
-/*import {patientsData} from './src/assets/data/patients';
-db.insert(patientsData, function (err, newDoc) {});*/
+// MOCK Ajout faux patients
+import {patientsData} from './src/assets/data/patients';
+db.insert(patientsData, function (err, newDoc) {});
 
 appExpress.use(bodyParser.json());
 
@@ -133,11 +133,11 @@ function createWindow() {
     }));
   }
 
-  win.webContents.openDevTools();
+  // win.webContents.openDevTools();
 
   // Emitted when the window is closed.
   win.on('closed', () => {
-    versionning();
+    // versionning();
 
     // Dereference the window object, usually you would store window
     // in an array if your app supports multi windows, this is the time
